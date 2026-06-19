@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { LevelId, LEVELS } from "./types";
+import { LevelId, LEVELS } from "@/types/types";
 import GameUI from "./GameUI";
 import WindowDistraction from "./WindowDistraction";
 import DoctorsOffice3D from "./DoctorsOffice3D";
