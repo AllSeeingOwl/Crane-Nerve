@@ -1,4 +1,4 @@
-import { LevelInfo } from "./types";
+import { LevelInfo } from "@/types/types";
 
 interface Props {
   level: LevelInfo;
