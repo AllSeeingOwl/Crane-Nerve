@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
-import { LevelId, LEVELS, DEADPAN_DIALOGUE } from "./types";
+
+import { LevelId, LEVELS, DEADPAN_DIALOGUE } from "@/types/types";
+
+import { LevelId, LEVELS, DEADPAN_DIALOGUE } from "../types";
 
 interface Props {
   levelId: LevelId;

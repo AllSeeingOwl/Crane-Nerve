@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { resumeAudio, playStress, playDialogue } from "../audio/gameAudio";
+import { resumeAudio, playStress, playDialogue } from "@/lib/gameAudio";
 
 interface Props {
   stress: number;

@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { LevelId, LEVELS } from "./types";
+import { LevelId, LEVELS } from "@/types/types";
 import GameUI from "./GameUI";
 import WindowDistraction from "./WindowDistraction";
 import DoctorsOffice3D from "./DoctorsOffice3D";
@@ -13,8 +13,13 @@ import Level6Tuning from "./levels/Level6Tuning";
 import Level7GagReflex from "./levels/Level7GagReflex";
 import Level8Accessory from "./levels/Level8Accessory";
 import Level9Hypoglossal from "./levels/Level9Hypoglossal";
-import { useAmbientAudio } from "./audio/useAmbientAudio";
-import { cameraState } from "./cameraState";
+
+import { useAmbientAudio } from "@/hooks/useAmbientAudio";
+
+
+
+import { cameraState } from "@/lib/cameraState";
+
 
 interface Props {
   levelId: LevelId;
