@@ -13,6 +13,13 @@ import Level6Tuning from "./levels/Level6Tuning";
 import Level7GagReflex from "./levels/Level7GagReflex";
 import Level8Accessory from "./levels/Level8Accessory";
 import Level9Hypoglossal from "./levels/Level9Hypoglossal";
+
+import { useAmbientAudio } from "@/hooks/useAmbientAudio";
+
+
+
+import { cameraState } from "@/lib/cameraState";
+
 import { useAmbientAudio } from "@/hooks/useAmbientAudio";
 import { cameraState } from "./cameraState";
 
