@@ -20,6 +20,8 @@ import { useAmbientAudio } from "@/hooks/useAmbientAudio";
 
 import { cameraState } from "@/lib/cameraState";
 
+import { useAmbientAudio } from "@/hooks/useAmbientAudio";
+import { cameraState } from "./cameraState";
 
 interface Props {
   levelId: LevelId;

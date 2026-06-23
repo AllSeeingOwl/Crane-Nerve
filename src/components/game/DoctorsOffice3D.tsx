@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import WindowVignette from "./WindowVignette";
 import { cameraState } from "@/lib/cameraState";
+import { cameraState } from "./cameraState";
 
 /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
 function CameraRig() {
