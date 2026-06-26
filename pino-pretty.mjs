@@ -1,25 +1,37 @@
-import { createRequire as __bannerCrReq } from 'node:module';
-import __bannerPath from 'node:path';
-import __bannerUrl from 'node:url';
+import { createRequire as __bannerCrReq } from "node:module";
+import __bannerPath from "node:path";
+import __bannerUrl from "node:url";
 
 globalThis.require = __bannerCrReq(import.meta.url);
 globalThis.__filename = __bannerUrl.fileURLToPath(import.meta.url);
 globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
-    
+
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
+var __require = /* @__PURE__ */ ((x) =>
+  typeof require !== "undefined"
+    ? require
+    : typeof Proxy !== "undefined"
+      ? new Proxy(x, {
+          get: (a, b) => (typeof require !== "undefined" ? require : a)[b],
+        })
+      : x)(function (x) {
   if (typeof require !== "undefined") return require.apply(this, arguments);
   throw Error('Dynamic require of "' + x + '" is not supported');
 });
-var __commonJS = (cb, mod) => function __require2() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
+var __commonJS = (cb, mod) =>
+  function __require2() {
+    return (
+      mod ||
+        (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod),
+      mod.exports
+    );
+  };
 
 // ../../node_modules/.pnpm/colorette@2.0.20/node_modules/colorette/index.cjs
 var require_colorette = __commonJS({
-  "../../node_modules/.pnpm/colorette@2.0.20/node_modules/colorette/index.cjs"(exports) {
+  "../../node_modules/.pnpm/colorette@2.0.20/node_modules/colorette/index.cjs"(
+    exports,
+  ) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var tty = __require("tty");
@@ -27,15 +39,21 @@ var require_colorette = __commonJS({
       if (e && e.__esModule) return e;
       var n = /* @__PURE__ */ Object.create(null);
       if (e) {
-        Object.keys(e).forEach(function(k) {
+        Object.keys(e).forEach(function (k) {
           if (k !== "default") {
             var d = Object.getOwnPropertyDescriptor(e, k);
-            Object.defineProperty(n, k, d.get ? d : {
-              enumerable: true,
-              get: function() {
-                return e[k];
-              }
-            });
+            Object.defineProperty(
+              n,
+              k,
+              d.get
+                ? d
+                : {
+                    enumerable: true,
+                    get: function () {
+                      return e[k];
+                    },
+                  },
+            );
           }
         });
       }
@@ -46,25 +64,54 @@ var require_colorette = __commonJS({
     var {
       env = {},
       argv = [],
-      platform = ""
+      platform = "",
     } = typeof process === "undefined" ? {} : process;
     var isDisabled = "NO_COLOR" in env || argv.includes("--no-color");
     var isForced = "FORCE_COLOR" in env || argv.includes("--color");
     var isWindows = platform === "win32";
     var isDumbTerminal = env.TERM === "dumb";
-    var isCompatibleTerminal = tty__namespace && tty__namespace.isatty && tty__namespace.isatty(1) && env.TERM && !isDumbTerminal;
-    var isCI = "CI" in env && ("GITHUB_ACTIONS" in env || "GITLAB_CI" in env || "CIRCLECI" in env);
-    var isColorSupported = !isDisabled && (isForced || isWindows && !isDumbTerminal || isCompatibleTerminal || isCI);
-    var replaceClose = (index, string, close, replace, head = string.substring(0, index) + replace, tail = string.substring(index + close.length), next = tail.indexOf(close)) => head + (next < 0 ? tail : replaceClose(next, tail, close, replace));
-    var clearBleed = (index, string, open, close, replace) => index < 0 ? open + string + close : open + replaceClose(index, string, close, replace) + close;
-    var filterEmpty = (open, close, replace = open, at = open.length + 1) => (string) => string || !(string === "" || string === void 0) ? clearBleed(
-      ("" + string).indexOf(close, at),
+    var isCompatibleTerminal =
+      tty__namespace &&
+      tty__namespace.isatty &&
+      tty__namespace.isatty(1) &&
+      env.TERM &&
+      !isDumbTerminal;
+    var isCI =
+      "CI" in env &&
+      ("GITHUB_ACTIONS" in env || "GITLAB_CI" in env || "CIRCLECI" in env);
+    var isColorSupported =
+      !isDisabled &&
+      (isForced ||
+        (isWindows && !isDumbTerminal) ||
+        isCompatibleTerminal ||
+        isCI);
+    var replaceClose = (
+      index,
       string,
-      open,
       close,
-      replace
-    ) : "";
-    var init = (open, close, replace) => filterEmpty(`\x1B[${open}m`, `\x1B[${close}m`, replace);
+      replace,
+      head = string.substring(0, index) + replace,
+      tail = string.substring(index + close.length),
+      next = tail.indexOf(close),
+    ) => head + (next < 0 ? tail : replaceClose(next, tail, close, replace));
+    var clearBleed = (index, string, open, close, replace) =>
+      index < 0
+        ? open + string + close
+        : open + replaceClose(index, string, close, replace) + close;
+    var filterEmpty =
+      (open, close, replace = open, at = open.length + 1) =>
+      (string) =>
+        string || !(string === "" || string === void 0)
+          ? clearBleed(
+              ("" + string).indexOf(close, at),
+              string,
+              open,
+              close,
+              replace,
+            )
+          : "";
+    var init = (open, close, replace) =>
+      filterEmpty(`\x1B[${open}m`, `\x1B[${close}m`, replace);
     var colors = {
       reset: init(0, 0),
       bold: init(1, 22, "\x1B[22m\x1B[1m"),
@@ -106,12 +153,15 @@ var require_colorette = __commonJS({
       bgBlueBright: init(104, 49),
       bgMagentaBright: init(105, 49),
       bgCyanBright: init(106, 49),
-      bgWhiteBright: init(107, 49)
+      bgWhiteBright: init(107, 49),
     };
-    var createColors = ({ useColor = isColorSupported } = {}) => useColor ? colors : Object.keys(colors).reduce(
-      (colors2, key) => ({ ...colors2, [key]: String }),
-      {}
-    );
+    var createColors = ({ useColor = isColorSupported } = {}) =>
+      useColor
+        ? colors
+        : Object.keys(colors).reduce(
+            (colors2, key) => ({ ...colors2, [key]: String }),
+            {},
+          );
     var {
       reset,
       bold,
@@ -153,7 +203,7 @@ var require_colorette = __commonJS({
       bgBlueBright,
       bgMagentaBright,
       bgCyanBright,
-      bgWhiteBright
+      bgWhiteBright,
     } = createColors();
     exports.bgBlack = bgBlack;
     exports.bgBlackBright = bgBlackBright;
@@ -198,18 +248,21 @@ var require_colorette = __commonJS({
     exports.whiteBright = whiteBright;
     exports.yellow = yellow;
     exports.yellowBright = yellowBright;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/wrappy@1.0.2/node_modules/wrappy/wrappy.js
 var require_wrappy = __commonJS({
-  "../../node_modules/.pnpm/wrappy@1.0.2/node_modules/wrappy/wrappy.js"(exports, module) {
+  "../../node_modules/.pnpm/wrappy@1.0.2/node_modules/wrappy/wrappy.js"(
+    exports,
+    module,
+  ) {
     module.exports = wrappy;
     function wrappy(fn, cb) {
       if (fn && cb) return wrappy(fn)(cb);
       if (typeof fn !== "function")
         throw new TypeError("need wrapper function");
-      Object.keys(fn).forEach(function(k) {
+      Object.keys(fn).forEach(function (k) {
         wrapper[k] = fn[k];
       });
       return wrapper;
@@ -221,108 +274,121 @@ var require_wrappy = __commonJS({
         var ret = fn.apply(this, args);
         var cb2 = args[args.length - 1];
         if (typeof ret === "function" && ret !== cb2) {
-          Object.keys(cb2).forEach(function(k) {
+          Object.keys(cb2).forEach(function (k) {
             ret[k] = cb2[k];
           });
         }
         return ret;
       }
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/once@1.4.0/node_modules/once/once.js
 var require_once = __commonJS({
-  "../../node_modules/.pnpm/once@1.4.0/node_modules/once/once.js"(exports, module) {
+  "../../node_modules/.pnpm/once@1.4.0/node_modules/once/once.js"(
+    exports,
+    module,
+  ) {
     var wrappy = require_wrappy();
     module.exports = wrappy(once);
     module.exports.strict = wrappy(onceStrict);
-    once.proto = once(function() {
+    once.proto = once(function () {
       Object.defineProperty(Function.prototype, "once", {
-        value: function() {
+        value: function () {
           return once(this);
         },
-        configurable: true
+        configurable: true,
       });
       Object.defineProperty(Function.prototype, "onceStrict", {
-        value: function() {
+        value: function () {
           return onceStrict(this);
         },
-        configurable: true
+        configurable: true,
       });
     });
     function once(fn) {
-      var f = function() {
+      var f = function () {
         if (f.called) return f.value;
         f.called = true;
-        return f.value = fn.apply(this, arguments);
+        return (f.value = fn.apply(this, arguments));
       };
       f.called = false;
       return f;
     }
     function onceStrict(fn) {
-      var f = function() {
-        if (f.called)
-          throw new Error(f.onceError);
+      var f = function () {
+        if (f.called) throw new Error(f.onceError);
         f.called = true;
-        return f.value = fn.apply(this, arguments);
+        return (f.value = fn.apply(this, arguments));
       };
       var name = fn.name || "Function wrapped with `once`";
       f.onceError = name + " shouldn't be called more than once";
       f.called = false;
       return f;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/end-of-stream@1.4.5/node_modules/end-of-stream/index.js
 var require_end_of_stream = __commonJS({
-  "../../node_modules/.pnpm/end-of-stream@1.4.5/node_modules/end-of-stream/index.js"(exports, module) {
+  "../../node_modules/.pnpm/end-of-stream@1.4.5/node_modules/end-of-stream/index.js"(
+    exports,
+    module,
+  ) {
     var once = require_once();
-    var noop = function() {
-    };
+    var noop = function () {};
     var qnt = global.Bare ? queueMicrotask : process.nextTick.bind(process);
-    var isRequest = function(stream) {
+    var isRequest = function (stream) {
       return stream.setHeader && typeof stream.abort === "function";
     };
-    var isChildProcess = function(stream) {
-      return stream.stdio && Array.isArray(stream.stdio) && stream.stdio.length === 3;
+    var isChildProcess = function (stream) {
+      return (
+        stream.stdio && Array.isArray(stream.stdio) && stream.stdio.length === 3
+      );
     };
-    var eos = function(stream, opts, callback) {
+    var eos = function (stream, opts, callback) {
       if (typeof opts === "function") return eos(stream, null, opts);
       if (!opts) opts = {};
       callback = once(callback || noop);
       var ws = stream._writableState;
       var rs = stream._readableState;
-      var readable = opts.readable || opts.readable !== false && stream.readable;
-      var writable = opts.writable || opts.writable !== false && stream.writable;
+      var readable =
+        opts.readable || (opts.readable !== false && stream.readable);
+      var writable =
+        opts.writable || (opts.writable !== false && stream.writable);
       var cancelled = false;
-      var onlegacyfinish = function() {
+      var onlegacyfinish = function () {
         if (!stream.writable) onfinish();
       };
-      var onfinish = function() {
+      var onfinish = function () {
         writable = false;
         if (!readable) callback.call(stream);
       };
-      var onend = function() {
+      var onend = function () {
         readable = false;
         if (!writable) callback.call(stream);
       };
-      var onexit = function(exitCode) {
-        callback.call(stream, exitCode ? new Error("exited with error code: " + exitCode) : null);
+      var onexit = function (exitCode) {
+        callback.call(
+          stream,
+          exitCode ? new Error("exited with error code: " + exitCode) : null,
+        );
       };
-      var onerror = function(err) {
+      var onerror = function (err) {
         callback.call(stream, err);
       };
-      var onclose = function() {
+      var onclose = function () {
         qnt(onclosenexttick);
       };
-      var onclosenexttick = function() {
+      var onclosenexttick = function () {
         if (cancelled) return;
-        if (readable && !(rs && (rs.ended && !rs.destroyed))) return callback.call(stream, new Error("premature close"));
-        if (writable && !(ws && (ws.ended && !ws.destroyed))) return callback.call(stream, new Error("premature close"));
+        if (readable && !(rs && rs.ended && !rs.destroyed))
+          return callback.call(stream, new Error("premature close"));
+        if (writable && !(ws && ws.ended && !ws.destroyed))
+          return callback.call(stream, new Error("premature close"));
       };
-      var onrequest = function() {
+      var onrequest = function () {
         stream.req.on("finish", onfinish);
       };
       if (isRequest(stream)) {
@@ -339,7 +405,7 @@ var require_end_of_stream = __commonJS({
       stream.on("finish", onfinish);
       if (opts.error !== false) stream.on("error", onerror);
       stream.on("close", onclose);
-      return function() {
+      return function () {
         cancelled = true;
         stream.removeListener("complete", onfinish);
         stream.removeListener("abort", onclose);
@@ -355,46 +421,52 @@ var require_end_of_stream = __commonJS({
       };
     };
     module.exports = eos;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pump@3.0.4/node_modules/pump/index.js
 var require_pump = __commonJS({
-  "../../node_modules/.pnpm/pump@3.0.4/node_modules/pump/index.js"(exports, module) {
+  "../../node_modules/.pnpm/pump@3.0.4/node_modules/pump/index.js"(
+    exports,
+    module,
+  ) {
     var once = require_once();
     var eos = require_end_of_stream();
     var fs;
     try {
       fs = __require("fs");
-    } catch (e) {
-    }
-    var noop = function() {
-    };
-    var ancient = typeof process === "undefined" ? false : /^v?\.0/.test(process.version);
-    var isFn = function(fn) {
+    } catch (e) {}
+    var noop = function () {};
+    var ancient =
+      typeof process === "undefined" ? false : /^v?\.0/.test(process.version);
+    var isFn = function (fn) {
       return typeof fn === "function";
     };
-    var isFS = function(stream) {
+    var isFS = function (stream) {
       if (!ancient) return false;
       if (!fs) return false;
-      return (stream instanceof (fs.ReadStream || noop) || stream instanceof (fs.WriteStream || noop)) && isFn(stream.close);
+      return (
+        (stream instanceof (fs.ReadStream || noop) ||
+          stream instanceof (fs.WriteStream || noop)) &&
+        isFn(stream.close)
+      );
     };
-    var isRequest = function(stream) {
+    var isRequest = function (stream) {
       return stream.setHeader && isFn(stream.abort);
     };
-    var destroyer = function(stream, reading, writing, callback) {
+    var destroyer = function (stream, reading, writing, callback) {
       callback = once(callback);
       var closed = false;
-      stream.on("close", function() {
+      stream.on("close", function () {
         closed = true;
       });
-      eos(stream, { readable: reading, writable: writing }, function(err) {
+      eos(stream, { readable: reading, writable: writing }, function (err) {
         if (err) return callback(err);
         closed = true;
         callback();
       });
       var destroyed = false;
-      return function(err) {
+      return function (err) {
         if (closed) return;
         if (destroyed) return;
         destroyed = true;
@@ -404,22 +476,24 @@ var require_pump = __commonJS({
         callback(err || new Error("stream was destroyed"));
       };
     };
-    var call = function(fn) {
+    var call = function (fn) {
       fn();
     };
-    var pipe = function(from, to) {
+    var pipe = function (from, to) {
       return from.pipe(to);
     };
-    var pump = function() {
+    var pump = function () {
       var streams = Array.prototype.slice.call(arguments);
-      var callback = isFn(streams[streams.length - 1] || noop) && streams.pop() || noop;
+      var callback =
+        (isFn(streams[streams.length - 1] || noop) && streams.pop()) || noop;
       if (Array.isArray(streams[0])) streams = streams[0];
-      if (streams.length < 2) throw new Error("pump requires two streams per minimum");
+      if (streams.length < 2)
+        throw new Error("pump requires two streams per minimum");
       var error;
-      var destroys = streams.map(function(stream, i) {
+      var destroys = streams.map(function (stream, i) {
         var reading = i < streams.length - 1;
         var writing = i > 0;
-        return destroyer(stream, reading, writing, function(err) {
+        return destroyer(stream, reading, writing, function (err) {
           if (!error) error = err;
           if (err) destroys.forEach(call);
           if (reading) return;
@@ -430,12 +504,15 @@ var require_pump = __commonJS({
       return streams.reduce(pipe);
     };
     module.exports = pump;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/split2@4.2.0/node_modules/split2/index.js
 var require_split2 = __commonJS({
-  "../../node_modules/.pnpm/split2@4.2.0/node_modules/split2/index.js"(exports, module) {
+  "../../node_modules/.pnpm/split2@4.2.0/node_modules/split2/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var { Transform } = __require("stream");
     var { StringDecoder } = __require("string_decoder");
@@ -496,7 +573,11 @@ var require_split2 = __commonJS({
           if (typeof matcher === "function") {
             mapper = matcher;
             matcher = /\r?\n/;
-          } else if (typeof matcher === "object" && !(matcher instanceof RegExp) && !matcher[Symbol.split]) {
+          } else if (
+            typeof matcher === "object" &&
+            !(matcher instanceof RegExp) &&
+            !matcher[Symbol.split]
+          ) {
             options = matcher;
             matcher = /\r?\n/;
           }
@@ -524,19 +605,22 @@ var require_split2 = __commonJS({
       stream.maxLength = options.maxLength;
       stream.skipOverflow = options.skipOverflow || false;
       stream.overflow = false;
-      stream._destroy = function(err, cb) {
+      stream._destroy = function (err, cb) {
         this._writableState.errorEmitted = false;
         cb(err);
       };
       return stream;
     }
     module.exports = split;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-abstract-transport@3.0.0/node_modules/pino-abstract-transport/index.js
 var require_pino_abstract_transport = __commonJS({
-  "../../node_modules/.pnpm/pino-abstract-transport@3.0.0/node_modules/pino-abstract-transport/index.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-abstract-transport@3.0.0/node_modules/pino-abstract-transport/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var metadata = /* @__PURE__ */ Symbol.for("pino.metadata");
     var split = require_split2();
@@ -554,47 +638,61 @@ var require_pino_abstract_transport = __commonJS({
       return promise;
     }
     module.exports = function build(fn, opts = {}) {
-      const waitForConfig = opts.expectPinoConfig === true && workerData?.workerData?.pinoWillSendConfig === true;
+      const waitForConfig =
+        opts.expectPinoConfig === true &&
+        workerData?.workerData?.pinoWillSendConfig === true;
       const parseLines = opts.parse === "lines";
-      const parseLine = typeof opts.parseLine === "function" ? opts.parseLine : JSON.parse;
+      const parseLine =
+        typeof opts.parseLine === "function" ? opts.parseLine : JSON.parse;
       const close = opts.close || defaultClose;
-      const stream = split(function(line) {
-        let value;
-        try {
-          value = parseLine(line);
-        } catch (error) {
-          this.emit("unknown", line, error);
-          return;
-        }
-        if (value === null) {
-          this.emit("unknown", line, "Null value ignored");
-          return;
-        }
-        if (typeof value !== "object") {
-          value = {
-            data: value,
-            time: Date.now()
-          };
-        }
-        if (stream[metadata]) {
-          stream.lastTime = value.time;
-          stream.lastLevel = value.level;
-          stream.lastObj = value;
-        }
-        if (parseLines) {
-          return line;
-        }
-        return value;
-      }, { autoDestroy: true });
-      stream._destroy = function(err, cb) {
+      const stream = split(
+        function (line) {
+          let value;
+          try {
+            value = parseLine(line);
+          } catch (error) {
+            this.emit("unknown", line, error);
+            return;
+          }
+          if (value === null) {
+            this.emit("unknown", line, "Null value ignored");
+            return;
+          }
+          if (typeof value !== "object") {
+            value = {
+              data: value,
+              time: Date.now(),
+            };
+          }
+          if (stream[metadata]) {
+            stream.lastTime = value.time;
+            stream.lastLevel = value.level;
+            stream.lastObj = value;
+          }
+          if (parseLines) {
+            return line;
+          }
+          return value;
+        },
+        { autoDestroy: true },
+      );
+      stream._destroy = function (err, cb) {
         const promise = close(err, cb);
         if (promise && typeof promise.then === "function") {
           promise.then(cb, cb);
         }
       };
-      if (opts.expectPinoConfig === true && workerData?.workerData?.pinoWillSendConfig !== true) {
+      if (
+        opts.expectPinoConfig === true &&
+        workerData?.workerData?.pinoWillSendConfig !== true
+      ) {
         setImmediate(() => {
-          stream.emit("error", new Error("This transport is not compatible with the current version of pino. Please upgrade pino to the latest version."));
+          stream.emit(
+            "error",
+            new Error(
+              "This transport is not compatible with the current version of pino. Please upgrade pino to the latest version.",
+            ),
+          );
         });
       }
       if (opts.metadata !== false) {
@@ -617,18 +715,18 @@ var require_pino_abstract_transport = __commonJS({
           levels: {
             get() {
               return pinoConfig.levels;
-            }
+            },
           },
           messageKey: {
             get() {
               return pinoConfig.messageKey;
-            }
+            },
           },
           errorKey: {
             get() {
               return pinoConfig.errorKey;
-            }
-          }
+            },
+          },
         });
         return configReceived.then(finish);
       }
@@ -649,12 +747,15 @@ var require_pino_abstract_transport = __commonJS({
     function defaultClose(err, cb) {
       process.nextTick(cb, err);
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/constants.js
 var require_constants = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/constants.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/constants.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = {
       DATE_FORMAT: "yyyy-mm-dd HH:MM:ss.l o",
@@ -674,7 +775,7 @@ var require_constants = __commonJS({
         40: "WARN",
         30: "INFO",
         20: "DEBUG",
-        10: "TRACE"
+        10: "TRACE",
       },
       LEVEL_NAMES: {
         fatal: 60,
@@ -682,7 +783,7 @@ var require_constants = __commonJS({
         warn: 40,
         info: 30,
         debug: 20,
-        trace: 10
+        trace: 10,
       },
       // Object keys that probably came from a logger like Pino or Bunyan.
       LOGGER_KEYS: [
@@ -692,37 +793,58 @@ var require_constants = __commonJS({
         "level",
         "time",
         "timestamp",
-        "caller"
-      ]
+        "caller",
+      ],
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/get-level-label-data.js
 var require_get_level_label_data = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/get-level-label-data.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/get-level-label-data.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = getLevelLabelData;
     var { LEVELS, LEVEL_NAMES } = require_constants();
-    function getLevelLabelData(useOnlyCustomProps, customLevels, customLevelNames) {
-      const levels = useOnlyCustomProps ? customLevels || LEVELS : Object.assign({}, LEVELS, customLevels);
-      const levelNames = useOnlyCustomProps ? customLevelNames || LEVEL_NAMES : Object.assign({}, LEVEL_NAMES, customLevelNames);
-      return function(level) {
+    function getLevelLabelData(
+      useOnlyCustomProps,
+      customLevels,
+      customLevelNames,
+    ) {
+      const levels = useOnlyCustomProps
+        ? customLevels || LEVELS
+        : Object.assign({}, LEVELS, customLevels);
+      const levelNames = useOnlyCustomProps
+        ? customLevelNames || LEVEL_NAMES
+        : Object.assign({}, LEVEL_NAMES, customLevelNames);
+      return function (level) {
         let levelNum = "default";
         if (Number.isInteger(+level)) {
-          levelNum = Object.prototype.hasOwnProperty.call(levels, level) ? level : levelNum;
+          levelNum = Object.prototype.hasOwnProperty.call(levels, level)
+            ? level
+            : levelNum;
         } else {
-          levelNum = Object.prototype.hasOwnProperty.call(levelNames, level.toLowerCase()) ? levelNames[level.toLowerCase()] : levelNum;
+          levelNum = Object.prototype.hasOwnProperty.call(
+            levelNames,
+            level.toLowerCase(),
+          )
+            ? levelNames[level.toLowerCase()]
+            : levelNum;
         }
         return [levels[levelNum], levelNum];
       };
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/colors.js
 var require_colors = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/colors.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/colors.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var nocolor = (input) => input;
     var plain = {
@@ -735,12 +857,13 @@ var require_colors = __commonJS({
       10: nocolor,
       message: nocolor,
       greyMessage: nocolor,
-      property: nocolor
+      property: nocolor,
     };
     var { createColors } = require_colorette();
     var getLevelLabelData = require_get_level_label_data();
     var availableColors = createColors({ useColor: true });
-    var { white, bgRed, red, yellow, green, blue, gray, cyan, magenta } = availableColors;
+    var { white, bgRed, red, yellow, green, blue, gray, cyan, magenta } =
+      availableColors;
     var colored = {
       default: white,
       60: bgRed,
@@ -751,26 +874,39 @@ var require_colors = __commonJS({
       10: gray,
       message: cyan,
       greyMessage: gray,
-      property: magenta
+      property: magenta,
     };
     function resolveCustomColoredColorizer(customColors) {
       return customColors.reduce(
-        function(agg, [level, color]) {
-          agg[level] = typeof availableColors[color] === "function" ? availableColors[color] : white;
+        function (agg, [level, color]) {
+          agg[level] =
+            typeof availableColors[color] === "function"
+              ? availableColors[color]
+              : white;
           return agg;
         },
-        { default: white, message: cyan, greyMessage: gray, property: magenta }
+        { default: white, message: cyan, greyMessage: gray, property: magenta },
       );
     }
     function colorizeLevel(useOnlyCustomProps) {
-      return function(level, colorizer, { customLevels, customLevelNames } = {}) {
-        const [levelStr, levelNum] = getLevelLabelData(useOnlyCustomProps, customLevels, customLevelNames)(level);
-        return Object.prototype.hasOwnProperty.call(colorizer, levelNum) ? colorizer[levelNum](levelStr) : colorizer.default(levelStr);
+      return function (
+        level,
+        colorizer,
+        { customLevels, customLevelNames } = {},
+      ) {
+        const [levelStr, levelNum] = getLevelLabelData(
+          useOnlyCustomProps,
+          customLevels,
+          customLevelNames,
+        )(level);
+        return Object.prototype.hasOwnProperty.call(colorizer, levelNum)
+          ? colorizer[levelNum](levelStr)
+          : colorizer.default(levelStr);
       };
     }
     function plainColorizer(useOnlyCustomProps) {
       const newPlainColorizer = colorizeLevel(useOnlyCustomProps);
-      const customColoredColorizer = function(level, opts) {
+      const customColoredColorizer = function (level, opts) {
         return newPlainColorizer(level, plain, opts);
       };
       customColoredColorizer.message = plain.message;
@@ -781,7 +917,7 @@ var require_colors = __commonJS({
     }
     function coloredColorizer(useOnlyCustomProps) {
       const newColoredColorizer = colorizeLevel(useOnlyCustomProps);
-      const customColoredColorizer = function(level, opts) {
+      const customColoredColorizer = function (level, opts) {
         return newColoredColorizer(level, colored, opts);
       };
       customColoredColorizer.message = colored.message;
@@ -792,18 +928,27 @@ var require_colors = __commonJS({
     }
     function customColoredColorizerFactory(customColors, useOnlyCustomProps) {
       const onlyCustomColored = resolveCustomColoredColorizer(customColors);
-      const customColored = useOnlyCustomProps ? onlyCustomColored : Object.assign({}, colored, onlyCustomColored);
+      const customColored = useOnlyCustomProps
+        ? onlyCustomColored
+        : Object.assign({}, colored, onlyCustomColored);
       const colorizeLevelCustom = colorizeLevel(useOnlyCustomProps);
-      const customColoredColorizer = function(level, opts) {
+      const customColoredColorizer = function (level, opts) {
         return colorizeLevelCustom(level, customColored, opts);
       };
       customColoredColorizer.colors = availableColors;
-      customColoredColorizer.message = customColoredColorizer.message || customColored.message;
-      customColoredColorizer.property = customColoredColorizer.property || customColored.property;
-      customColoredColorizer.greyMessage = customColoredColorizer.greyMessage || customColored.greyMessage;
+      customColoredColorizer.message =
+        customColoredColorizer.message || customColored.message;
+      customColoredColorizer.property =
+        customColoredColorizer.property || customColored.property;
+      customColoredColorizer.greyMessage =
+        customColoredColorizer.greyMessage || customColored.greyMessage;
       return customColoredColorizer;
     }
-    module.exports = function getColorizer(useColors = false, customColors, useOnlyCustomProps) {
+    module.exports = function getColorizer(
+      useColors = false,
+      customColors,
+      useOnlyCustomProps,
+    ) {
       if (useColors && customColors !== void 0) {
         return customColoredColorizerFactory(customColors, useOnlyCustomProps);
       } else if (useColors) {
@@ -811,47 +956,59 @@ var require_colors = __commonJS({
       }
       return plainColorizer(useOnlyCustomProps);
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/atomic-sleep@1.0.0/node_modules/atomic-sleep/index.js
 var require_atomic_sleep = __commonJS({
-  "../../node_modules/.pnpm/atomic-sleep@1.0.0/node_modules/atomic-sleep/index.js"(exports, module) {
+  "../../node_modules/.pnpm/atomic-sleep@1.0.0/node_modules/atomic-sleep/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
-    if (typeof SharedArrayBuffer !== "undefined" && typeof Atomics !== "undefined") {
-      let sleep = function(ms) {
+    if (
+      typeof SharedArrayBuffer !== "undefined" &&
+      typeof Atomics !== "undefined"
+    ) {
+      let sleep = function (ms) {
         const valid = ms > 0 && ms < Infinity;
         if (valid === false) {
           if (typeof ms !== "number" && typeof ms !== "bigint") {
             throw TypeError("sleep: ms must be a number");
           }
-          throw RangeError("sleep: ms must be a number that is greater than 0 but less than Infinity");
+          throw RangeError(
+            "sleep: ms must be a number that is greater than 0 but less than Infinity",
+          );
         }
         Atomics.wait(nil, 0, 0, Number(ms));
       };
       const nil = new Int32Array(new SharedArrayBuffer(4));
       module.exports = sleep;
     } else {
-      let sleep = function(ms) {
+      let sleep = function (ms) {
         const valid = ms > 0 && ms < Infinity;
         if (valid === false) {
           if (typeof ms !== "number" && typeof ms !== "bigint") {
             throw TypeError("sleep: ms must be a number");
           }
-          throw RangeError("sleep: ms must be a number that is greater than 0 but less than Infinity");
+          throw RangeError(
+            "sleep: ms must be a number that is greater than 0 but less than Infinity",
+          );
         }
         const target = Date.now() + Number(ms);
-        while (target > Date.now()) {
-        }
+        while (target > Date.now()) {}
       };
       module.exports = sleep;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/sonic-boom@4.2.1/node_modules/sonic-boom/index.js
 var require_sonic_boom = __commonJS({
-  "../../node_modules/.pnpm/sonic-boom@4.2.1/node_modules/sonic-boom/index.js"(exports, module) {
+  "../../node_modules/.pnpm/sonic-boom@4.2.1/node_modules/sonic-boom/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var fs = __require("fs");
     var EventEmitter = __require("events");
@@ -864,7 +1021,9 @@ var require_sonic_boom = __commonJS({
     var MAX_WRITE = 16 * 1024;
     var kContentModeBuffer = "buffer";
     var kContentModeUtf8 = "utf8";
-    var [major, minor] = (process.versions.node || "0.0").split(".").map(Number);
+    var [major, minor] = (process.versions.node || "0.0")
+      .split(".")
+      .map(Number);
     var kCopyBuffer = major >= 22 && minor >= 7;
     function openFile(file, sonic) {
       sonic._opening = true;
@@ -900,7 +1059,10 @@ var require_sonic_boom = __commonJS({
         if (sonic.destroyed) {
           return;
         }
-        if (!sonic._writing && sonic._len > sonic.minLength || sonic._flushPending) {
+        if (
+          (!sonic._writing && sonic._len > sonic.minLength) ||
+          sonic._flushPending
+        ) {
           sonic._actualWrite();
         } else if (reopening) {
           process.nextTick(() => sonic.emit("drain"));
@@ -910,7 +1072,8 @@ var require_sonic_boom = __commonJS({
       const mode = sonic.mode;
       if (sonic.sync) {
         try {
-          if (sonic.mkdir) fs.mkdirSync(path.dirname(file), { recursive: true });
+          if (sonic.mkdir)
+            fs.mkdirSync(path.dirname(file), { recursive: true });
           const fd = fs.openSync(file, flags, mode);
           fileOpened(null, fd);
         } catch (err) {
@@ -930,7 +1093,21 @@ var require_sonic_boom = __commonJS({
       if (!(this instanceof SonicBoom)) {
         return new SonicBoom(opts);
       }
-      let { fd, dest, minLength, maxLength, maxWrite, periodicFlush, sync, append = true, mkdir, retryEAGAIN, fsync, contentMode, mode } = opts || {};
+      let {
+        fd,
+        dest,
+        minLength,
+        maxLength,
+        maxWrite,
+        periodicFlush,
+        sync,
+        append = true,
+        mkdir,
+        retryEAGAIN,
+        fsync,
+        contentMode,
+        mode,
+      } = opts || {};
       fd = fd || dest;
       this._len = 0;
       this.fd = -1;
@@ -985,7 +1162,9 @@ var require_sonic_boom = __commonJS({
           return fs.write(this.fd, this._writingBuf, "utf8", this.release);
         };
       } else {
-        throw new Error(`SonicBoom supports "${kContentModeUtf8}" and "${kContentModeBuffer}", but passed ${contentMode}`);
+        throw new Error(
+          `SonicBoom supports "${kContentModeUtf8}" and "${kContentModeBuffer}", but passed ${contentMode}`,
+        );
       }
       if (typeof fd === "number") {
         this.fd = fd;
@@ -996,11 +1175,20 @@ var require_sonic_boom = __commonJS({
         throw new Error("SonicBoom supports only file descriptors and files");
       }
       if (this.minLength >= this.maxWrite) {
-        throw new Error(`minLength should be smaller than maxWrite (${this.maxWrite})`);
+        throw new Error(
+          `minLength should be smaller than maxWrite (${this.maxWrite})`,
+        );
       }
       this.release = (err, n) => {
         if (err) {
-          if ((err.code === "EAGAIN" || err.code === "EBUSY") && this.retryEAGAIN(err, this._writingBuf.length, this._len - this._writingBuf.length)) {
+          if (
+            (err.code === "EAGAIN" || err.code === "EBUSY") &&
+            this.retryEAGAIN(
+              err,
+              this._writingBuf.length,
+              this._len - this._writingBuf.length,
+            )
+          ) {
             if (this.sync) {
               try {
                 sleep(BUSY_WRITE_TIMEOUT);
@@ -1018,7 +1206,11 @@ var require_sonic_boom = __commonJS({
           return;
         }
         this.emit("write", n);
-        const releasedBufObj = releaseWritingBuf(this._writingBuf, this._len, n);
+        const releasedBufObj = releaseWritingBuf(
+          this._writingBuf,
+          this._len,
+          n,
+        );
         this._len = releasedBufObj.len;
         this._writingBuf = releasedBufObj.writingBuf;
         if (this._writingBuf.length) {
@@ -1029,7 +1221,11 @@ var require_sonic_boom = __commonJS({
           try {
             do {
               const n2 = fsWriteSync();
-              const releasedBufObj2 = releaseWritingBuf(this._writingBuf, this._len, n2);
+              const releasedBufObj2 = releaseWritingBuf(
+                this._writingBuf,
+                this._len,
+                n2,
+              );
               this._len = releasedBufObj2.len;
               this._writingBuf = releasedBufObj2.writingBuf;
             } while (this._writingBuf.length);
@@ -1067,13 +1263,16 @@ var require_sonic_boom = __commonJS({
           }
         }
       };
-      this.on("newListener", function(name) {
+      this.on("newListener", function (name) {
         if (name === "drain") {
           this._asyncDrainScheduled = false;
         }
       });
       if (this._periodicFlush !== 0) {
-        this._periodicFlushTimer = setInterval(() => this.flush(null), this._periodicFlush);
+        this._periodicFlushTimer = setInterval(
+          () => this.flush(null),
+          this._periodicFlush,
+        );
         this._periodicFlushTimer.unref();
       }
     }
@@ -1113,7 +1312,10 @@ var require_sonic_boom = __commonJS({
         this.emit("drop", data);
         return this._len < this._hwm;
       }
-      if (bufs.length === 0 || Buffer.byteLength(bufs[bufs.length - 1]) + dataLen > this.maxWrite) {
+      if (
+        bufs.length === 0 ||
+        Buffer.byteLength(bufs[bufs.length - 1]) + dataLen > this.maxWrite
+      ) {
         bufs.push(data);
       } else {
         bufs[bufs.length - 1] += data;
@@ -1135,7 +1337,10 @@ var require_sonic_boom = __commonJS({
         this.emit("drop", data);
         return this._len < this._hwm;
       }
-      if (bufs.length === 0 || lens[lens.length - 1] + data.length > this.maxWrite) {
+      if (
+        bufs.length === 0 ||
+        lens[lens.length - 1] + data.length > this.maxWrite
+      ) {
         bufs.push([data]);
         lens.push(data.length);
       } else {
@@ -1229,7 +1434,7 @@ var require_sonic_boom = __commonJS({
       }
       this._actualWrite();
     }
-    SonicBoom.prototype.reopen = function(file) {
+    SonicBoom.prototype.reopen = function (file) {
       if (this.destroyed) {
         throw new Error("SonicBoom destroyed");
       }
@@ -1243,7 +1448,9 @@ var require_sonic_boom = __commonJS({
         return;
       }
       if (!this.file) {
-        throw new Error("Unable to reopen a file descriptor, you must pass a file to SonicBoom");
+        throw new Error(
+          "Unable to reopen a file descriptor, you must pass a file to SonicBoom",
+        );
       }
       if (file) {
         this.file = file;
@@ -1264,7 +1471,7 @@ var require_sonic_boom = __commonJS({
       });
       openFile(this.file, this);
     };
-    SonicBoom.prototype.end = function() {
+    SonicBoom.prototype.end = function () {
       if (this.destroyed) {
         throw new Error("SonicBoom destroyed");
       }
@@ -1304,7 +1511,9 @@ var require_sonic_boom = __commonJS({
           buf = this._bufs[0];
         }
         try {
-          const n = Buffer.isBuffer(buf) ? fs.writeSync(this.fd, buf) : fs.writeSync(this.fd, buf, "utf8");
+          const n = Buffer.isBuffer(buf)
+            ? fs.writeSync(this.fd, buf)
+            : fs.writeSync(this.fd, buf, "utf8");
           const releasedBufObj = releaseWritingBuf(buf, this._len, n);
           buf = releasedBufObj.writingBuf;
           this._len = releasedBufObj.len;
@@ -1313,7 +1522,10 @@ var require_sonic_boom = __commonJS({
           }
         } catch (err) {
           const shouldRetry = err.code === "EAGAIN" || err.code === "EBUSY";
-          if (shouldRetry && !this.retryEAGAIN(err, buf.length, this._len - buf.length)) {
+          if (
+            shouldRetry &&
+            !this.retryEAGAIN(err, buf.length, this._len - buf.length)
+          ) {
             throw err;
           }
           sleep(BUSY_WRITE_TIMEOUT);
@@ -1321,8 +1533,7 @@ var require_sonic_boom = __commonJS({
       }
       try {
         fs.fsyncSync(this.fd);
-      } catch {
-      }
+      } catch {}
     }
     function flushBufferSync() {
       if (this.destroyed) {
@@ -1350,14 +1561,17 @@ var require_sonic_boom = __commonJS({
           }
         } catch (err) {
           const shouldRetry = err.code === "EAGAIN" || err.code === "EBUSY";
-          if (shouldRetry && !this.retryEAGAIN(err, buf.length, this._len - buf.length)) {
+          if (
+            shouldRetry &&
+            !this.retryEAGAIN(err, buf.length, this._len - buf.length)
+          ) {
             throw err;
           }
           sleep(BUSY_WRITE_TIMEOUT);
         }
       }
     }
-    SonicBoom.prototype.destroy = function() {
+    SonicBoom.prototype.destroy = function () {
       if (this.destroyed) {
         return;
       }
@@ -1366,10 +1580,14 @@ var require_sonic_boom = __commonJS({
     function actualWrite() {
       const release = this.release;
       this._writing = true;
-      this._writingBuf = this._writingBuf.length ? this._writingBuf : this._bufs.shift() || "";
+      this._writingBuf = this._writingBuf.length
+        ? this._writingBuf
+        : this._bufs.shift() || "";
       if (this.sync) {
         try {
-          const written = Buffer.isBuffer(this._writingBuf) ? fs.writeSync(this.fd, this._writingBuf) : fs.writeSync(this.fd, this._writingBuf, "utf8");
+          const written = Buffer.isBuffer(this._writingBuf)
+            ? fs.writeSync(this.fd, this._writingBuf)
+            : fs.writeSync(this.fd, this._writingBuf, "utf8");
           release(null, written);
         } catch (err) {
           release(err);
@@ -1381,7 +1599,9 @@ var require_sonic_boom = __commonJS({
     function actualWriteBuffer() {
       const release = this.release;
       this._writing = true;
-      this._writingBuf = this._writingBuf.length ? this._writingBuf : mergeBuf(this._bufs.shift(), this._lens.shift());
+      this._writingBuf = this._writingBuf.length
+        ? this._writingBuf
+        : mergeBuf(this._bufs.shift(), this._lens.shift());
       if (this.sync) {
         try {
           const written = fs.writeSync(this.fd, this._writingBuf);
@@ -1407,11 +1627,13 @@ var require_sonic_boom = __commonJS({
       sonic.destroyed = true;
       sonic._bufs = [];
       sonic._lens = [];
-      assert(typeof sonic.fd === "number", `sonic.fd must be a number, got ${typeof sonic.fd}`);
+      assert(
+        typeof sonic.fd === "number",
+        `sonic.fd must be a number, got ${typeof sonic.fd}`,
+      );
       try {
         fs.fsync(sonic.fd, closeWrapped);
-      } catch {
-      }
+      } catch {}
       function closeWrapped() {
         if (sonic.fd !== 1 && sonic.fd !== 2) {
           fs.close(sonic.fd, done);
@@ -1433,29 +1655,34 @@ var require_sonic_boom = __commonJS({
     SonicBoom.SonicBoom = SonicBoom;
     SonicBoom.default = SonicBoom;
     module.exports = SonicBoom;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/noop.js
 var require_noop = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/noop.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/noop.js"(
+    exports,
+    module,
+  ) {
     "use strict";
-    module.exports = function noop() {
-    };
-  }
+    module.exports = function noop() {};
+  },
 });
 
 // ../../node_modules/.pnpm/on-exit-leak-free@2.1.2/node_modules/on-exit-leak-free/index.js
 var require_on_exit_leak_free = __commonJS({
-  "../../node_modules/.pnpm/on-exit-leak-free@2.1.2/node_modules/on-exit-leak-free/index.js"(exports, module) {
+  "../../node_modules/.pnpm/on-exit-leak-free@2.1.2/node_modules/on-exit-leak-free/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var refs = {
       exit: [],
-      beforeExit: []
+      beforeExit: [],
     };
     var functions = {
       exit: onExit,
-      beforeExit: onBeforeExit
+      beforeExit: onBeforeExit,
     };
     var registry;
     function ensureRegistry() {
@@ -1534,14 +1761,17 @@ var require_on_exit_leak_free = __commonJS({
     module.exports = {
       register,
       registerBeforeExit,
-      unregister
+      unregister,
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/build-safe-sonic-boom.js
 var require_build_safe_sonic_boom = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/build-safe-sonic-boom.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/build-safe-sonic-boom.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = buildSafeSonicBoom;
     var { isMainThread } = __require("node:worker_threads");
@@ -1569,7 +1799,7 @@ var require_build_safe_sonic_boom = __commonJS({
       if (global.WeakRef && global.WeakMap && global.FinalizationRegistry) {
         const onExit = require_on_exit_leak_free();
         onExit.register(stream, autoEnd);
-        stream.on("close", function() {
+        stream.on("close", function () {
           onExit.unregister(stream);
         });
       }
@@ -1580,30 +1810,36 @@ var require_build_safe_sonic_boom = __commonJS({
       }
       if (eventName === "beforeExit") {
         stream.flush();
-        stream.on("drain", function() {
+        stream.on("drain", function () {
           stream.end();
         });
       } else {
         stream.flushSync();
       }
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/is-valid-date.js
 var require_is_valid_date = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/is-valid-date.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/is-valid-date.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = isValidDate;
     function isValidDate(date) {
       return date instanceof Date && !Number.isNaN(date.getTime());
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/create-date.js
 var require_create_date = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/create-date.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/create-date.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = createDate;
     var isValidDate = require_is_valid_date();
@@ -1615,12 +1851,15 @@ var require_create_date = __commonJS({
       date = /* @__PURE__ */ new Date(+epoch);
       return date;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/split-property-key.js
 var require_split_property_key = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/split-property-key.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/split-property-key.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = splitPropertyKey;
     function splitPropertyKey(key) {
@@ -1650,17 +1889,22 @@ var require_split_property_key = __commonJS({
       }
       return result;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/get-property-value.js
 var require_get_property_value = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/get-property-value.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/get-property-value.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = getPropertyValue;
     var splitPropertyKey = require_split_property_key();
     function getPropertyValue(obj, property) {
-      const props = Array.isArray(property) ? property : splitPropertyKey(property);
+      const props = Array.isArray(property)
+        ? property
+        : splitPropertyKey(property);
       for (const prop of props) {
         if (!Object.prototype.hasOwnProperty.call(obj, prop)) {
           return;
@@ -1669,12 +1913,15 @@ var require_get_property_value = __commonJS({
       }
       return obj;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/delete-log-property.js
 var require_delete_log_property = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/delete-log-property.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/delete-log-property.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = deleteLogProperty;
     var getPropertyValue = require_get_property_value();
@@ -1683,16 +1930,22 @@ var require_delete_log_property = __commonJS({
       const props = splitPropertyKey(property);
       const propToDelete = props.pop();
       log = getPropertyValue(log, props);
-      if (log !== null && typeof log === "object" && Object.prototype.hasOwnProperty.call(log, propToDelete)) {
+      if (
+        log !== null &&
+        typeof log === "object" &&
+        Object.prototype.hasOwnProperty.call(log, propToDelete)
+      ) {
         delete log[propToDelete];
       }
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/fast-copy@4.0.2/node_modules/fast-copy/dist/cjs/index.cjs
 var require_cjs = __commonJS({
-  "../../node_modules/.pnpm/fast-copy@4.0.2/node_modules/fast-copy/dist/cjs/index.cjs"(exports) {
+  "../../node_modules/.pnpm/fast-copy@4.0.2/node_modules/fast-copy/dist/cjs/index.cjs"(
+    exports,
+  ) {
     "use strict";
     var toStringFunction = Function.prototype.toString;
     var toStringObject = Object.prototype.toString;
@@ -1704,11 +1957,13 @@ var require_cjs = __commonJS({
       if (Constructor === Object) {
         return prototype === Object.prototype ? {} : Object.create(prototype);
       }
-      if (Constructor && ~toStringFunction.call(Constructor).indexOf("[native code]")) {
+      if (
+        Constructor &&
+        ~toStringFunction.call(Constructor).indexOf("[native code]")
+      ) {
         try {
           return new Constructor();
-        } catch (_a) {
-        }
+        } catch (_a) {}
       }
       return Object.create(prototype);
     }
@@ -1722,18 +1977,24 @@ var require_cjs = __commonJS({
     }
     var { hasOwnProperty, propertyIsEnumerable } = Object.prototype;
     function copyOwnDescriptor(original, clone, property, state) {
-      const ownDescriptor = Object.getOwnPropertyDescriptor(original, property) || {
+      const ownDescriptor = Object.getOwnPropertyDescriptor(
+        original,
+        property,
+      ) || {
         configurable: true,
         enumerable: true,
         value: original[property],
-        writable: true
+        writable: true,
       };
-      const descriptor = ownDescriptor.get || ownDescriptor.set ? ownDescriptor : {
-        configurable: ownDescriptor.configurable,
-        enumerable: ownDescriptor.enumerable,
-        value: state.copier(ownDescriptor.value, state),
-        writable: ownDescriptor.writable
-      };
+      const descriptor =
+        ownDescriptor.get || ownDescriptor.set
+          ? ownDescriptor
+          : {
+              configurable: ownDescriptor.configurable,
+              enumerable: ownDescriptor.enumerable,
+              value: state.copier(ownDescriptor.value, state),
+              writable: ownDescriptor.writable,
+            };
       try {
         Object.defineProperty(clone, property, descriptor);
       } catch (_a) {
@@ -1834,7 +2095,11 @@ var require_cjs = __commonJS({
     function createDefaultCache() {
       return /* @__PURE__ */ new WeakMap();
     }
-    function getOptions({ createCache: createCacheOverride, methods: methodsOverride, strict }) {
+    function getOptions({
+      createCache: createCacheOverride,
+      methods: methodsOverride,
+      strict,
+    }) {
       const defaultMethods = {
         array: strict ? copyArrayStrict : copyArrayLoose,
         arrayBuffer: copyArrayBuffer,
@@ -1847,9 +2112,11 @@ var require_cjs = __commonJS({
         map: strict ? copyMapStrict : copyMapLoose,
         object: strict ? copyObjectStrict : copyObjectLoose,
         regExp: copyRegExp,
-        set: strict ? copySetStrict : copySetLoose
+        set: strict ? copySetStrict : copySetLoose,
       };
-      const methods = methodsOverride ? Object.assign(defaultMethods, methodsOverride) : defaultMethods;
+      const methods = methodsOverride
+        ? Object.assign(defaultMethods, methodsOverride)
+        : defaultMethods;
       const copiers = getTagSpecificCopiers(methods);
       const createCache = createCacheOverride || createDefaultCache;
       if (!copiers.Object || !copiers.Array) {
@@ -1887,7 +2154,7 @@ var require_cjs = __commonJS({
         Uint8ClampedArray: methods.arrayBuffer,
         Uint16Array: methods.arrayBuffer,
         Uint32Array: methods.arrayBuffer,
-        Uint64Array: methods.arrayBuffer
+        Uint64Array: methods.arrayBuffer,
       };
     }
     function createCopier(options = {}) {
@@ -1913,14 +2180,16 @@ var require_cjs = __commonJS({
         if (tagSpecificCopier) {
           return tagSpecificCopier(value, state);
         }
-        return typeof value.then === "function" ? value : copyObject(value, state);
+        return typeof value.then === "function"
+          ? value
+          : copyObject(value, state);
       }
       return function copy2(value) {
         return copier(value, {
           Constructor: void 0,
           cache: createCache(),
           copier,
-          prototype: void 0
+          prototype: void 0,
         });
       };
     }
@@ -1929,12 +2198,15 @@ var require_cjs = __commonJS({
     exports.copy = copy;
     exports.copyStrict = copyStrict;
     exports.createCopier = createCopier;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/filter-log.js
 var require_filter_log = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/filter-log.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/filter-log.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = filterLog;
     var { createCopier } = require_cjs();
@@ -1955,12 +2227,15 @@ var require_filter_log = __commonJS({
       });
       return logCopy;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/dateformat@4.6.3/node_modules/dateformat/lib/dateformat.js
 var require_dateformat = __commonJS({
-  "../../node_modules/.pnpm/dateformat@4.6.3/node_modules/dateformat/lib/dateformat.js"(exports, module) {
+  "../../node_modules/.pnpm/dateformat@4.6.3/node_modules/dateformat/lib/dateformat.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     function _typeof(obj) {
       "@babel/helpers - typeof";
@@ -1970,19 +2245,30 @@ var require_dateformat = __commonJS({
         };
       } else {
         _typeof = function _typeof2(obj2) {
-          return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+          return obj2 &&
+            typeof Symbol === "function" &&
+            obj2.constructor === Symbol &&
+            obj2 !== Symbol.prototype
+            ? "symbol"
+            : typeof obj2;
         };
       }
       return _typeof(obj);
     }
-    (function(global2) {
+    (function (global2) {
       var _arguments = arguments;
-      var dateFormat = /* @__PURE__ */ (function() {
-        var token = /d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|W{1,2}|[LlopSZN]|"[^"]*"|'[^']*'/g;
-        var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
+      var dateFormat = /* @__PURE__ */ (function () {
+        var token =
+          /d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|W{1,2}|[LlopSZN]|"[^"]*"|'[^']*'/g;
+        var timezone =
+          /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
         var timezoneClip = /[^-+\dA-Z]/g;
-        return function(date, mask, utc, gmt) {
-          if (_arguments.length === 1 && kindOf(date) === "string" && !/\d/.test(date)) {
+        return function (date, mask, utc, gmt) {
+          if (
+            _arguments.length === 1 &&
+            kindOf(date) === "string" &&
+            !/\d/.test(date)
+          ) {
             mask = date;
             date = void 0;
           }
@@ -1993,7 +2279,9 @@ var require_dateformat = __commonJS({
           if (isNaN(date)) {
             throw TypeError("Invalid date");
           }
-          mask = String(dateFormat.masks[mask] || mask || dateFormat.masks["default"]);
+          mask = String(
+            dateFormat.masks[mask] || mask || dateFormat.masks["default"],
+          );
           var maskSlice = mask.slice(0, 4);
           if (maskSlice === "UTC:" || maskSlice === "GMT:") {
             mask = mask.slice(4);
@@ -2038,74 +2326,151 @@ var require_dateformat = __commonJS({
           var _N = function N() {
             return getDayOfWeek(date);
           };
-          var flags = { d: function d() {
-            return _d();
-          }, dd: function dd() {
-            return pad(_d());
-          }, ddd: function ddd() {
-            return dateFormat.i18n.dayNames[D()];
-          }, DDD: function DDD() {
-            return getDayName({ y: y(), m: _m(), d: _d(), _: _(), dayName: dateFormat.i18n.dayNames[D()], short: true });
-          }, dddd: function dddd() {
-            return dateFormat.i18n.dayNames[D() + 7];
-          }, DDDD: function DDDD() {
-            return getDayName({ y: y(), m: _m(), d: _d(), _: _(), dayName: dateFormat.i18n.dayNames[D() + 7] });
-          }, m: function m() {
-            return _m() + 1;
-          }, mm: function mm() {
-            return pad(_m() + 1);
-          }, mmm: function mmm() {
-            return dateFormat.i18n.monthNames[_m()];
-          }, mmmm: function mmmm() {
-            return dateFormat.i18n.monthNames[_m() + 12];
-          }, yy: function yy() {
-            return String(y()).slice(2);
-          }, yyyy: function yyyy() {
-            return pad(y(), 4);
-          }, h: function h() {
-            return _H() % 12 || 12;
-          }, hh: function hh() {
-            return pad(_H() % 12 || 12);
-          }, H: function H() {
-            return _H();
-          }, HH: function HH() {
-            return pad(_H());
-          }, M: function M() {
-            return _M();
-          }, MM: function MM() {
-            return pad(_M());
-          }, s: function s() {
-            return _s();
-          }, ss: function ss() {
-            return pad(_s());
-          }, l: function l() {
-            return pad(_L(), 3);
-          }, L: function L() {
-            return pad(Math.floor(_L() / 10));
-          }, t: function t() {
-            return _H() < 12 ? dateFormat.i18n.timeNames[0] : dateFormat.i18n.timeNames[1];
-          }, tt: function tt() {
-            return _H() < 12 ? dateFormat.i18n.timeNames[2] : dateFormat.i18n.timeNames[3];
-          }, T: function T() {
-            return _H() < 12 ? dateFormat.i18n.timeNames[4] : dateFormat.i18n.timeNames[5];
-          }, TT: function TT() {
-            return _H() < 12 ? dateFormat.i18n.timeNames[6] : dateFormat.i18n.timeNames[7];
-          }, Z: function Z() {
-            return gmt ? "GMT" : utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, "").replace(/GMT\+0000/g, "UTC");
-          }, o: function o() {
-            return (_o() > 0 ? "-" : "+") + pad(Math.floor(Math.abs(_o()) / 60) * 100 + Math.abs(_o()) % 60, 4);
-          }, p: function p() {
-            return (_o() > 0 ? "-" : "+") + pad(Math.floor(Math.abs(_o()) / 60), 2) + ":" + pad(Math.floor(Math.abs(_o()) % 60), 2);
-          }, S: function S() {
-            return ["th", "st", "nd", "rd"][_d() % 10 > 3 ? 0 : (_d() % 100 - _d() % 10 != 10) * _d() % 10];
-          }, W: function W() {
-            return _W();
-          }, WW: function WW() {
-            return pad(_W());
-          }, N: function N() {
-            return _N();
-          } };
-          return mask.replace(token, function(match) {
+          var flags = {
+            d: function d() {
+              return _d();
+            },
+            dd: function dd() {
+              return pad(_d());
+            },
+            ddd: function ddd() {
+              return dateFormat.i18n.dayNames[D()];
+            },
+            DDD: function DDD() {
+              return getDayName({
+                y: y(),
+                m: _m(),
+                d: _d(),
+                _: _(),
+                dayName: dateFormat.i18n.dayNames[D()],
+                short: true,
+              });
+            },
+            dddd: function dddd() {
+              return dateFormat.i18n.dayNames[D() + 7];
+            },
+            DDDD: function DDDD() {
+              return getDayName({
+                y: y(),
+                m: _m(),
+                d: _d(),
+                _: _(),
+                dayName: dateFormat.i18n.dayNames[D() + 7],
+              });
+            },
+            m: function m() {
+              return _m() + 1;
+            },
+            mm: function mm() {
+              return pad(_m() + 1);
+            },
+            mmm: function mmm() {
+              return dateFormat.i18n.monthNames[_m()];
+            },
+            mmmm: function mmmm() {
+              return dateFormat.i18n.monthNames[_m() + 12];
+            },
+            yy: function yy() {
+              return String(y()).slice(2);
+            },
+            yyyy: function yyyy() {
+              return pad(y(), 4);
+            },
+            h: function h() {
+              return _H() % 12 || 12;
+            },
+            hh: function hh() {
+              return pad(_H() % 12 || 12);
+            },
+            H: function H() {
+              return _H();
+            },
+            HH: function HH() {
+              return pad(_H());
+            },
+            M: function M() {
+              return _M();
+            },
+            MM: function MM() {
+              return pad(_M());
+            },
+            s: function s() {
+              return _s();
+            },
+            ss: function ss() {
+              return pad(_s());
+            },
+            l: function l() {
+              return pad(_L(), 3);
+            },
+            L: function L() {
+              return pad(Math.floor(_L() / 10));
+            },
+            t: function t() {
+              return _H() < 12
+                ? dateFormat.i18n.timeNames[0]
+                : dateFormat.i18n.timeNames[1];
+            },
+            tt: function tt() {
+              return _H() < 12
+                ? dateFormat.i18n.timeNames[2]
+                : dateFormat.i18n.timeNames[3];
+            },
+            T: function T() {
+              return _H() < 12
+                ? dateFormat.i18n.timeNames[4]
+                : dateFormat.i18n.timeNames[5];
+            },
+            TT: function TT() {
+              return _H() < 12
+                ? dateFormat.i18n.timeNames[6]
+                : dateFormat.i18n.timeNames[7];
+            },
+            Z: function Z() {
+              return gmt
+                ? "GMT"
+                : utc
+                  ? "UTC"
+                  : (String(date).match(timezone) || [""])
+                      .pop()
+                      .replace(timezoneClip, "")
+                      .replace(/GMT\+0000/g, "UTC");
+            },
+            o: function o() {
+              return (
+                (_o() > 0 ? "-" : "+") +
+                pad(
+                  Math.floor(Math.abs(_o()) / 60) * 100 + (Math.abs(_o()) % 60),
+                  4,
+                )
+              );
+            },
+            p: function p() {
+              return (
+                (_o() > 0 ? "-" : "+") +
+                pad(Math.floor(Math.abs(_o()) / 60), 2) +
+                ":" +
+                pad(Math.floor(Math.abs(_o()) % 60), 2)
+              );
+            },
+            S: function S() {
+              return ["th", "st", "nd", "rd"][
+                _d() % 10 > 3
+                  ? 0
+                  : (((_d() % 100) - (_d() % 10) != 10) * _d()) % 10
+              ];
+            },
+            W: function W() {
+              return _W();
+            },
+            WW: function WW() {
+              return pad(_W());
+            },
+            N: function N() {
+              return _N();
+            },
+          };
+          return mask.replace(token, function (match) {
             if (match in flags) {
               return flags[match]();
             }
@@ -2113,8 +2478,67 @@ var require_dateformat = __commonJS({
           });
         };
       })();
-      dateFormat.masks = { default: "ddd mmm dd yyyy HH:MM:ss", shortDate: "m/d/yy", paddedShortDate: "mm/dd/yyyy", mediumDate: "mmm d, yyyy", longDate: "mmmm d, yyyy", fullDate: "dddd, mmmm d, yyyy", shortTime: "h:MM TT", mediumTime: "h:MM:ss TT", longTime: "h:MM:ss TT Z", isoDate: "yyyy-mm-dd", isoTime: "HH:MM:ss", isoDateTime: "yyyy-mm-dd'T'HH:MM:sso", isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'", expiresHeaderFormat: "ddd, dd mmm yyyy HH:MM:ss Z" };
-      dateFormat.i18n = { dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], timeNames: ["a", "p", "am", "pm", "A", "P", "AM", "PM"] };
+      dateFormat.masks = {
+        default: "ddd mmm dd yyyy HH:MM:ss",
+        shortDate: "m/d/yy",
+        paddedShortDate: "mm/dd/yyyy",
+        mediumDate: "mmm d, yyyy",
+        longDate: "mmmm d, yyyy",
+        fullDate: "dddd, mmmm d, yyyy",
+        shortTime: "h:MM TT",
+        mediumTime: "h:MM:ss TT",
+        longTime: "h:MM:ss TT Z",
+        isoDate: "yyyy-mm-dd",
+        isoTime: "HH:MM:ss",
+        isoDateTime: "yyyy-mm-dd'T'HH:MM:sso",
+        isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
+        expiresHeaderFormat: "ddd, dd mmm yyyy HH:MM:ss Z",
+      };
+      dateFormat.i18n = {
+        dayNames: [
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        monthNames: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ],
+        timeNames: ["a", "p", "am", "pm", "A", "P", "AM", "PM"],
+      };
       var pad = function pad2(val, len) {
         val = String(val);
         len = len || 2;
@@ -2124,7 +2548,13 @@ var require_dateformat = __commonJS({
         return val;
       };
       var getDayName = function getDayName2(_ref) {
-        var y = _ref.y, m = _ref.m, d = _ref.d, _ = _ref._, dayName = _ref.dayName, _ref$short = _ref["short"], _short = _ref$short === void 0 ? false : _ref$short;
+        var y = _ref.y,
+          m = _ref.m,
+          d = _ref.d,
+          _ = _ref._,
+          dayName = _ref.dayName,
+          _ref$short = _ref["short"],
+          _short = _ref$short === void 0 ? false : _ref$short;
         var today = /* @__PURE__ */ new Date();
         var yesterday = /* @__PURE__ */ new Date();
         yesterday.setDate(yesterday[_ + "Date"]() - 1);
@@ -2159,19 +2589,37 @@ var require_dateformat = __commonJS({
         };
         if (today_y() === y && today_m() === m && today_d() === d) {
           return _short ? "Tdy" : "Today";
-        } else if (yesterday_y() === y && yesterday_m() === m && yesterday_d() === d) {
+        } else if (
+          yesterday_y() === y &&
+          yesterday_m() === m &&
+          yesterday_d() === d
+        ) {
           return _short ? "Ysd" : "Yesterday";
-        } else if (tomorrow_y() === y && tomorrow_m() === m && tomorrow_d() === d) {
+        } else if (
+          tomorrow_y() === y &&
+          tomorrow_m() === m &&
+          tomorrow_d() === d
+        ) {
           return _short ? "Tmw" : "Tomorrow";
         }
         return dayName;
       };
       var getWeek = function getWeek2(date) {
-        var targetThursday = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-        targetThursday.setDate(targetThursday.getDate() - (targetThursday.getDay() + 6) % 7 + 3);
+        var targetThursday = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+        );
+        targetThursday.setDate(
+          targetThursday.getDate() - ((targetThursday.getDay() + 6) % 7) + 3,
+        );
         var firstThursday = new Date(targetThursday.getFullYear(), 0, 4);
-        firstThursday.setDate(firstThursday.getDate() - (firstThursday.getDay() + 6) % 7 + 3);
-        var ds = targetThursday.getTimezoneOffset() - firstThursday.getTimezoneOffset();
+        firstThursday.setDate(
+          firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7) + 3,
+        );
+        var ds =
+          targetThursday.getTimezoneOffset() -
+          firstThursday.getTimezoneOffset();
         targetThursday.setHours(targetThursday.getHours() - ds);
         var weekDiff = (targetThursday - firstThursday) / (864e5 * 7);
         return 1 + Math.floor(weekDiff);
@@ -2199,27 +2647,30 @@ var require_dateformat = __commonJS({
         return {}.toString.call(val).slice(8, -1).toLowerCase();
       };
       if (typeof define === "function" && define.amd) {
-        define(function() {
+        define(function () {
           return dateFormat;
         });
-      } else if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === "object") {
+      } else if (
+        (typeof exports === "undefined" ? "undefined" : _typeof(exports)) ===
+        "object"
+      ) {
         module.exports = dateFormat;
       } else {
         global2.dateFormat = dateFormat;
       }
     })(void 0);
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/format-time.js
 var require_format_time = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/format-time.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/format-time.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = formatTime;
-    var {
-      DATE_FORMAT,
-      DATE_FORMAT_SIMPLE
-    } = require_constants();
+    var { DATE_FORMAT, DATE_FORMAT_SIMPLE } = require_constants();
     var dateformat = require_dateformat();
     var createDate = require_create_date();
     var isValidDate = require_is_valid_date();
@@ -2247,12 +2698,15 @@ var require_format_time = __commonJS({
       }
       return dateformat(instant, `UTC:${translateTime}`);
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/handle-custom-levels-names-opts.js
 var require_handle_custom_levels_names_opts = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/handle-custom-levels-names-opts.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/handle-custom-levels-names-opts.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = handleCustomLevelsNamesOpts;
     function handleCustomLevelsNamesOpts(cLevels) {
@@ -2263,7 +2717,9 @@ var require_handle_custom_levels_names_opts = __commonJS({
           agg[levelName.toLowerCase()] = levelNum;
           return agg;
         }, {});
-      } else if (Object.prototype.toString.call(cLevels) === "[object Object]") {
+      } else if (
+        Object.prototype.toString.call(cLevels) === "[object Object]"
+      ) {
         return Object.keys(cLevels).reduce((agg, levelName) => {
           agg[levelName.toLowerCase()] = cLevels[levelName];
           return agg;
@@ -2272,12 +2728,15 @@ var require_handle_custom_levels_names_opts = __commonJS({
         return {};
       }
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/handle-custom-levels-opts.js
 var require_handle_custom_levels_opts = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/handle-custom-levels-opts.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/handle-custom-levels-opts.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = handleCustomLevelsOpts;
     function handleCustomLevelsOpts(cLevels) {
@@ -2289,23 +2748,31 @@ var require_handle_custom_levels_opts = __commonJS({
             agg[levelNum] = levelName.toUpperCase();
             return agg;
           },
-          { default: "USERLVL" }
+          { default: "USERLVL" },
         );
-      } else if (Object.prototype.toString.call(cLevels) === "[object Object]") {
-        return Object.keys(cLevels).reduce((agg, levelName) => {
-          agg[cLevels[levelName]] = levelName.toUpperCase();
-          return agg;
-        }, { default: "USERLVL" });
+      } else if (
+        Object.prototype.toString.call(cLevels) === "[object Object]"
+      ) {
+        return Object.keys(cLevels).reduce(
+          (agg, levelName) => {
+            agg[cLevels[levelName]] = levelName.toUpperCase();
+            return agg;
+          },
+          { default: "USERLVL" },
+        );
       } else {
         return {};
       }
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/interpret-conditionals.js
 var require_interpret_conditionals = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/interpret-conditionals.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/interpret-conditionals.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = interpretConditionals;
     var getPropertyValue = require_get_property_value();
@@ -2323,23 +2790,29 @@ var require_interpret_conditionals = __commonJS({
         }
       }
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/is-object.js
 var require_is_object = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/is-object.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/is-object.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = isObject;
     function isObject(input) {
       return Object.prototype.toString.apply(input) === "[object Object]";
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/join-lines-with-indentation.js
 var require_join_lines_with_indentation = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/join-lines-with-indentation.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/join-lines-with-indentation.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = joinLinesWithIndentation;
     function joinLinesWithIndentation({ input, ident = "    ", eol = "\n" }) {
@@ -2349,17 +2822,18 @@ var require_join_lines_with_indentation = __commonJS({
       }
       return lines.join(eol);
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/parse-factory-options.js
 var require_parse_factory_options = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/parse-factory-options.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/parse-factory-options.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = parseFactoryOptions;
-    var {
-      LEVEL_NAMES
-    } = require_constants();
+    var { LEVEL_NAMES } = require_constants();
     var colors = require_colors();
     var handleCustomLevelsOpts = require_handle_custom_levels_opts();
     var handleCustomLevelsNamesOpts = require_handle_custom_levels_names_opts();
@@ -2379,35 +2853,59 @@ var require_parse_factory_options = __commonJS({
         minimumLevel,
         singleLine,
         timestampKey,
-        translateTime
+        translateTime,
       } = options;
       const errorProps = options.errorProps.split(",");
-      const useOnlyCustomProps = typeof options.useOnlyCustomProps === "boolean" ? options.useOnlyCustomProps : options.useOnlyCustomProps === "true";
+      const useOnlyCustomProps =
+        typeof options.useOnlyCustomProps === "boolean"
+          ? options.useOnlyCustomProps
+          : options.useOnlyCustomProps === "true";
       const customLevels = handleCustomLevelsOpts(options.customLevels);
-      const customLevelNames = handleCustomLevelsNamesOpts(options.customLevels);
-      const getLevelLabelData = handleLevelLabelData(useOnlyCustomProps, customLevels, customLevelNames);
+      const customLevelNames = handleCustomLevelsNamesOpts(
+        options.customLevels,
+      );
+      const getLevelLabelData = handleLevelLabelData(
+        useOnlyCustomProps,
+        customLevels,
+        customLevelNames,
+      );
       let customColors;
       if (options.customColors) {
         if (typeof options.customColors === "string") {
-          customColors = options.customColors.split(",").reduce((agg, value) => {
-            const [level, color] = value.split(":");
-            const condition = useOnlyCustomProps ? options.customLevels : customLevelNames[level] !== void 0;
-            const levelNum = condition ? customLevelNames[level] : LEVEL_NAMES[level];
-            const colorIdx = levelNum !== void 0 ? levelNum : level;
-            agg.push([colorIdx, color]);
-            return agg;
-          }, []);
+          customColors = options.customColors
+            .split(",")
+            .reduce((agg, value) => {
+              const [level, color] = value.split(":");
+              const condition = useOnlyCustomProps
+                ? options.customLevels
+                : customLevelNames[level] !== void 0;
+              const levelNum = condition
+                ? customLevelNames[level]
+                : LEVEL_NAMES[level];
+              const colorIdx = levelNum !== void 0 ? levelNum : level;
+              agg.push([colorIdx, color]);
+              return agg;
+            }, []);
         } else if (typeof options.customColors === "object") {
-          customColors = Object.keys(options.customColors).reduce((agg, value) => {
-            const [level, color] = [value, options.customColors[value]];
-            const condition = useOnlyCustomProps ? options.customLevels : customLevelNames[level] !== void 0;
-            const levelNum = condition ? customLevelNames[level] : LEVEL_NAMES[level];
-            const colorIdx = levelNum !== void 0 ? levelNum : level;
-            agg.push([colorIdx, color]);
-            return agg;
-          }, []);
+          customColors = Object.keys(options.customColors).reduce(
+            (agg, value) => {
+              const [level, color] = [value, options.customColors[value]];
+              const condition = useOnlyCustomProps
+                ? options.customLevels
+                : customLevelNames[level] !== void 0;
+              const levelNum = condition
+                ? customLevelNames[level]
+                : LEVEL_NAMES[level];
+              const colorIdx = levelNum !== void 0 ? levelNum : level;
+              agg.push([colorIdx, color]);
+              return agg;
+            },
+            [],
+          );
         } else {
-          throw new Error("options.customColors must be of type string or object.");
+          throw new Error(
+            "options.customColors must be of type string or object.",
+          );
         }
       }
       const customProperties = { customLevels, customLevelNames };
@@ -2415,10 +2913,22 @@ var require_parse_factory_options = __commonJS({
         customProperties.customLevels = void 0;
         customProperties.customLevelNames = void 0;
       }
-      const includeKeys = options.include !== void 0 ? new Set(options.include.split(",")) : void 0;
-      const ignoreKeys = !includeKeys && options.ignore ? new Set(options.ignore.split(",")) : void 0;
-      const colorizer = colors(options.colorize, customColors, useOnlyCustomProps);
-      const objectColorizer = options.colorizeObjects ? colorizer : colors(false, [], false);
+      const includeKeys =
+        options.include !== void 0
+          ? new Set(options.include.split(","))
+          : void 0;
+      const ignoreKeys =
+        !includeKeys && options.ignore
+          ? new Set(options.ignore.split(","))
+          : void 0;
+      const colorizer = colors(
+        options.colorize,
+        customColors,
+        useOnlyCustomProps,
+      );
+      const objectColorizer = options.colorizeObjects
+        ? colorizer
+        : colors(false, [], false);
       return {
         EOL,
         IDENT,
@@ -2444,15 +2954,18 @@ var require_parse_factory_options = __commonJS({
         singleLine,
         timestampKey,
         translateTime,
-        useOnlyCustomProps
+        useOnlyCustomProps,
       };
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/fast-safe-stringify@2.1.1/node_modules/fast-safe-stringify/index.js
 var require_fast_safe_stringify = __commonJS({
-  "../../node_modules/.pnpm/fast-safe-stringify@2.1.1/node_modules/fast-safe-stringify/index.js"(exports, module) {
+  "../../node_modules/.pnpm/fast-safe-stringify@2.1.1/node_modules/fast-safe-stringify/index.js"(
+    exports,
+    module,
+  ) {
     module.exports = stringify;
     stringify.default = stringify;
     stringify.stable = deterministicStringify;
@@ -2464,7 +2977,7 @@ var require_fast_safe_stringify = __commonJS({
     function defaultOptions() {
       return {
         depthLimit: Number.MAX_SAFE_INTEGER,
-        edgesLimit: Number.MAX_SAFE_INTEGER
+        edgesLimit: Number.MAX_SAFE_INTEGER,
       };
     }
     function stringify(obj, replacer, spacer, options) {
@@ -2480,7 +2993,9 @@ var require_fast_safe_stringify = __commonJS({
           res = JSON.stringify(obj, replaceGetterValues(replacer), spacer);
         }
       } catch (_) {
-        return JSON.stringify("[unable to serialize, circular reference is too complex to analyze]");
+        return JSON.stringify(
+          "[unable to serialize, circular reference is too complex to analyze]",
+        );
       } finally {
         while (arr.length !== 0) {
           var part = arr.pop();
@@ -2517,11 +3032,17 @@ var require_fast_safe_stringify = __commonJS({
             return;
           }
         }
-        if (typeof options.depthLimit !== "undefined" && depth > options.depthLimit) {
+        if (
+          typeof options.depthLimit !== "undefined" &&
+          depth > options.depthLimit
+        ) {
           setReplace(LIMIT_REPLACE_NODE, val, k, parent);
           return;
         }
-        if (typeof options.edgesLimit !== "undefined" && edgeIndex + 1 > options.edgesLimit) {
+        if (
+          typeof options.edgesLimit !== "undefined" &&
+          edgeIndex + 1 > options.edgesLimit
+        ) {
           setReplace(LIMIT_REPLACE_NODE, val, k, parent);
           return;
         }
@@ -2562,7 +3083,9 @@ var require_fast_safe_stringify = __commonJS({
           res = JSON.stringify(tmp, replaceGetterValues(replacer), spacer);
         }
       } catch (_) {
-        return JSON.stringify("[unable to serialize, circular reference is too complex to analyze]");
+        return JSON.stringify(
+          "[unable to serialize, circular reference is too complex to analyze]",
+        );
       } finally {
         while (arr.length !== 0) {
           var part = arr.pop();
@@ -2575,7 +3098,15 @@ var require_fast_safe_stringify = __commonJS({
       }
       return res;
     }
-    function deterministicDecirc(val, k, edgeIndex, stack, parent, depth, options) {
+    function deterministicDecirc(
+      val,
+      k,
+      edgeIndex,
+      stack,
+      parent,
+      depth,
+      options,
+    ) {
       depth += 1;
       var i;
       if (typeof val === "object" && val !== null) {
@@ -2592,11 +3123,17 @@ var require_fast_safe_stringify = __commonJS({
         } catch (_) {
           return;
         }
-        if (typeof options.depthLimit !== "undefined" && depth > options.depthLimit) {
+        if (
+          typeof options.depthLimit !== "undefined" &&
+          depth > options.depthLimit
+        ) {
           setReplace(LIMIT_REPLACE_NODE, val, k, parent);
           return;
         }
-        if (typeof options.edgesLimit !== "undefined" && edgeIndex + 1 > options.edgesLimit) {
+        if (
+          typeof options.edgesLimit !== "undefined" &&
+          edgeIndex + 1 > options.edgesLimit
+        ) {
           setReplace(LIMIT_REPLACE_NODE, val, k, parent);
           return;
         }
@@ -2624,10 +3161,13 @@ var require_fast_safe_stringify = __commonJS({
       }
     }
     function replaceGetterValues(replacer) {
-      replacer = typeof replacer !== "undefined" ? replacer : function(k, v) {
-        return v;
-      };
-      return function(key, val) {
+      replacer =
+        typeof replacer !== "undefined"
+          ? replacer
+          : function (k, v) {
+              return v;
+            };
+      return function (key, val) {
         if (replacerStack.length > 0) {
           for (var i = 0; i < replacerStack.length; i++) {
             var part = replacerStack[i];
@@ -2641,18 +3181,25 @@ var require_fast_safe_stringify = __commonJS({
         return replacer.call(this, key, val);
       };
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-error.js
 var require_prettify_error = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-error.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-error.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = prettifyError;
     var joinLinesWithIndentation = require_join_lines_with_indentation();
     function prettifyError({ keyName, lines, eol, ident }) {
       let result = "";
-      const joinedLines = joinLinesWithIndentation({ input: lines, ident, eol });
+      const joinedLines = joinLinesWithIndentation({
+        input: lines,
+        ident,
+        eol,
+      });
       const splitLines = `${ident}${keyName}: ${joinedLines}${eol}`.split(eol);
       for (let j = 0; j < splitLines.length; j += 1) {
         if (j !== 0) result += eol;
@@ -2663,7 +3210,11 @@ var require_prettify_error = __commonJS({
             const indentSize = /^\s*/.exec(line)[0].length + 4;
             const indentation = " ".repeat(indentSize);
             const stackMessage = matches[2];
-            result += matches[1] + eol + indentation + JSON.parse(stackMessage).replace(/\n/g, eol + indentation);
+            result +=
+              matches[1] +
+              eol +
+              indentation +
+              JSON.parse(stackMessage).replace(/\n/g, eol + indentation);
           } else {
             result += line;
           }
@@ -2673,17 +3224,18 @@ var require_prettify_error = __commonJS({
       }
       return result;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-object.js
 var require_prettify_object = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-object.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-object.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = prettifyObject;
-    var {
-      LOGGER_KEYS
-    } = require_constants();
+    var { LOGGER_KEYS } = require_constants();
     var stringifySafe = require_fast_safe_stringify();
     var joinLinesWithIndentation = require_join_lines_with_indentation();
     var prettifyError = require_prettify_error();
@@ -2691,7 +3243,7 @@ var require_prettify_object = __commonJS({
       log,
       excludeLoggerKeys = true,
       skipKeys = [],
-      context
+      context,
     }) {
       const {
         EOL: eol,
@@ -2700,22 +3252,29 @@ var require_prettify_object = __commonJS({
         errorLikeObjectKeys: errorLikeKeys,
         objectColorizer,
         singleLine,
-        colorizer
+        colorizer,
       } = context;
       const keysToIgnore = [].concat(skipKeys);
-      if (excludeLoggerKeys === true) Array.prototype.push.apply(keysToIgnore, LOGGER_KEYS);
+      if (excludeLoggerKeys === true)
+        Array.prototype.push.apply(keysToIgnore, LOGGER_KEYS);
       let result = "";
-      const { plain, errors } = Object.entries(log).reduce(({ plain: plain2, errors: errors2 }, [k, v]) => {
-        if (keysToIgnore.includes(k) === false) {
-          const pretty = typeof customPrettifiers[k] === "function" ? customPrettifiers[k](v, k, log, { colors: colorizer.colors }) : v;
-          if (errorLikeKeys.includes(k)) {
-            errors2[k] = pretty;
-          } else {
-            plain2[k] = pretty;
+      const { plain, errors } = Object.entries(log).reduce(
+        ({ plain: plain2, errors: errors2 }, [k, v]) => {
+          if (keysToIgnore.includes(k) === false) {
+            const pretty =
+              typeof customPrettifiers[k] === "function"
+                ? customPrettifiers[k](v, k, log, { colors: colorizer.colors })
+                : v;
+            if (errorLikeKeys.includes(k)) {
+              errors2[k] = pretty;
+            } else {
+              plain2[k] = pretty;
+            }
           }
-        }
-        return { plain: plain2, errors: errors2 };
-      }, { plain: {}, errors: {} });
+          return { plain: plain2, errors: errors2 };
+        },
+        { plain: {}, errors: {} },
+      );
       if (singleLine) {
         if (Object.keys(plain).length > 0) {
           result += objectColorizer.greyMessage(stringifySafe(plain));
@@ -2724,31 +3283,42 @@ var require_prettify_object = __commonJS({
         result = result.replace(/\\\\/gi, "\\");
       } else {
         Object.entries(plain).forEach(([keyName, keyValue]) => {
-          let lines = typeof customPrettifiers[keyName] === "function" ? keyValue : stringifySafe(keyValue, null, 2);
+          let lines =
+            typeof customPrettifiers[keyName] === "function"
+              ? keyValue
+              : stringifySafe(keyValue, null, 2);
           if (lines === void 0) return;
           lines = lines.replace(/\\\\/gi, "\\");
-          const joinedLines = joinLinesWithIndentation({ input: lines, ident, eol });
+          const joinedLines = joinLinesWithIndentation({
+            input: lines,
+            ident,
+            eol,
+          });
           result += `${ident}${objectColorizer.property(keyName)}:${joinedLines.startsWith(eol) ? "" : " "}${joinedLines}${eol}`;
         });
       }
       Object.entries(errors).forEach(([keyName, keyValue]) => {
-        const lines = typeof customPrettifiers[keyName] === "function" ? keyValue : stringifySafe(keyValue, null, 2);
+        const lines =
+          typeof customPrettifiers[keyName] === "function"
+            ? keyValue
+            : stringifySafe(keyValue, null, 2);
         if (lines === void 0) return;
         result += prettifyError({ keyName, lines, eol, ident });
       });
       return result;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-error-log.js
 var require_prettify_error_log = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-error-log.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-error-log.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = prettifyErrorLog;
-    var {
-      LOGGER_KEYS
-    } = require_constants();
+    var { LOGGER_KEYS } = require_constants();
     var isObject = require_is_object();
     var joinLinesWithIndentation = require_join_lines_with_indentation();
     var prettifyObject = require_prettify_object();
@@ -2757,18 +3327,30 @@ var require_prettify_error_log = __commonJS({
         EOL: eol,
         IDENT: ident,
         errorProps: errorProperties,
-        messageKey
+        messageKey,
       } = context;
       const stack = log.stack;
-      const joinedLines = joinLinesWithIndentation({ input: stack, ident, eol });
+      const joinedLines = joinLinesWithIndentation({
+        input: stack,
+        ident,
+        eol,
+      });
       let result = `${ident}${joinedLines}${eol}`;
       if (errorProperties.length > 0) {
-        const excludeProperties = LOGGER_KEYS.concat(messageKey, "type", "stack");
+        const excludeProperties = LOGGER_KEYS.concat(
+          messageKey,
+          "type",
+          "stack",
+        );
         let propertiesToPrint;
         if (errorProperties[0] === "*") {
-          propertiesToPrint = Object.keys(log).filter((k) => excludeProperties.includes(k) === false);
+          propertiesToPrint = Object.keys(log).filter(
+            (k) => excludeProperties.includes(k) === false,
+          );
         } else {
-          propertiesToPrint = errorProperties.filter((k) => excludeProperties.includes(k) === false);
+          propertiesToPrint = errorProperties.filter(
+            (k) => excludeProperties.includes(k) === false,
+          );
         }
         for (let i = 0; i < propertiesToPrint.length; i += 1) {
           const key = propertiesToPrint[i];
@@ -2779,8 +3361,8 @@ var require_prettify_error_log = __commonJS({
               excludeLoggerKeys: false,
               context: {
                 ...context,
-                IDENT: ident + ident
-              }
+                IDENT: ident + ident,
+              },
             });
             result = `${result}${ident}${key}: {${eol}${prettifiedObject}${ident}}${eol}`;
             continue;
@@ -2790,12 +3372,15 @@ var require_prettify_error_log = __commonJS({
       }
       return result;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-level.js
 var require_prettify_level = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-level.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-level.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = prettifyLevel;
     var getPropertyValue = require_get_property_value();
@@ -2805,29 +3390,37 @@ var require_prettify_level = __commonJS({
         customLevels,
         customLevelNames,
         levelKey,
-        getLevelLabelData
+        getLevelLabelData,
       } = context;
       const prettifier = context.customPrettifiers?.level;
       const output = getPropertyValue(log, levelKey);
       if (output === void 0) return void 0;
-      const labelColorized = colorizer(output, { customLevels, customLevelNames });
+      const labelColorized = colorizer(output, {
+        customLevels,
+        customLevelNames,
+      });
       if (prettifier) {
         const [label] = getLevelLabelData(output);
-        return prettifier(output, levelKey, log, { label, labelColorized, colors: colorizer.colors });
+        return prettifier(output, levelKey, log, {
+          label,
+          labelColorized,
+          colors: colorizer.colors,
+        });
       }
       return labelColorized;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-message.js
 var require_prettify_message = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-message.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-message.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = prettifyMessage;
-    var {
-      LEVELS
-    } = require_constants();
+    var { LEVELS } = require_constants();
     var getPropertyValue = require_get_property_value();
     var interpretConditionals = require_interpret_conditionals();
     function prettifyMessage({ log, context }) {
@@ -2838,38 +3431,53 @@ var require_prettify_message = __commonJS({
         levelLabel,
         messageFormat,
         messageKey,
-        useOnlyCustomProps
+        useOnlyCustomProps,
       } = context;
       if (messageFormat && typeof messageFormat === "string") {
         const parsedMessageFormat = interpretConditionals(messageFormat, log);
         const message = String(parsedMessageFormat).replace(
           /{([^{}]+)}/g,
-          function(match, p1) {
+          function (match, p1) {
             let level;
-            if (p1 === levelLabel && (level = getPropertyValue(log, levelKey)) !== void 0) {
-              const condition = useOnlyCustomProps ? customLevels === void 0 : customLevels[level] === void 0;
+            if (
+              p1 === levelLabel &&
+              (level = getPropertyValue(log, levelKey)) !== void 0
+            ) {
+              const condition = useOnlyCustomProps
+                ? customLevels === void 0
+                : customLevels[level] === void 0;
               return condition ? LEVELS[level] : customLevels[level];
             }
             const value = getPropertyValue(log, p1);
             return value !== void 0 ? value : "";
-          }
+          },
         );
         return colorizer.message(message);
       }
       if (messageFormat && typeof messageFormat === "function") {
-        const msg = messageFormat(log, messageKey, levelLabel, { colors: colorizer.colors });
+        const msg = messageFormat(log, messageKey, levelLabel, {
+          colors: colorizer.colors,
+        });
         return colorizer.message(msg);
       }
       if (messageKey in log === false) return void 0;
-      if (typeof log[messageKey] !== "string" && typeof log[messageKey] !== "number" && typeof log[messageKey] !== "boolean") return void 0;
+      if (
+        typeof log[messageKey] !== "string" &&
+        typeof log[messageKey] !== "number" &&
+        typeof log[messageKey] !== "boolean"
+      )
+        return void 0;
       return colorizer.message(log[messageKey]);
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-metadata.js
 var require_prettify_metadata = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-metadata.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-metadata.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = prettifyMetadata;
     function prettifyMetadata({ log, context }) {
@@ -2878,10 +3486,16 @@ var require_prettify_metadata = __commonJS({
       if (log.name || log.pid || log.hostname) {
         line += "(";
         if (log.name) {
-          line += prettifiers.name ? prettifiers.name(log.name, "name", log, { colors: colorizer.colors }) : log.name;
+          line += prettifiers.name
+            ? prettifiers.name(log.name, "name", log, {
+                colors: colorizer.colors,
+              })
+            : log.name;
         }
         if (log.pid) {
-          const prettyPid = prettifiers.pid ? prettifiers.pid(log.pid, "pid", log, { colors: colorizer.colors }) : log.pid;
+          const prettyPid = prettifiers.pid
+            ? prettifiers.pid(log.pid, "pid", log, { colors: colorizer.colors })
+            : log.pid;
           if (log.name && log.pid) {
             line += "/" + prettyPid;
           } else {
@@ -2889,13 +3503,21 @@ var require_prettify_metadata = __commonJS({
           }
         }
         if (log.hostname) {
-          const prettyHostname = prettifiers.hostname ? prettifiers.hostname(log.hostname, "hostname", log, { colors: colorizer.colors }) : log.hostname;
+          const prettyHostname = prettifiers.hostname
+            ? prettifiers.hostname(log.hostname, "hostname", log, {
+                colors: colorizer.colors,
+              })
+            : log.hostname;
           line += `${line === "(" ? "on" : " on"} ${prettyHostname}`;
         }
         line += ")";
       }
       if (log.caller) {
-        const prettyCaller = prettifiers.caller ? prettifiers.caller(log.caller, "caller", log, { colors: colorizer.colors }) : log.caller;
+        const prettyCaller = prettifiers.caller
+          ? prettifiers.caller(log.caller, "caller", log, {
+              colors: colorizer.colors,
+            })
+          : log.caller;
         line += `${line === "" ? "" : " "}<${prettyCaller}>`;
       }
       if (line === "") {
@@ -2904,20 +3526,20 @@ var require_prettify_metadata = __commonJS({
         return line;
       }
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-time.js
 var require_prettify_time = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-time.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/prettify-time.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = prettifyTime;
     var formatTime = require_format_time();
     function prettifyTime({ log, context }) {
-      const {
-        timestampKey,
-        translateTime: translateFormat
-      } = context;
+      const { timestampKey, translateTime: translateFormat } = context;
       const prettifier = context.customPrettifiers?.time;
       let time = null;
       if (timestampKey in log) {
@@ -2929,12 +3551,15 @@ var require_prettify_time = __commonJS({
       const output = translateFormat ? formatTime(time, translateFormat) : time;
       return prettifier ? prettifier(output) : `[${output}]`;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/index.js
 var require_utils = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/index.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/utils/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = {
       buildSafeSonicBoom: require_build_safe_sonic_boom(),
@@ -2959,18 +3584,23 @@ var require_utils = __commonJS({
       prettifyObject: require_prettify_object(),
       prettifyTime: require_prettify_time(),
       splitPropertyKey: require_split_property_key(),
-      getLevelLabelData: require_get_level_label_data()
+      getLevelLabelData: require_get_level_label_data(),
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/secure-json-parse@4.1.0/node_modules/secure-json-parse/index.js
 var require_secure_json_parse = __commonJS({
-  "../../node_modules/.pnpm/secure-json-parse@4.1.0/node_modules/secure-json-parse/index.js"(exports, module) {
+  "../../node_modules/.pnpm/secure-json-parse@4.1.0/node_modules/secure-json-parse/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var hasBuffer = typeof Buffer !== "undefined";
-    var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
-    var suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
+    var suspectProtoRx =
+      /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
+    var suspectConstructorRx =
+      /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
     function _parse(text, reviver, options) {
       if (options == null) {
         if (reviver !== null && typeof reviver === "object") {
@@ -2988,13 +3618,17 @@ var require_secure_json_parse = __commonJS({
       if (obj === null || typeof obj !== "object") {
         return obj;
       }
-      const protoAction = options && options.protoAction || "error";
-      const constructorAction = options && options.constructorAction || "error";
+      const protoAction = (options && options.protoAction) || "error";
+      const constructorAction =
+        (options && options.constructorAction) || "error";
       if (protoAction === "ignore" && constructorAction === "ignore") {
         return obj;
       }
       if (protoAction !== "ignore" && constructorAction !== "ignore") {
-        if (suspectProtoRx.test(text) === false && suspectConstructorRx.test(text) === false) {
+        if (
+          suspectProtoRx.test(text) === false &&
+          suspectConstructorRx.test(text) === false
+        ) {
           return obj;
         }
       } else if (protoAction !== "ignore" && constructorAction === "ignore") {
@@ -3006,27 +3640,47 @@ var require_secure_json_parse = __commonJS({
           return obj;
         }
       }
-      return filter(obj, { protoAction, constructorAction, safe: options && options.safe });
+      return filter(obj, {
+        protoAction,
+        constructorAction,
+        safe: options && options.safe,
+      });
     }
-    function filter(obj, { protoAction = "error", constructorAction = "error", safe } = {}) {
+    function filter(
+      obj,
+      { protoAction = "error", constructorAction = "error", safe } = {},
+    ) {
       let next = [obj];
       while (next.length) {
         const nodes = next;
         next = [];
         for (const node of nodes) {
-          if (protoAction !== "ignore" && Object.prototype.hasOwnProperty.call(node, "__proto__")) {
+          if (
+            protoAction !== "ignore" &&
+            Object.prototype.hasOwnProperty.call(node, "__proto__")
+          ) {
             if (safe === true) {
               return null;
             } else if (protoAction === "error") {
-              throw new SyntaxError("Object contains forbidden prototype property");
+              throw new SyntaxError(
+                "Object contains forbidden prototype property",
+              );
             }
             delete node.__proto__;
           }
-          if (constructorAction !== "ignore" && Object.prototype.hasOwnProperty.call(node, "constructor") && node.constructor !== null && typeof node.constructor === "object" && Object.prototype.hasOwnProperty.call(node.constructor, "prototype")) {
+          if (
+            constructorAction !== "ignore" &&
+            Object.prototype.hasOwnProperty.call(node, "constructor") &&
+            node.constructor !== null &&
+            typeof node.constructor === "object" &&
+            Object.prototype.hasOwnProperty.call(node.constructor, "prototype")
+          ) {
             if (safe === true) {
               return null;
             } else if (constructorAction === "error") {
-              throw new SyntaxError("Object contains forbidden prototype property");
+              throw new SyntaxError(
+                "Object contains forbidden prototype property",
+              );
             }
             delete node.constructor;
           }
@@ -3065,12 +3719,15 @@ var require_secure_json_parse = __commonJS({
     module.exports.parse = parse;
     module.exports.safeParse = safeParse;
     module.exports.scan = filter;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/pretty.js
 var require_pretty = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/pretty.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/lib/pretty.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = pretty;
     var sjs = require_secure_json_parse();
@@ -3082,11 +3739,7 @@ var require_pretty = __commonJS({
     var prettifyObject = require_prettify_object();
     var prettifyTime = require_prettify_time();
     var filterLog = require_filter_log();
-    var {
-      LEVELS,
-      LEVEL_KEY,
-      LEVEL_NAMES
-    } = require_constants();
+    var { LEVELS, LEVEL_KEY, LEVEL_NAMES } = require_constants();
     var jsonParser = (input) => {
       try {
         return { value: sjs.parse(input, { protoAction: "remove" }) };
@@ -3119,7 +3772,10 @@ var require_pretty = __commonJS({
           minimum = LEVEL_NAMES[this.minimumLevel];
         }
         if (!minimum) {
-          minimum = typeof this.minimumLevel === "string" ? LEVEL_NAMES[this.minimumLevel] : LEVEL_NAMES[LEVELS[this.minimumLevel].toLowerCase()];
+          minimum =
+            typeof this.minimumLevel === "string"
+              ? LEVEL_NAMES[this.minimumLevel]
+              : LEVEL_NAMES[LEVELS[this.minimumLevel].toLowerCase()];
         }
         const level = log[this.levelKey === void 0 ? LEVEL_KEY : this.levelKey];
         if (level < minimum) return;
@@ -3135,10 +3791,13 @@ var require_pretty = __commonJS({
           // This is odd. The colorizer ends up relying on the value of
           // `customProperties` instead of the original `customLevels` and
           // `customLevelNames`.
-          ...this.context.customProperties
-        }
+          ...this.context.customProperties,
+        },
       });
-      const prettifiedMetadata = prettifyMetadata({ log, context: this.context });
+      const prettifiedMetadata = prettifyMetadata({
+        log,
+        context: this.context,
+      });
       const prettifiedTime = prettifyTime({ log, context: this.context });
       let line = "";
       if (this.levelFirst && prettifiedLevel) {
@@ -3177,21 +3836,26 @@ var require_pretty = __commonJS({
         line += this.EOL;
       }
       if (log.type === "Error" && typeof log.stack === "string") {
-        const prettifiedErrorLog = prettifyErrorLog({ log, context: this.context });
+        const prettifiedErrorLog = prettifyErrorLog({
+          log,
+          context: this.context,
+        });
         if (this.singleLine) line += this.EOL;
         line += prettifiedErrorLog;
       } else if (this.hideObject === false) {
-        const skipKeys = [
-          this.messageKey,
-          this.levelKey,
-          this.timestampKey
-        ].map((key) => key.replaceAll(/\\/g, "")).filter((key) => {
-          return typeof log[key] === "string" || typeof log[key] === "number" || typeof log[key] === "boolean";
-        });
+        const skipKeys = [this.messageKey, this.levelKey, this.timestampKey]
+          .map((key) => key.replaceAll(/\\/g, ""))
+          .filter((key) => {
+            return (
+              typeof log[key] === "string" ||
+              typeof log[key] === "number" ||
+              typeof log[key] === "boolean"
+            );
+          });
         const prettifiedObject = prettifyObject({
           log,
           skipKeys,
-          context: this.context
+          context: this.context,
         });
         if (this.singleLine && !/^\s$/.test(prettifiedObject)) {
           line += " ";
@@ -3200,12 +3864,15 @@ var require_pretty = __commonJS({
       }
       return line;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/index.js
 var require_pino_pretty = __commonJS({
-  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/index.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-pretty@13.1.3/node_modules/pino-pretty/index.js"(
+    exports,
+    module,
+  ) {
     var { isColorSupported } = require_colorette();
     var pump = require_pump();
     var { Transform } = __require("node:stream");
@@ -3216,12 +3883,9 @@ var require_pino_pretty = __commonJS({
       LEVEL_KEY,
       LEVEL_LABEL,
       MESSAGE_KEY,
-      TIMESTAMP_KEY
+      TIMESTAMP_KEY,
     } = require_constants();
-    var {
-      buildSafeSonicBoom,
-      parseFactoryOptions
-    } = require_utils();
+    var { buildSafeSonicBoom, parseFactoryOptions } = require_utils();
     var pretty = require_pretty();
     var defaultOptions = {
       colorize: isColorSupported,
@@ -3245,58 +3909,71 @@ var require_pino_pretty = __commonJS({
       singleLine: false,
       timestampKey: TIMESTAMP_KEY,
       translateTime: true,
-      useOnlyCustomProps: true
+      useOnlyCustomProps: true,
     };
     function prettyFactory(options) {
-      const context = parseFactoryOptions(Object.assign({}, defaultOptions, options));
+      const context = parseFactoryOptions(
+        Object.assign({}, defaultOptions, options),
+      );
       return pretty.bind({ ...context, context });
     }
     function build(opts = {}) {
       let pretty2 = prettyFactory(opts);
       let destination;
-      return abstractTransport(function(source) {
-        source.on("message", function pinoConfigListener(message) {
-          if (!message || message.code !== "PINO_CONFIG") return;
-          Object.assign(opts, {
-            messageKey: message.config.messageKey,
-            errorLikeObjectKeys: Array.from(/* @__PURE__ */ new Set([...opts.errorLikeObjectKeys || ERROR_LIKE_KEYS, message.config.errorKey])),
-            customLevels: message.config.levels.values
+      return abstractTransport(
+        function (source) {
+          source.on("message", function pinoConfigListener(message) {
+            if (!message || message.code !== "PINO_CONFIG") return;
+            Object.assign(opts, {
+              messageKey: message.config.messageKey,
+              errorLikeObjectKeys: Array.from(
+                /* @__PURE__ */ new Set([
+                  ...(opts.errorLikeObjectKeys || ERROR_LIKE_KEYS),
+                  message.config.errorKey,
+                ]),
+              ),
+              customLevels: message.config.levels.values,
+            });
+            pretty2 = prettyFactory(opts);
+            source.off("message", pinoConfigListener);
           });
-          pretty2 = prettyFactory(opts);
-          source.off("message", pinoConfigListener);
-        });
-        const stream = new Transform({
-          objectMode: true,
-          autoDestroy: true,
-          transform(chunk, enc, cb) {
-            const line = pretty2(chunk);
-            cb(null, line);
+          const stream = new Transform({
+            objectMode: true,
+            autoDestroy: true,
+            transform(chunk, enc, cb) {
+              const line = pretty2(chunk);
+              cb(null, line);
+            },
+          });
+          if (
+            typeof opts.destination === "object" &&
+            typeof opts.destination.write === "function"
+          ) {
+            destination = opts.destination;
+          } else {
+            destination = buildSafeSonicBoom({
+              dest: opts.destination || 1,
+              append: opts.append,
+              mkdir: opts.mkdir,
+              sync: opts.sync,
+              // by default sonic will be async
+            });
           }
-        });
-        if (typeof opts.destination === "object" && typeof opts.destination.write === "function") {
-          destination = opts.destination;
-        } else {
-          destination = buildSafeSonicBoom({
-            dest: opts.destination || 1,
-            append: opts.append,
-            mkdir: opts.mkdir,
-            sync: opts.sync
-            // by default sonic will be async
+          source.on("unknown", function (line) {
+            destination.write(line + "\n");
           });
-        }
-        source.on("unknown", function(line) {
-          destination.write(line + "\n");
-        });
-        pump(source, stream, destination);
-        return stream;
-      }, {
-        parse: "lines",
-        close(err, cb) {
-          destination.on("close", () => {
-            cb(err);
-          });
-        }
-      });
+          pump(source, stream, destination);
+          return stream;
+        },
+        {
+          parse: "lines",
+          close(err, cb) {
+            destination.on("close", () => {
+              cb(err);
+            });
+          },
+        },
+      );
     }
     module.exports = build;
     module.exports.build = build;
@@ -3305,7 +3982,7 @@ var require_pino_pretty = __commonJS({
     module.exports.colorizerFactory = colors;
     module.exports.isColorSupported = isColorSupported;
     module.exports.default = build;
-  }
+  },
 });
 export default require_pino_pretty();
 //# sourceMappingURL=pino-pretty.mjs.map

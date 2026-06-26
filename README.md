@@ -5,9 +5,11 @@ Welcome to **Cranial Nerve Crisis**, a physics-based comedy medical simulator wh
 Inspired by games like QWOP and Surgeon Simulator, this game turns a calming, ASMR-like medical procedure into an absolute circus.
 
 ## 🧠 High-Concept
+
 Perform delicate medical procedures. Try not to stress out your patient. Don't poke any eyes out. Expect chaotic physics, early-2000s PC game aesthetics, and a healthy dose of ambient dread from the "Window of Distraction."
 
 ## 🎮 Features
+
 - **12 Unique Levels:** Each level represents a different cranial nerve test with its own deliberately convoluted control scheme.
 - **Physics-Based Chaos:** Characters react to your inputs with extreme, floppy physics. You'll encounter "The Human Noodle" and "The Juggernaut of Jiggle."
 - **Stress Meter:** Clumsy actions increase the patient's stress. Max it out, and you fail.
@@ -16,6 +18,7 @@ Perform delicate medical procedures. Try not to stress out your patient. Don't p
 - **The Window of Distraction:** Strange, unsettling background events distract you from the intense focus required to not fail miserably.
 
 ## 🛠 Tech Stack
+
 - **Frameworks:** React + Vite
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS (with a healthy dose of monospace CRT aesthetics)
@@ -27,21 +30,26 @@ Perform delicate medical procedures. Try not to stress out your patient. Don't p
 To get started, make sure you have `pnpm` installed.
 
 1. **Install Dependencies:**
+
    ```bash
    pnpm install
    ```
 
 2. **Run the Game:**
+
    ```bash
    pnpm --filter @workspace/cranial-nerve-crisis run dev
    ```
+
    The game will be available at `http://localhost:24089`.
 
 3. **Run the API Server (Optional):**
+
    ```bash
    pnpm --filter @workspace/api-server run dev
    ```
-   *Note: The API server is not currently required for the core gameplay.*
+
+   _Note: The API server is not currently required for the core gameplay._
 
 4. **Typecheck:**
    ```bash
@@ -49,6 +57,7 @@ To get started, make sure you have `pnpm` installed.
    ```
 
 ## 📁 Repository Structure
+
 - `src/` - Core application source
   - `src/components/game/` - Game engine, UI, and 3D environment
   - `src/components/levels/` - Individual mini-games for each cranial nerve test
@@ -57,4 +66,5 @@ To get started, make sure you have `pnpm` installed.
   - `src/lib/` - Shared utilities and state management
 
 ## 📝 Design Document
+
 For more details on the inspiration, mechanics, and art direction, check out the original Game Design Document: `Cranial_Nerve_Crisis_1778081661703.md`.
