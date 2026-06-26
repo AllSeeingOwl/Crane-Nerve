@@ -16,8 +16,6 @@ import Level9Hypoglossal from "./levels/Level9Hypoglossal";
 
 import { useAmbientAudio } from "@/hooks/useAmbientAudio";
 
-
-
 import { cameraState } from "@/lib/cameraState";
 
 import { useAmbientAudio } from "@/hooks/useAmbientAudio";
@@ -39,8 +37,15 @@ interface LevelProps {
   onLose: (reason: string) => void;
 }
 
-export default function GameEngine({ levelId, stress, onStressChange, onWin, onLose, onQuit }: Props) {
-  const level = LEVELS.find(l => l.id === levelId)!;
+export default function GameEngine({
+  levelId,
+  stress,
+  onStressChange,
+  onWin,
+  onLose,
+  onQuit,
+}: Props) {
+  const level = LEVELS.find((l) => l.id === levelId)!;
   const levelProps: LevelProps = { stress, onStressChange, onWin, onLose };
 
   useAmbientAudio(true);
@@ -48,7 +53,7 @@ export default function GameEngine({ levelId, stress, onStressChange, onWin, onL
   // Feed mouse position into the shared camera state so the R3F rig can read it
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
-      cameraState.mouseX = (e.clientX / window.innerWidth)  * 2 - 1;
+      cameraState.mouseX = (e.clientX / window.innerWidth) * 2 - 1;
       cameraState.mouseY = -((e.clientY / window.innerHeight) * 2 - 1);
     };
     window.addEventListener("mousemove", handleMove);
@@ -57,7 +62,6 @@ export default function GameEngine({ levelId, stress, onStressChange, onWin, onL
 
   return (
     <div className="w-screen h-screen relative overflow-hidden">
-
       {/* ── 3D Doctor's Office — full-screen background ── */}
       <div className="absolute inset-0 z-0" style={{ pointerEvents: "none" }}>
         <Canvas
@@ -74,15 +78,15 @@ export default function GameEngine({ levelId, stress, onStressChange, onWin, onL
 
       {/* ── Level UI — overlays the 3D scene ── */}
       <div className="absolute inset-0 z-10">
-        {levelId === 1  && <Level1Olfactory    {...levelProps} />}
-        {levelId === 2  && <Level2Optic        {...levelProps} />}
-        {levelId === 3  && <Level3EyeMovement  {...levelProps} />}
-        {levelId === 4  && <Level4Trigeminal   {...levelProps} />}
-        {levelId === 5  && <Level5FacialNerve  {...levelProps} />}
-        {levelId === 6  && <Level6Tuning       {...levelProps} />}
-        {levelId === 7  && <Level7GagReflex    {...levelProps} />}
-        {levelId === 8  && <Level8Accessory    {...levelProps} />}
-        {levelId === 9  && <Level9Hypoglossal  {...levelProps} />}
+        {levelId === 1 && <Level1Olfactory {...levelProps} />}
+        {levelId === 2 && <Level2Optic {...levelProps} />}
+        {levelId === 3 && <Level3EyeMovement {...levelProps} />}
+        {levelId === 4 && <Level4Trigeminal {...levelProps} />}
+        {levelId === 5 && <Level5FacialNerve {...levelProps} />}
+        {levelId === 6 && <Level6Tuning {...levelProps} />}
+        {levelId === 7 && <Level7GagReflex {...levelProps} />}
+        {levelId === 8 && <Level8Accessory {...levelProps} />}
+        {levelId === 9 && <Level9Hypoglossal {...levelProps} />}
       </div>
 
       {/* ── Window of Distraction — floats bottom-right ── */}

@@ -1,25 +1,38 @@
-import { createRequire as __bannerCrReq } from 'node:module';
-import __bannerPath from 'node:path';
-import __bannerUrl from 'node:url';
+import { createRequire as __bannerCrReq } from "node:module";
+import __bannerPath from "node:path";
+import __bannerUrl from "node:url";
 
 globalThis.require = __bannerCrReq(import.meta.url);
 globalThis.__filename = __bannerUrl.fileURLToPath(import.meta.url);
 globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
-    
+
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
+var __require = /* @__PURE__ */ ((x) =>
+  typeof require !== "undefined"
+    ? require
+    : typeof Proxy !== "undefined"
+      ? new Proxy(x, {
+          get: (a, b) => (typeof require !== "undefined" ? require : a)[b],
+        })
+      : x)(function (x) {
   if (typeof require !== "undefined") return require.apply(this, arguments);
   throw Error('Dynamic require of "' + x + '" is not supported');
 });
-var __commonJS = (cb, mod) => function __require2() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
+var __commonJS = (cb, mod) =>
+  function __require2() {
+    return (
+      mod ||
+        (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod),
+      mod.exports
+    );
+  };
 
 // ../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-helpers.js
 var require_err_helpers = __commonJS({
-  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-helpers.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-helpers.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var isErrorLike = (err) => {
       return err && typeof err.message === "string";
@@ -48,7 +61,8 @@ var require_err_helpers = __commonJS({
         return stack;
       }
     };
-    var stackWithCauses = (err) => _stackWithCauses(err, /* @__PURE__ */ new Set());
+    var stackWithCauses = (err) =>
+      _stackWithCauses(err, /* @__PURE__ */ new Set());
     var _messageWithCauses = (err, seen, skip) => {
       if (!isErrorLike(err)) return "";
       const message = skip ? "" : err.message || "";
@@ -59,78 +73,93 @@ var require_err_helpers = __commonJS({
       if (cause) {
         seen.add(err);
         const skipIfVErrorStyleCause = typeof err.cause === "function";
-        return message + (skipIfVErrorStyleCause ? "" : ": ") + _messageWithCauses(cause, seen, skipIfVErrorStyleCause);
+        return (
+          message +
+          (skipIfVErrorStyleCause ? "" : ": ") +
+          _messageWithCauses(cause, seen, skipIfVErrorStyleCause)
+        );
       } else {
         return message;
       }
     };
-    var messageWithCauses = (err) => _messageWithCauses(err, /* @__PURE__ */ new Set());
+    var messageWithCauses = (err) =>
+      _messageWithCauses(err, /* @__PURE__ */ new Set());
     module.exports = {
       isErrorLike,
       getErrorCause,
       stackWithCauses,
-      messageWithCauses
+      messageWithCauses,
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-proto.js
 var require_err_proto = __commonJS({
-  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-proto.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-proto.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var seen = /* @__PURE__ */ Symbol("circular-ref-tag");
     var rawSymbol = /* @__PURE__ */ Symbol("pino-raw-err-ref");
-    var pinoErrProto = Object.create({}, {
-      type: {
-        enumerable: true,
-        writable: true,
-        value: void 0
-      },
-      message: {
-        enumerable: true,
-        writable: true,
-        value: void 0
-      },
-      stack: {
-        enumerable: true,
-        writable: true,
-        value: void 0
-      },
-      aggregateErrors: {
-        enumerable: true,
-        writable: true,
-        value: void 0
-      },
-      raw: {
-        enumerable: false,
-        get: function() {
-          return this[rawSymbol];
+    var pinoErrProto = Object.create(
+      {},
+      {
+        type: {
+          enumerable: true,
+          writable: true,
+          value: void 0,
         },
-        set: function(val) {
-          this[rawSymbol] = val;
-        }
-      }
-    });
+        message: {
+          enumerable: true,
+          writable: true,
+          value: void 0,
+        },
+        stack: {
+          enumerable: true,
+          writable: true,
+          value: void 0,
+        },
+        aggregateErrors: {
+          enumerable: true,
+          writable: true,
+          value: void 0,
+        },
+        raw: {
+          enumerable: false,
+          get: function () {
+            return this[rawSymbol];
+          },
+          set: function (val) {
+            this[rawSymbol] = val;
+          },
+        },
+      },
+    );
     Object.defineProperty(pinoErrProto, rawSymbol, {
       writable: true,
-      value: {}
+      value: {},
     });
     module.exports = {
       pinoErrProto,
       pinoErrorSymbols: {
         seen,
-        rawSymbol
-      }
+        rawSymbol,
+      },
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err.js
 var require_err = __commonJS({
-  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = errSerializer;
-    var { messageWithCauses, stackWithCauses, isErrorLike } = require_err_helpers();
+    var { messageWithCauses, stackWithCauses, isErrorLike } =
+      require_err_helpers();
     var { pinoErrProto, pinoErrorSymbols } = require_err_proto();
     var { seen } = pinoErrorSymbols;
     var { toString } = Object.prototype;
@@ -140,7 +169,10 @@ var require_err = __commonJS({
       }
       err[seen] = void 0;
       const _err = Object.create(pinoErrProto);
-      _err.type = toString.call(err.constructor) === "[object Function]" ? err.constructor.name : err.name;
+      _err.type =
+        toString.call(err.constructor) === "[object Function]"
+          ? err.constructor.name
+          : err.name;
       _err.message = messageWithCauses(err);
       _err.stack = stackWithCauses(err);
       if (Array.isArray(err.errors)) {
@@ -150,7 +182,10 @@ var require_err = __commonJS({
         if (_err[key] === void 0) {
           const val = err[key];
           if (isErrorLike(val)) {
-            if (key !== "cause" && !Object.prototype.hasOwnProperty.call(val, seen)) {
+            if (
+              key !== "cause" &&
+              !Object.prototype.hasOwnProperty.call(val, seen)
+            ) {
               _err[key] = errSerializer(val);
             }
           } else {
@@ -162,12 +197,15 @@ var require_err = __commonJS({
       _err.raw = err;
       return _err;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-with-cause.js
 var require_err_with_cause = __commonJS({
-  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-with-cause.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/err-with-cause.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = errWithCauseSerializer;
     var { isErrorLike } = require_err_helpers();
@@ -180,13 +218,21 @@ var require_err_with_cause = __commonJS({
       }
       err[seen] = void 0;
       const _err = Object.create(pinoErrProto);
-      _err.type = toString.call(err.constructor) === "[object Function]" ? err.constructor.name : err.name;
+      _err.type =
+        toString.call(err.constructor) === "[object Function]"
+          ? err.constructor.name
+          : err.name;
       _err.message = err.message;
       _err.stack = err.stack;
       if (Array.isArray(err.errors)) {
-        _err.aggregateErrors = err.errors.map((err2) => errWithCauseSerializer(err2));
+        _err.aggregateErrors = err.errors.map((err2) =>
+          errWithCauseSerializer(err2),
+        );
       }
-      if (isErrorLike(err.cause) && !Object.prototype.hasOwnProperty.call(err.cause, seen)) {
+      if (
+        isErrorLike(err.cause) &&
+        !Object.prototype.hasOwnProperty.call(err.cause, seen)
+      ) {
         _err.cause = errWithCauseSerializer(err.cause);
       }
       for (const key in err) {
@@ -205,83 +251,97 @@ var require_err_with_cause = __commonJS({
       _err.raw = err;
       return _err;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/req.js
 var require_req = __commonJS({
-  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/req.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/req.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = {
       mapHttpRequest,
-      reqSerializer
+      reqSerializer,
     };
     var rawSymbol = /* @__PURE__ */ Symbol("pino-raw-req-ref");
-    var pinoReqProto = Object.create({}, {
-      id: {
-        enumerable: true,
-        writable: true,
-        value: ""
-      },
-      method: {
-        enumerable: true,
-        writable: true,
-        value: ""
-      },
-      url: {
-        enumerable: true,
-        writable: true,
-        value: ""
-      },
-      query: {
-        enumerable: true,
-        writable: true,
-        value: ""
-      },
-      params: {
-        enumerable: true,
-        writable: true,
-        value: ""
-      },
-      headers: {
-        enumerable: true,
-        writable: true,
-        value: {}
-      },
-      remoteAddress: {
-        enumerable: true,
-        writable: true,
-        value: ""
-      },
-      remotePort: {
-        enumerable: true,
-        writable: true,
-        value: ""
-      },
-      raw: {
-        enumerable: false,
-        get: function() {
-          return this[rawSymbol];
+    var pinoReqProto = Object.create(
+      {},
+      {
+        id: {
+          enumerable: true,
+          writable: true,
+          value: "",
         },
-        set: function(val) {
-          this[rawSymbol] = val;
-        }
-      }
-    });
+        method: {
+          enumerable: true,
+          writable: true,
+          value: "",
+        },
+        url: {
+          enumerable: true,
+          writable: true,
+          value: "",
+        },
+        query: {
+          enumerable: true,
+          writable: true,
+          value: "",
+        },
+        params: {
+          enumerable: true,
+          writable: true,
+          value: "",
+        },
+        headers: {
+          enumerable: true,
+          writable: true,
+          value: {},
+        },
+        remoteAddress: {
+          enumerable: true,
+          writable: true,
+          value: "",
+        },
+        remotePort: {
+          enumerable: true,
+          writable: true,
+          value: "",
+        },
+        raw: {
+          enumerable: false,
+          get: function () {
+            return this[rawSymbol];
+          },
+          set: function (val) {
+            this[rawSymbol] = val;
+          },
+        },
+      },
+    );
     Object.defineProperty(pinoReqProto, rawSymbol, {
       writable: true,
-      value: {}
+      value: {},
     });
     function reqSerializer(req) {
       const connection = req.info || req.socket;
       const _req = Object.create(pinoReqProto);
-      _req.id = typeof req.id === "function" ? req.id() : req.id || (req.info ? req.info.id : void 0);
+      _req.id =
+        typeof req.id === "function"
+          ? req.id()
+          : req.id || (req.info ? req.info.id : void 0);
       _req.method = req.method;
       if (req.originalUrl) {
         _req.url = req.originalUrl;
       } else {
         const path = req.path;
-        _req.url = typeof path === "string" ? path : req.url ? req.url.path || req.url : void 0;
+        _req.url =
+          typeof path === "string"
+            ? path
+            : req.url
+              ? req.url.path || req.url
+              : void 0;
       }
       if (req.query) {
         _req.query = req.query;
@@ -297,45 +357,51 @@ var require_req = __commonJS({
     }
     function mapHttpRequest(req) {
       return {
-        req: reqSerializer(req)
+        req: reqSerializer(req),
       };
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/res.js
 var require_res = __commonJS({
-  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/res.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/lib/res.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = {
       mapHttpResponse,
-      resSerializer
+      resSerializer,
     };
     var rawSymbol = /* @__PURE__ */ Symbol("pino-raw-res-ref");
-    var pinoResProto = Object.create({}, {
-      statusCode: {
-        enumerable: true,
-        writable: true,
-        value: 0
-      },
-      headers: {
-        enumerable: true,
-        writable: true,
-        value: ""
-      },
-      raw: {
-        enumerable: false,
-        get: function() {
-          return this[rawSymbol];
+    var pinoResProto = Object.create(
+      {},
+      {
+        statusCode: {
+          enumerable: true,
+          writable: true,
+          value: 0,
         },
-        set: function(val) {
-          this[rawSymbol] = val;
-        }
-      }
-    });
+        headers: {
+          enumerable: true,
+          writable: true,
+          value: "",
+        },
+        raw: {
+          enumerable: false,
+          get: function () {
+            return this[rawSymbol];
+          },
+          set: function (val) {
+            this[rawSymbol] = val;
+          },
+        },
+      },
+    );
     Object.defineProperty(pinoResProto, rawSymbol, {
       writable: true,
-      value: {}
+      value: {},
     });
     function resSerializer(res) {
       const _res = Object.create(pinoResProto);
@@ -346,15 +412,18 @@ var require_res = __commonJS({
     }
     function mapHttpResponse(res) {
       return {
-        res: resSerializer(res)
+        res: resSerializer(res),
       };
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/index.js
 var require_pino_std_serializers = __commonJS({
-  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/index.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-std-serializers@7.1.0/node_modules/pino-std-serializers/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var errSerializer = require_err();
     var errWithCauseSerializer = require_err_with_cause();
@@ -374,24 +443,31 @@ var require_pino_std_serializers = __commonJS({
         };
       },
       wrapRequestSerializer: function wrapRequestSerializer(customSerializer) {
-        if (customSerializer === reqSerializers.reqSerializer) return customSerializer;
+        if (customSerializer === reqSerializers.reqSerializer)
+          return customSerializer;
         return function wrappedReqSerializer(req) {
           return customSerializer(reqSerializers.reqSerializer(req));
         };
       },
-      wrapResponseSerializer: function wrapResponseSerializer(customSerializer) {
-        if (customSerializer === resSerializers.resSerializer) return customSerializer;
+      wrapResponseSerializer: function wrapResponseSerializer(
+        customSerializer,
+      ) {
+        if (customSerializer === resSerializers.resSerializer)
+          return customSerializer;
         return function wrappedResSerializer(res) {
           return customSerializer(resSerializers.resSerializer(res));
         };
-      }
+      },
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/caller.js
 var require_caller = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/caller.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/caller.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     function noOpPrepareStackTrace(_, stack) {
       return stack;
@@ -414,12 +490,15 @@ var require_caller = __commonJS({
       }
       return fileNames;
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/@pinojs+redact@0.4.0/node_modules/@pinojs/redact/index.js
 var require_redact = __commonJS({
-  "../../node_modules/.pnpm/@pinojs+redact@0.4.0/node_modules/@pinojs/redact/index.js"(exports, module) {
+  "../../node_modules/.pnpm/@pinojs+redact@0.4.0/node_modules/@pinojs/redact/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     function deepClone(obj) {
       if (obj === null || typeof obj !== "object") {
@@ -493,7 +572,11 @@ var require_redact = __commonJS({
       let current = obj;
       for (let i = 0; i < parts.length - 1; i++) {
         const key = parts[i];
-        if (typeof current !== "object" || current === null || !(key in current)) {
+        if (
+          typeof current !== "object" ||
+          current === null ||
+          !(key in current)
+        ) {
           return false;
         }
         if (typeof current[key] !== "object" || current[key] === null) {
@@ -515,7 +598,12 @@ var require_redact = __commonJS({
           }
         }
       } else {
-        if (typeof current === "object" && current !== null && lastKey in current && Object.prototype.hasOwnProperty.call(current, lastKey)) {
+        if (
+          typeof current === "object" &&
+          current !== null &&
+          lastKey in current &&
+          Object.prototype.hasOwnProperty.call(current, lastKey)
+        ) {
           current[lastKey] = value;
         }
       }
@@ -525,7 +613,11 @@ var require_redact = __commonJS({
       let current = obj;
       for (let i = 0; i < parts.length - 1; i++) {
         const key = parts[i];
-        if (typeof current !== "object" || current === null || !(key in current)) {
+        if (
+          typeof current !== "object" ||
+          current === null ||
+          !(key in current)
+        ) {
           return false;
         }
         if (typeof current[key] !== "object" || current[key] === null) {
@@ -547,7 +639,12 @@ var require_redact = __commonJS({
           }
         }
       } else {
-        if (typeof current === "object" && current !== null && lastKey in current && Object.prototype.hasOwnProperty.call(current, lastKey)) {
+        if (
+          typeof current === "object" &&
+          current !== null &&
+          lastKey in current &&
+          Object.prototype.hasOwnProperty.call(current, lastKey)
+        ) {
           delete current[lastKey];
         }
       }
@@ -596,13 +693,20 @@ var require_redact = __commonJS({
             if (value === PATH_NOT_FOUND) {
               continue;
             }
-            const actualCensor = typeof censor === "function" ? censor(value, parts) : censor;
+            const actualCensor =
+              typeof censor === "function" ? censor(value, parts) : censor;
             setValue(obj, parts, actualCensor);
           }
         }
       }
     }
-    function redactWildcardPath(obj, parts, censor, originalPath, remove = false) {
+    function redactWildcardPath(
+      obj,
+      parts,
+      censor,
+      originalPath,
+      remove = false,
+    ) {
       const wildcardIndex = parts.indexOf("*");
       if (wildcardIndex === parts.length - 1) {
         const parentParts = parts.slice(0, -1);
@@ -620,7 +724,10 @@ var require_redact = __commonJS({
           } else {
             for (let i = 0; i < current.length; i++) {
               const indexPath = [...parentParts, i.toString()];
-              const actualCensor = typeof censor === "function" ? censor(current[i], indexPath) : censor;
+              const actualCensor =
+                typeof censor === "function"
+                  ? censor(current[i], indexPath)
+                  : censor;
               current[i] = actualCensor;
             }
           }
@@ -638,16 +745,33 @@ var require_redact = __commonJS({
           } else {
             for (const key in current) {
               const keyPath = [...parentParts, key];
-              const actualCensor = typeof censor === "function" ? censor(current[key], keyPath) : censor;
+              const actualCensor =
+                typeof censor === "function"
+                  ? censor(current[key], keyPath)
+                  : censor;
               current[key] = actualCensor;
             }
           }
         }
       } else {
-        redactIntermediateWildcard(obj, parts, censor, wildcardIndex, originalPath, remove);
+        redactIntermediateWildcard(
+          obj,
+          parts,
+          censor,
+          wildcardIndex,
+          originalPath,
+          remove,
+        );
       }
     }
-    function redactIntermediateWildcard(obj, parts, censor, wildcardIndex, originalPath, remove = false) {
+    function redactIntermediateWildcard(
+      obj,
+      parts,
+      censor,
+      wildcardIndex,
+      originalPath,
+      remove = false,
+    ) {
       const beforeWildcard = parts.slice(0, wildcardIndex);
       const afterWildcard = parts.slice(wildcardIndex + 1);
       const pathArray = [];
@@ -666,22 +790,45 @@ var require_redact = __commonJS({
           }
         } else if (pathLength < beforeWildcard.length) {
           const nextKey = beforeWildcard[pathLength];
-          if (current && typeof current === "object" && current !== null && nextKey in current) {
+          if (
+            current &&
+            typeof current === "object" &&
+            current !== null &&
+            nextKey in current
+          ) {
             pathArray[pathLength] = nextKey;
             traverse(current[nextKey], pathLength + 1);
           }
         } else {
           if (afterWildcard.includes("*")) {
-            const wrappedCensor = typeof censor === "function" ? (value, path) => {
-              const fullPath = [...pathArray.slice(0, pathLength), ...path];
-              return censor(value, fullPath);
-            } : censor;
-            redactWildcardPath(current, afterWildcard, wrappedCensor, originalPath, remove);
+            const wrappedCensor =
+              typeof censor === "function"
+                ? (value, path) => {
+                    const fullPath = [
+                      ...pathArray.slice(0, pathLength),
+                      ...path,
+                    ];
+                    return censor(value, fullPath);
+                  }
+                : censor;
+            redactWildcardPath(
+              current,
+              afterWildcard,
+              wrappedCensor,
+              originalPath,
+              remove,
+            );
           } else {
             if (remove) {
               removeKey(current, afterWildcard);
             } else {
-              const actualCensor = typeof censor === "function" ? censor(getValue(current, afterWildcard), [...pathArray.slice(0, pathLength), ...afterWildcard]) : censor;
+              const actualCensor =
+                typeof censor === "function"
+                  ? censor(getValue(current, afterWildcard), [
+                      ...pathArray.slice(0, pathLength),
+                      ...afterWildcard,
+                    ])
+                  : censor;
               setValue(current, afterWildcard, actualCensor);
             }
           }
@@ -740,7 +887,10 @@ var require_redact = __commonJS({
           for (let i = 0; i < source.length; i++) {
             const indexStr = i.toString();
             if (pathMap.has(indexStr) || pathMap.has("*")) {
-              cloned2[i] = cloneSelectively(source[i], pathMap.get(indexStr) || pathMap.get("*"));
+              cloned2[i] = cloneSelectively(
+                source[i],
+                pathMap.get(indexStr) || pathMap.get("*"),
+              );
             } else {
               cloned2[i] = source[i];
             }
@@ -751,7 +901,10 @@ var require_redact = __commonJS({
         for (const key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             if (pathMap.has(key) || pathMap.has("*")) {
-              cloned[key] = cloneSelectively(source[key], pathMap.get(key) || pathMap.get("*"));
+              cloned[key] = cloneSelectively(
+                source[key],
+                pathMap.get(key) || pathMap.get("*"),
+              );
             } else {
               cloned[key] = source[key];
             }
@@ -814,7 +967,7 @@ var require_redact = __commonJS({
         censor = "[REDACTED]",
         serialize = JSON.stringify,
         strict = true,
-        remove = false
+        remove = false,
       } = options;
       validatePaths(paths);
       const pathStructure = buildPathStructure(paths);
@@ -835,7 +988,7 @@ var require_redact = __commonJS({
         }
         redactPaths(cloned, paths, actualCensor, remove);
         if (serialize === false) {
-          cloned.restore = function() {
+          cloned.restore = function () {
             return deepClone(original);
           };
           return cloned;
@@ -847,19 +1000,24 @@ var require_redact = __commonJS({
       };
     }
     module.exports = slowRedact;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/symbols.js
 var require_symbols = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/symbols.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/symbols.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var setLevelSym = /* @__PURE__ */ Symbol("pino.setLevel");
     var getLevelSym = /* @__PURE__ */ Symbol("pino.getLevel");
     var levelValSym = /* @__PURE__ */ Symbol("pino.levelVal");
     var levelCompSym = /* @__PURE__ */ Symbol("pino.levelComp");
     var useLevelLabelsSym = /* @__PURE__ */ Symbol("pino.useLevelLabels");
-    var useOnlyCustomLevelsSym = /* @__PURE__ */ Symbol("pino.useOnlyCustomLevels");
+    var useOnlyCustomLevelsSym = /* @__PURE__ */ Symbol(
+      "pino.useOnlyCustomLevels",
+    );
     var mixinSym = /* @__PURE__ */ Symbol("pino.mixin");
     var lsCacheSym = /* @__PURE__ */ Symbol("pino.lsCache");
     var chindingsSym = /* @__PURE__ */ Symbol("pino.chindings");
@@ -878,7 +1036,9 @@ var require_symbols = __commonJS({
     var errorKeySym = /* @__PURE__ */ Symbol("pino.errorKey");
     var nestedKeySym = /* @__PURE__ */ Symbol("pino.nestedKey");
     var nestedKeyStrSym = /* @__PURE__ */ Symbol("pino.nestedKeyStr");
-    var mixinMergeStrategySym = /* @__PURE__ */ Symbol("pino.mixinMergeStrategy");
+    var mixinMergeStrategySym = /* @__PURE__ */ Symbol(
+      "pino.mixinMergeStrategy",
+    );
     var msgPrefixSym = /* @__PURE__ */ Symbol("pino.msgPrefix");
     var wildcardFirstSym = /* @__PURE__ */ Symbol("pino.wildcardFirst");
     var serializersSym = /* @__PURE__ */ Symbol.for("pino.serializers");
@@ -916,14 +1076,17 @@ var require_symbols = __commonJS({
       hooksSym,
       nestedKeyStrSym,
       mixinMergeStrategySym,
-      msgPrefixSym
+      msgPrefixSym,
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/redaction.js
 var require_redaction = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/redaction.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/redaction.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var Redact = require_redact();
     var { redactFmtSym, wildcardFirstSym } = require_symbols();
@@ -936,7 +1099,10 @@ var require_redaction = __commonJS({
         rx.lastIndex = 0;
         const first = rx.exec(str);
         const next = rx.exec(str);
-        let ns = first[1] !== void 0 ? first[1].replace(/^(?:"|'|`)(.*)(?:"|'|`)$/, "$1") : first[0];
+        let ns =
+          first[1] !== void 0
+            ? first[1].replace(/^(?:"|'|`)(.*)(?:"|'|`)$/, "$1")
+            : first[0];
         if (ns === "*") {
           ns = wildcardFirstSym;
         }
@@ -951,10 +1117,10 @@ var require_redaction = __commonJS({
         const nextPath = `${str.substr(index, str.length - 1)}`;
         o[ns] = o[ns] || [];
         if (ns !== wildcardFirstSym && o[ns].length === 0) {
-          o[ns].push(...o[wildcardFirstSym] || []);
+          o[ns].push(...(o[wildcardFirstSym] || []));
         }
         if (ns === wildcardFirstSym) {
-          Object.keys(o).forEach(function(k) {
+          Object.keys(o).forEach(function (k) {
             if (o[k]) {
               o[k].push(nextPath);
             }
@@ -964,24 +1130,32 @@ var require_redaction = __commonJS({
         return o;
       }, {});
       const result = {
-        [redactFmtSym]: Redact({ paths, censor, serialize, strict, remove })
+        [redactFmtSym]: Redact({ paths, censor, serialize, strict, remove }),
       };
       const topCensor = (...args) => {
-        return typeof censor === "function" ? serialize(censor(...args)) : serialize(censor);
+        return typeof censor === "function"
+          ? serialize(censor(...args))
+          : serialize(censor);
       };
-      return [...Object.keys(shape), ...Object.getOwnPropertySymbols(shape)].reduce((o, k) => {
+      return [
+        ...Object.keys(shape),
+        ...Object.getOwnPropertySymbols(shape),
+      ].reduce((o, k) => {
         if (shape[k] === null) {
           o[k] = (value) => topCensor(value, [k]);
         } else {
-          const wrappedCensor = typeof censor === "function" ? (value, path) => {
-            return censor(value, [k, ...path]);
-          } : censor;
+          const wrappedCensor =
+            typeof censor === "function"
+              ? (value, path) => {
+                  return censor(value, [k, ...path]);
+                }
+              : censor;
           o[k] = Redact({
             paths: shape[k],
             censor: wrappedCensor,
             serialize,
             strict,
-            remove
+            remove,
           });
         }
         return o;
@@ -1000,12 +1174,15 @@ var require_redaction = __commonJS({
       return { paths, censor, remove };
     }
     module.exports = redaction;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/time.js
 var require_time = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/time.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/time.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var nullTime = () => "";
     var epochTime = () => `,"time":${Date.now()}`;
@@ -1020,7 +1197,9 @@ var require_time = __commonJS({
       const currentTimeNs = startWallTimeNs + elapsedNs;
       const secondsSinceEpoch = currentTimeNs / NS_PER_SEC;
       const nanosWithinSecond = currentTimeNs % NS_PER_SEC;
-      const msSinceEpoch = Number(secondsSinceEpoch * 1000n + nanosWithinSecond / 1000000n);
+      const msSinceEpoch = Number(
+        secondsSinceEpoch * 1000n + nanosWithinSecond / 1000000n,
+      );
       const date = new Date(msSinceEpoch);
       const year = date.getUTCFullYear();
       const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
@@ -1031,12 +1210,15 @@ var require_time = __commonJS({
       return `,"time":"${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${nanosWithinSecond.toString().padStart(9, "0")}Z"`;
     };
     module.exports = { nullTime, epochTime, unixTime, isoTime, isoTimeNano };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/quick-format-unescaped@4.0.4/node_modules/quick-format-unescaped/index.js
 var require_quick_format_unescaped = __commonJS({
-  "../../node_modules/.pnpm/quick-format-unescaped@4.0.4/node_modules/quick-format-unescaped/index.js"(exports, module) {
+  "../../node_modules/.pnpm/quick-format-unescaped@4.0.4/node_modules/quick-format-unescaped/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     function tryStringify(o) {
       try {
@@ -1047,7 +1229,7 @@ var require_quick_format_unescaped = __commonJS({
     }
     module.exports = format;
     function format(f, args, opts) {
-      var ss = opts && opts.stringify || tryStringify;
+      var ss = (opts && opts.stringify) || tryStringify;
       var offset = 1;
       if (typeof f === "object" && f !== null) {
         var len = args.length + offset;
@@ -1067,7 +1249,7 @@ var require_quick_format_unescaped = __commonJS({
       var str = "";
       var a = 1 - offset;
       var lastPos = -1;
-      var flen = f && f.length || 0;
+      var flen = (f && f.length) || 0;
       for (var i = 0; i < flen; ) {
         if (f.charCodeAt(i) === 37 && i + 1 < flen) {
           lastPos = lastPos > -1 ? lastPos : 0;
@@ -1075,21 +1257,17 @@ var require_quick_format_unescaped = __commonJS({
             case 100:
             // 'd'
             case 102:
-              if (a >= argLen)
-                break;
+              if (a >= argLen) break;
               if (args[a] == null) break;
-              if (lastPos < i)
-                str += f.slice(lastPos, i);
+              if (lastPos < i) str += f.slice(lastPos, i);
               str += Number(args[a]);
               lastPos = i + 2;
               i++;
               break;
             case 105:
-              if (a >= argLen)
-                break;
+              if (a >= argLen) break;
               if (args[a] == null) break;
-              if (lastPos < i)
-                str += f.slice(lastPos, i);
+              if (lastPos < i) str += f.slice(lastPos, i);
               str += Math.floor(Number(args[a]));
               lastPos = i + 2;
               i++;
@@ -1099,11 +1277,9 @@ var require_quick_format_unescaped = __commonJS({
             case 111:
             // 'o'
             case 106:
-              if (a >= argLen)
-                break;
+              if (a >= argLen) break;
               if (args[a] === void 0) break;
-              if (lastPos < i)
-                str += f.slice(lastPos, i);
+              if (lastPos < i) str += f.slice(lastPos, i);
               var type = typeof args[a];
               if (type === "string") {
                 str += "'" + args[a] + "'";
@@ -1122,17 +1298,14 @@ var require_quick_format_unescaped = __commonJS({
               i++;
               break;
             case 115:
-              if (a >= argLen)
-                break;
-              if (lastPos < i)
-                str += f.slice(lastPos, i);
+              if (a >= argLen) break;
+              if (lastPos < i) str += f.slice(lastPos, i);
               str += String(args[a]);
               lastPos = i + 2;
               i++;
               break;
             case 37:
-              if (lastPos < i)
-                str += f.slice(lastPos, i);
+              if (lastPos < i) str += f.slice(lastPos, i);
               str += "%";
               lastPos = i + 2;
               i++;
@@ -1143,54 +1316,65 @@ var require_quick_format_unescaped = __commonJS({
         }
         ++i;
       }
-      if (lastPos === -1)
-        return f;
+      if (lastPos === -1) return f;
       else if (lastPos < flen) {
         str += f.slice(lastPos);
       }
       return str;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/atomic-sleep@1.0.0/node_modules/atomic-sleep/index.js
 var require_atomic_sleep = __commonJS({
-  "../../node_modules/.pnpm/atomic-sleep@1.0.0/node_modules/atomic-sleep/index.js"(exports, module) {
+  "../../node_modules/.pnpm/atomic-sleep@1.0.0/node_modules/atomic-sleep/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
-    if (typeof SharedArrayBuffer !== "undefined" && typeof Atomics !== "undefined") {
-      let sleep = function(ms) {
+    if (
+      typeof SharedArrayBuffer !== "undefined" &&
+      typeof Atomics !== "undefined"
+    ) {
+      let sleep = function (ms) {
         const valid = ms > 0 && ms < Infinity;
         if (valid === false) {
           if (typeof ms !== "number" && typeof ms !== "bigint") {
             throw TypeError("sleep: ms must be a number");
           }
-          throw RangeError("sleep: ms must be a number that is greater than 0 but less than Infinity");
+          throw RangeError(
+            "sleep: ms must be a number that is greater than 0 but less than Infinity",
+          );
         }
         Atomics.wait(nil, 0, 0, Number(ms));
       };
       const nil = new Int32Array(new SharedArrayBuffer(4));
       module.exports = sleep;
     } else {
-      let sleep = function(ms) {
+      let sleep = function (ms) {
         const valid = ms > 0 && ms < Infinity;
         if (valid === false) {
           if (typeof ms !== "number" && typeof ms !== "bigint") {
             throw TypeError("sleep: ms must be a number");
           }
-          throw RangeError("sleep: ms must be a number that is greater than 0 but less than Infinity");
+          throw RangeError(
+            "sleep: ms must be a number that is greater than 0 but less than Infinity",
+          );
         }
         const target = Date.now() + Number(ms);
-        while (target > Date.now()) {
-        }
+        while (target > Date.now()) {}
       };
       module.exports = sleep;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/sonic-boom@4.2.1/node_modules/sonic-boom/index.js
 var require_sonic_boom = __commonJS({
-  "../../node_modules/.pnpm/sonic-boom@4.2.1/node_modules/sonic-boom/index.js"(exports, module) {
+  "../../node_modules/.pnpm/sonic-boom@4.2.1/node_modules/sonic-boom/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var fs = __require("fs");
     var EventEmitter = __require("events");
@@ -1203,7 +1387,9 @@ var require_sonic_boom = __commonJS({
     var MAX_WRITE = 16 * 1024;
     var kContentModeBuffer = "buffer";
     var kContentModeUtf8 = "utf8";
-    var [major, minor] = (process.versions.node || "0.0").split(".").map(Number);
+    var [major, minor] = (process.versions.node || "0.0")
+      .split(".")
+      .map(Number);
     var kCopyBuffer = major >= 22 && minor >= 7;
     function openFile(file, sonic) {
       sonic._opening = true;
@@ -1239,7 +1425,10 @@ var require_sonic_boom = __commonJS({
         if (sonic.destroyed) {
           return;
         }
-        if (!sonic._writing && sonic._len > sonic.minLength || sonic._flushPending) {
+        if (
+          (!sonic._writing && sonic._len > sonic.minLength) ||
+          sonic._flushPending
+        ) {
           sonic._actualWrite();
         } else if (reopening) {
           process.nextTick(() => sonic.emit("drain"));
@@ -1249,7 +1438,8 @@ var require_sonic_boom = __commonJS({
       const mode = sonic.mode;
       if (sonic.sync) {
         try {
-          if (sonic.mkdir) fs.mkdirSync(path.dirname(file), { recursive: true });
+          if (sonic.mkdir)
+            fs.mkdirSync(path.dirname(file), { recursive: true });
           const fd = fs.openSync(file, flags, mode);
           fileOpened(null, fd);
         } catch (err) {
@@ -1269,7 +1459,21 @@ var require_sonic_boom = __commonJS({
       if (!(this instanceof SonicBoom)) {
         return new SonicBoom(opts);
       }
-      let { fd, dest, minLength, maxLength, maxWrite, periodicFlush, sync, append = true, mkdir, retryEAGAIN, fsync, contentMode, mode } = opts || {};
+      let {
+        fd,
+        dest,
+        minLength,
+        maxLength,
+        maxWrite,
+        periodicFlush,
+        sync,
+        append = true,
+        mkdir,
+        retryEAGAIN,
+        fsync,
+        contentMode,
+        mode,
+      } = opts || {};
       fd = fd || dest;
       this._len = 0;
       this.fd = -1;
@@ -1324,7 +1528,9 @@ var require_sonic_boom = __commonJS({
           return fs.write(this.fd, this._writingBuf, "utf8", this.release);
         };
       } else {
-        throw new Error(`SonicBoom supports "${kContentModeUtf8}" and "${kContentModeBuffer}", but passed ${contentMode}`);
+        throw new Error(
+          `SonicBoom supports "${kContentModeUtf8}" and "${kContentModeBuffer}", but passed ${contentMode}`,
+        );
       }
       if (typeof fd === "number") {
         this.fd = fd;
@@ -1335,11 +1541,20 @@ var require_sonic_boom = __commonJS({
         throw new Error("SonicBoom supports only file descriptors and files");
       }
       if (this.minLength >= this.maxWrite) {
-        throw new Error(`minLength should be smaller than maxWrite (${this.maxWrite})`);
+        throw new Error(
+          `minLength should be smaller than maxWrite (${this.maxWrite})`,
+        );
       }
       this.release = (err, n) => {
         if (err) {
-          if ((err.code === "EAGAIN" || err.code === "EBUSY") && this.retryEAGAIN(err, this._writingBuf.length, this._len - this._writingBuf.length)) {
+          if (
+            (err.code === "EAGAIN" || err.code === "EBUSY") &&
+            this.retryEAGAIN(
+              err,
+              this._writingBuf.length,
+              this._len - this._writingBuf.length,
+            )
+          ) {
             if (this.sync) {
               try {
                 sleep(BUSY_WRITE_TIMEOUT);
@@ -1357,7 +1572,11 @@ var require_sonic_boom = __commonJS({
           return;
         }
         this.emit("write", n);
-        const releasedBufObj = releaseWritingBuf(this._writingBuf, this._len, n);
+        const releasedBufObj = releaseWritingBuf(
+          this._writingBuf,
+          this._len,
+          n,
+        );
         this._len = releasedBufObj.len;
         this._writingBuf = releasedBufObj.writingBuf;
         if (this._writingBuf.length) {
@@ -1368,7 +1587,11 @@ var require_sonic_boom = __commonJS({
           try {
             do {
               const n2 = fsWriteSync();
-              const releasedBufObj2 = releaseWritingBuf(this._writingBuf, this._len, n2);
+              const releasedBufObj2 = releaseWritingBuf(
+                this._writingBuf,
+                this._len,
+                n2,
+              );
               this._len = releasedBufObj2.len;
               this._writingBuf = releasedBufObj2.writingBuf;
             } while (this._writingBuf.length);
@@ -1406,13 +1629,16 @@ var require_sonic_boom = __commonJS({
           }
         }
       };
-      this.on("newListener", function(name) {
+      this.on("newListener", function (name) {
         if (name === "drain") {
           this._asyncDrainScheduled = false;
         }
       });
       if (this._periodicFlush !== 0) {
-        this._periodicFlushTimer = setInterval(() => this.flush(null), this._periodicFlush);
+        this._periodicFlushTimer = setInterval(
+          () => this.flush(null),
+          this._periodicFlush,
+        );
         this._periodicFlushTimer.unref();
       }
     }
@@ -1452,7 +1678,10 @@ var require_sonic_boom = __commonJS({
         this.emit("drop", data);
         return this._len < this._hwm;
       }
-      if (bufs.length === 0 || Buffer.byteLength(bufs[bufs.length - 1]) + dataLen > this.maxWrite) {
+      if (
+        bufs.length === 0 ||
+        Buffer.byteLength(bufs[bufs.length - 1]) + dataLen > this.maxWrite
+      ) {
         bufs.push(data);
       } else {
         bufs[bufs.length - 1] += data;
@@ -1474,7 +1703,10 @@ var require_sonic_boom = __commonJS({
         this.emit("drop", data);
         return this._len < this._hwm;
       }
-      if (bufs.length === 0 || lens[lens.length - 1] + data.length > this.maxWrite) {
+      if (
+        bufs.length === 0 ||
+        lens[lens.length - 1] + data.length > this.maxWrite
+      ) {
         bufs.push([data]);
         lens.push(data.length);
       } else {
@@ -1568,7 +1800,7 @@ var require_sonic_boom = __commonJS({
       }
       this._actualWrite();
     }
-    SonicBoom.prototype.reopen = function(file) {
+    SonicBoom.prototype.reopen = function (file) {
       if (this.destroyed) {
         throw new Error("SonicBoom destroyed");
       }
@@ -1582,7 +1814,9 @@ var require_sonic_boom = __commonJS({
         return;
       }
       if (!this.file) {
-        throw new Error("Unable to reopen a file descriptor, you must pass a file to SonicBoom");
+        throw new Error(
+          "Unable to reopen a file descriptor, you must pass a file to SonicBoom",
+        );
       }
       if (file) {
         this.file = file;
@@ -1603,7 +1837,7 @@ var require_sonic_boom = __commonJS({
       });
       openFile(this.file, this);
     };
-    SonicBoom.prototype.end = function() {
+    SonicBoom.prototype.end = function () {
       if (this.destroyed) {
         throw new Error("SonicBoom destroyed");
       }
@@ -1643,7 +1877,9 @@ var require_sonic_boom = __commonJS({
           buf = this._bufs[0];
         }
         try {
-          const n = Buffer.isBuffer(buf) ? fs.writeSync(this.fd, buf) : fs.writeSync(this.fd, buf, "utf8");
+          const n = Buffer.isBuffer(buf)
+            ? fs.writeSync(this.fd, buf)
+            : fs.writeSync(this.fd, buf, "utf8");
           const releasedBufObj = releaseWritingBuf(buf, this._len, n);
           buf = releasedBufObj.writingBuf;
           this._len = releasedBufObj.len;
@@ -1652,7 +1888,10 @@ var require_sonic_boom = __commonJS({
           }
         } catch (err) {
           const shouldRetry = err.code === "EAGAIN" || err.code === "EBUSY";
-          if (shouldRetry && !this.retryEAGAIN(err, buf.length, this._len - buf.length)) {
+          if (
+            shouldRetry &&
+            !this.retryEAGAIN(err, buf.length, this._len - buf.length)
+          ) {
             throw err;
           }
           sleep(BUSY_WRITE_TIMEOUT);
@@ -1660,8 +1899,7 @@ var require_sonic_boom = __commonJS({
       }
       try {
         fs.fsyncSync(this.fd);
-      } catch {
-      }
+      } catch {}
     }
     function flushBufferSync() {
       if (this.destroyed) {
@@ -1689,14 +1927,17 @@ var require_sonic_boom = __commonJS({
           }
         } catch (err) {
           const shouldRetry = err.code === "EAGAIN" || err.code === "EBUSY";
-          if (shouldRetry && !this.retryEAGAIN(err, buf.length, this._len - buf.length)) {
+          if (
+            shouldRetry &&
+            !this.retryEAGAIN(err, buf.length, this._len - buf.length)
+          ) {
             throw err;
           }
           sleep(BUSY_WRITE_TIMEOUT);
         }
       }
     }
-    SonicBoom.prototype.destroy = function() {
+    SonicBoom.prototype.destroy = function () {
       if (this.destroyed) {
         return;
       }
@@ -1705,10 +1946,14 @@ var require_sonic_boom = __commonJS({
     function actualWrite() {
       const release = this.release;
       this._writing = true;
-      this._writingBuf = this._writingBuf.length ? this._writingBuf : this._bufs.shift() || "";
+      this._writingBuf = this._writingBuf.length
+        ? this._writingBuf
+        : this._bufs.shift() || "";
       if (this.sync) {
         try {
-          const written = Buffer.isBuffer(this._writingBuf) ? fs.writeSync(this.fd, this._writingBuf) : fs.writeSync(this.fd, this._writingBuf, "utf8");
+          const written = Buffer.isBuffer(this._writingBuf)
+            ? fs.writeSync(this.fd, this._writingBuf)
+            : fs.writeSync(this.fd, this._writingBuf, "utf8");
           release(null, written);
         } catch (err) {
           release(err);
@@ -1720,7 +1965,9 @@ var require_sonic_boom = __commonJS({
     function actualWriteBuffer() {
       const release = this.release;
       this._writing = true;
-      this._writingBuf = this._writingBuf.length ? this._writingBuf : mergeBuf(this._bufs.shift(), this._lens.shift());
+      this._writingBuf = this._writingBuf.length
+        ? this._writingBuf
+        : mergeBuf(this._bufs.shift(), this._lens.shift());
       if (this.sync) {
         try {
           const written = fs.writeSync(this.fd, this._writingBuf);
@@ -1746,11 +1993,13 @@ var require_sonic_boom = __commonJS({
       sonic.destroyed = true;
       sonic._bufs = [];
       sonic._lens = [];
-      assert(typeof sonic.fd === "number", `sonic.fd must be a number, got ${typeof sonic.fd}`);
+      assert(
+        typeof sonic.fd === "number",
+        `sonic.fd must be a number, got ${typeof sonic.fd}`,
+      );
       try {
         fs.fsync(sonic.fd, closeWrapped);
-      } catch {
-      }
+      } catch {}
       function closeWrapped() {
         if (sonic.fd !== 1 && sonic.fd !== 2) {
           fs.close(sonic.fd, done);
@@ -1772,20 +2021,23 @@ var require_sonic_boom = __commonJS({
     SonicBoom.SonicBoom = SonicBoom;
     SonicBoom.default = SonicBoom;
     module.exports = SonicBoom;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/on-exit-leak-free@2.1.2/node_modules/on-exit-leak-free/index.js
 var require_on_exit_leak_free = __commonJS({
-  "../../node_modules/.pnpm/on-exit-leak-free@2.1.2/node_modules/on-exit-leak-free/index.js"(exports, module) {
+  "../../node_modules/.pnpm/on-exit-leak-free@2.1.2/node_modules/on-exit-leak-free/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var refs = {
       exit: [],
-      beforeExit: []
+      beforeExit: [],
     };
     var functions = {
       exit: onExit,
-      beforeExit: onBeforeExit
+      beforeExit: onBeforeExit,
     };
     var registry;
     function ensureRegistry() {
@@ -1864,14 +2116,17 @@ var require_on_exit_leak_free = __commonJS({
     module.exports = {
       register,
       registerBeforeExit,
-      unregister
+      unregister,
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/package.json
 var require_package = __commonJS({
-  "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/package.json"(exports, module) {
+  "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/package.json"(
+    exports,
+    module,
+  ) {
     module.exports = {
       name: "thread-stream",
       version: "3.1.0",
@@ -1879,7 +2134,7 @@ var require_package = __commonJS({
       main: "index.js",
       types: "index.d.ts",
       dependencies: {
-        "real-require": "^0.2.0"
+        "real-require": "^0.2.0",
       },
       devDependencies: {
         "@types/node": "^20.1.0",
@@ -1894,47 +2149,46 @@ var require_package = __commonJS({
         tap: "^16.2.0",
         "ts-node": "^10.8.0",
         typescript: "^5.3.2",
-        "why-is-node-running": "^2.2.2"
+        "why-is-node-running": "^2.2.2",
       },
       scripts: {
         build: "tsc --noEmit",
         test: 'standard && npm run build && npm run transpile && tap "test/**/*.test.*js" && tap --ts test/*.test.*ts',
-        "test:ci": "standard && npm run transpile && npm run test:ci:js && npm run test:ci:ts",
-        "test:ci:js": 'tap --no-check-coverage --timeout=120 --coverage-report=lcovonly "test/**/*.test.*js"',
-        "test:ci:ts": 'tap --ts --no-check-coverage --coverage-report=lcovonly "test/**/*.test.*ts"',
-        "test:yarn": 'npm run transpile && tap "test/**/*.test.js" --no-check-coverage',
+        "test:ci":
+          "standard && npm run transpile && npm run test:ci:js && npm run test:ci:ts",
+        "test:ci:js":
+          'tap --no-check-coverage --timeout=120 --coverage-report=lcovonly "test/**/*.test.*js"',
+        "test:ci:ts":
+          'tap --ts --no-check-coverage --coverage-report=lcovonly "test/**/*.test.*ts"',
+        "test:yarn":
+          'npm run transpile && tap "test/**/*.test.js" --no-check-coverage',
         transpile: "sh ./test/ts/transpile.sh",
-        prepare: "husky install"
+        prepare: "husky install",
       },
       standard: {
-        ignore: [
-          "test/ts/**/*",
-          "test/syntax-error.mjs"
-        ]
+        ignore: ["test/ts/**/*", "test/syntax-error.mjs"],
       },
       repository: {
         type: "git",
-        url: "git+https://github.com/mcollina/thread-stream.git"
+        url: "git+https://github.com/mcollina/thread-stream.git",
       },
-      keywords: [
-        "worker",
-        "thread",
-        "threads",
-        "stream"
-      ],
+      keywords: ["worker", "thread", "threads", "stream"],
       author: "Matteo Collina <hello@matteocollina.com>",
       license: "MIT",
       bugs: {
-        url: "https://github.com/mcollina/thread-stream/issues"
+        url: "https://github.com/mcollina/thread-stream/issues",
       },
-      homepage: "https://github.com/mcollina/thread-stream#readme"
+      homepage: "https://github.com/mcollina/thread-stream#readme",
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/lib/wait.js
 var require_wait = __commonJS({
-  "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/lib/wait.js"(exports, module) {
+  "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/lib/wait.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var MAX_TIMEOUT = 1e3;
     function wait(state, index, expected, timeout, done) {
@@ -1987,25 +2241,31 @@ var require_wait = __commonJS({
       check(1);
     }
     module.exports = { wait, waitDiff };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/lib/indexes.js
 var require_indexes = __commonJS({
-  "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/lib/indexes.js"(exports, module) {
+  "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/lib/indexes.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var WRITE_INDEX = 4;
     var READ_INDEX = 8;
     module.exports = {
       WRITE_INDEX,
-      READ_INDEX
+      READ_INDEX,
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/index.js
 var require_thread_stream = __commonJS({
-  "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/index.js"(exports, module) {
+  "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var { version } = require_package();
     var { EventEmitter } = __require("events");
@@ -2013,10 +2273,7 @@ var require_thread_stream = __commonJS({
     var { join } = __require("path");
     var { pathToFileURL } = __require("url");
     var { wait } = require_wait();
-    var {
-      WRITE_INDEX,
-      READ_INDEX
-    } = require_indexes();
+    var { WRITE_INDEX, READ_INDEX } = require_indexes();
     var buffer = __require("buffer");
     var assert = __require("assert");
     var kImpl = /* @__PURE__ */ Symbol("kImpl");
@@ -2030,13 +2287,15 @@ var require_thread_stream = __commonJS({
       }
     };
     var FakeFinalizationRegistry = class {
-      register() {
-      }
-      unregister() {
-      }
+      register() {}
+      unregister() {}
     };
-    var FinalizationRegistry2 = process.env.NODE_V8_COVERAGE ? FakeFinalizationRegistry : global.FinalizationRegistry || FakeFinalizationRegistry;
-    var WeakRef2 = process.env.NODE_V8_COVERAGE ? FakeWeakRef : global.WeakRef || FakeWeakRef;
+    var FinalizationRegistry2 = process.env.NODE_V8_COVERAGE
+      ? FakeFinalizationRegistry
+      : global.FinalizationRegistry || FakeFinalizationRegistry;
+    var WeakRef2 = process.env.NODE_V8_COVERAGE
+      ? FakeWeakRef
+      : global.WeakRef || FakeWeakRef;
     var registry = new FinalizationRegistry2((worker) => {
       if (worker.exited) {
         return;
@@ -2045,22 +2304,30 @@ var require_thread_stream = __commonJS({
     });
     function createWorker(stream, opts) {
       const { filename, workerData } = opts;
-      const bundlerOverrides = "__bundlerPathsOverrides" in globalThis ? globalThis.__bundlerPathsOverrides : {};
-      const toExecute = bundlerOverrides["thread-stream-worker"] || join(__dirname, "lib", "worker.js");
+      const bundlerOverrides =
+        "__bundlerPathsOverrides" in globalThis
+          ? globalThis.__bundlerPathsOverrides
+          : {};
+      const toExecute =
+        bundlerOverrides["thread-stream-worker"] ||
+        join(__dirname, "lib", "worker.js");
       const worker = new Worker(toExecute, {
         ...opts.workerOpts,
         trackUnmanagedFds: false,
         workerData: {
-          filename: filename.indexOf("file://") === 0 ? filename : pathToFileURL(filename).href,
+          filename:
+            filename.indexOf("file://") === 0
+              ? filename
+              : pathToFileURL(filename).href,
           dataBuf: stream[kImpl].dataBuf,
           stateBuf: stream[kImpl].stateBuf,
           workerData: {
             $context: {
-              threadStreamVersion: version
+              threadStreamVersion: version,
             },
-            ...workerData
-          }
-        }
+            ...workerData,
+          },
+        },
       });
       worker.stream = new FakeWeakRef(stream);
       worker.on("message", onWorkerMessage);
@@ -2162,7 +2429,10 @@ var require_thread_stream = __commonJS({
       registry.unregister(stream);
       stream.worker.exited = true;
       stream.worker.off("exit", onWorkerExit);
-      destroy(stream, code !== 0 ? new Error("the worker thread exited") : null);
+      destroy(
+        stream,
+        code !== 0 ? new Error("the worker thread exited") : null,
+      );
     }
     var ThreadStream = class extends EventEmitter {
       constructor(opts = {}) {
@@ -2173,7 +2443,9 @@ var require_thread_stream = __commonJS({
         this[kImpl] = {};
         this[kImpl].stateBuf = new SharedArrayBuffer(128);
         this[kImpl].state = new Int32Array(this[kImpl].stateBuf);
-        this[kImpl].dataBuf = new SharedArrayBuffer(opts.bufferSize || 4 * 1024 * 1024);
+        this[kImpl].dataBuf = new SharedArrayBuffer(
+          opts.bufferSize || 4 * 1024 * 1024,
+        );
         this[kImpl].data = Buffer.from(this[kImpl].dataBuf);
         this[kImpl].sync = opts.sync || false;
         this[kImpl].ending = false;
@@ -2200,7 +2472,10 @@ var require_thread_stream = __commonJS({
           error(this, new Error("the worker is ending"));
           return false;
         }
-        if (this[kImpl].flushing && this[kImpl].buf.length + data.length >= MAX_STRING) {
+        if (
+          this[kImpl].flushing &&
+          this[kImpl].buf.length + data.length >= MAX_STRING
+        ) {
           try {
             writeSync(this);
             this[kImpl].flushing = true;
@@ -2223,7 +2498,11 @@ var require_thread_stream = __commonJS({
           this[kImpl].flushing = true;
           setImmediate(nextFlush, this);
         }
-        this[kImpl].needDrain = this[kImpl].data.length - this[kImpl].buf.length - Atomics.load(this[kImpl].state, WRITE_INDEX) <= 0;
+        this[kImpl].needDrain =
+          this[kImpl].data.length -
+            this[kImpl].buf.length -
+            Atomics.load(this[kImpl].state, WRITE_INDEX) <=
+          0;
         return !this[kImpl].needDrain;
       }
       end() {
@@ -2241,18 +2520,24 @@ var require_thread_stream = __commonJS({
           return;
         }
         const writeIndex = Atomics.load(this[kImpl].state, WRITE_INDEX);
-        wait(this[kImpl].state, READ_INDEX, writeIndex, Infinity, (err, res) => {
-          if (err) {
-            destroy(this, err);
-            process.nextTick(cb, err);
-            return;
-          }
-          if (res === "not-equal") {
-            this.flush(cb);
-            return;
-          }
-          process.nextTick(cb);
-        });
+        wait(
+          this[kImpl].state,
+          READ_INDEX,
+          writeIndex,
+          Infinity,
+          (err, res) => {
+            if (err) {
+              destroy(this, err);
+              process.nextTick(cb, err);
+              return;
+            }
+            if (res === "not-equal") {
+              this.flush(cb);
+              return;
+            }
+            process.nextTick(cb);
+          },
+        );
       }
       flushSync() {
         if (this[kImpl].destroyed) {
@@ -2310,11 +2595,13 @@ var require_thread_stream = __commonJS({
         error(stream, err);
       }
       if (!stream.worker.exited) {
-        stream.worker.terminate().catch(() => {
-        }).then(() => {
-          stream[kImpl].closed = true;
-          stream.emit("close");
-        });
+        stream.worker
+          .terminate()
+          .catch(() => {})
+          .then(() => {
+            stream[kImpl].closed = true;
+            stream.emit("close");
+          });
       } else {
         setImmediate(() => {
           stream[kImpl].closed = true;
@@ -2332,7 +2619,11 @@ var require_thread_stream = __commonJS({
       return true;
     }
     function end(stream) {
-      if (stream[kImpl].ended || !stream[kImpl].ending || stream[kImpl].flushing) {
+      if (
+        stream[kImpl].ended ||
+        !stream[kImpl].ending ||
+        stream[kImpl].flushing
+      ) {
         return;
       }
       stream[kImpl].ended = true;
@@ -2423,12 +2714,15 @@ var require_thread_stream = __commonJS({
       }
     }
     module.exports = ThreadStream;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/transport.js
 var require_transport = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/transport.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/transport.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var { createRequire } = __require("module");
     var getCallers = require_caller();
@@ -2439,7 +2733,7 @@ var require_transport = __commonJS({
     function setupOnExit(stream) {
       onExit.register(stream, autoEnd);
       onExit.registerBeforeExit(stream, flush);
-      stream.on("close", function() {
+      stream.on("close", function () {
         onExit.unregister(stream);
       });
     }
@@ -2448,10 +2742,10 @@ var require_transport = __commonJS({
         filename,
         workerData,
         workerOpts,
-        sync
+        sync,
       });
       stream.on("ready", onReady);
-      stream.on("close", function() {
+      stream.on("close", function () {
         process.removeListener("exit", onExit2);
       });
       process.on("exit", onExit2);
@@ -2476,7 +2770,7 @@ var require_transport = __commonJS({
       stream.ref();
       stream.flushSync();
       stream.end();
-      stream.once("close", function() {
+      stream.once("close", function () {
         stream.unref();
       });
     }
@@ -2484,42 +2778,61 @@ var require_transport = __commonJS({
       stream.flushSync();
     }
     function transport(fullOptions) {
-      const { pipeline, targets, levels, dedupe, worker = {}, caller = getCallers(), sync = false } = fullOptions;
+      const {
+        pipeline,
+        targets,
+        levels,
+        dedupe,
+        worker = {},
+        caller = getCallers(),
+        sync = false,
+      } = fullOptions;
       const options = {
-        ...fullOptions.options
+        ...fullOptions.options,
       };
       const callers = typeof caller === "string" ? [caller] : caller;
-      const bundlerOverrides = "__bundlerPathsOverrides" in globalThis ? globalThis.__bundlerPathsOverrides : {};
+      const bundlerOverrides =
+        "__bundlerPathsOverrides" in globalThis
+          ? globalThis.__bundlerPathsOverrides
+          : {};
       let target = fullOptions.target;
       if (target && targets) {
         throw new Error("only one of target or targets can be specified");
       }
       if (targets) {
-        target = bundlerOverrides["pino-worker"] || join(__dirname, "worker.js");
-        options.targets = targets.filter((dest) => dest.target).map((dest) => {
-          return {
-            ...dest,
-            target: fixTarget(dest.target)
-          };
-        });
-        options.pipelines = targets.filter((dest) => dest.pipeline).map((dest) => {
-          return dest.pipeline.map((t) => {
+        target =
+          bundlerOverrides["pino-worker"] || join(__dirname, "worker.js");
+        options.targets = targets
+          .filter((dest) => dest.target)
+          .map((dest) => {
             return {
-              ...t,
-              level: dest.level,
-              // duplicate the pipeline `level` property defined in the upper level
-              target: fixTarget(t.target)
+              ...dest,
+              target: fixTarget(dest.target),
             };
           });
-        });
+        options.pipelines = targets
+          .filter((dest) => dest.pipeline)
+          .map((dest) => {
+            return dest.pipeline.map((t) => {
+              return {
+                ...t,
+                level: dest.level,
+                // duplicate the pipeline `level` property defined in the upper level
+                target: fixTarget(t.target),
+              };
+            });
+          });
       } else if (pipeline) {
-        target = bundlerOverrides["pino-worker"] || join(__dirname, "worker.js");
-        options.pipelines = [pipeline.map((dest) => {
-          return {
-            ...dest,
-            target: fixTarget(dest.target)
-          };
-        })];
+        target =
+          bundlerOverrides["pino-worker"] || join(__dirname, "worker.js");
+        options.pipelines = [
+          pipeline.map((dest) => {
+            return {
+              ...dest,
+              target: fixTarget(dest.target),
+            };
+          }),
+        ];
       }
       if (levels) {
         options.levels = levels;
@@ -2540,7 +2853,8 @@ var require_transport = __commonJS({
         let fixTarget2;
         for (const filePath of callers) {
           try {
-            const context = filePath === "node:repl" ? process.cwd() + sep : filePath;
+            const context =
+              filePath === "node:repl" ? process.cwd() + sep : filePath;
             fixTarget2 = createRequire(context).resolve(origin);
             break;
           } catch (err) {
@@ -2548,18 +2862,23 @@ var require_transport = __commonJS({
           }
         }
         if (!fixTarget2) {
-          throw new Error(`unable to determine transport target for "${origin}"`);
+          throw new Error(
+            `unable to determine transport target for "${origin}"`,
+          );
         }
         return fixTarget2;
       }
     }
     module.exports = transport;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/tools.js
 var require_tools = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/tools.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/tools.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var diagChan = __require("node:diagnostics_channel");
     var format = require_quick_format_unescaped();
@@ -2582,7 +2901,7 @@ var require_tools = __commonJS({
       messageKeySym,
       errorKeySym,
       nestedKeyStrSym,
-      msgPrefixSym
+      msgPrefixSym,
     } = require_symbols();
     var { isMainThread } = __require("worker_threads");
     var transport = require_transport();
@@ -2594,11 +2913,10 @@ var require_tools = __commonJS({
         hasSubscribers: false,
         traceSync(fn, store, thisArg, ...args) {
           return fn.call(thisArg, ...args);
-        }
+        },
       };
     }
-    function noop() {
-    }
+    function noop() {}
     function genLog(level, hook) {
       if (!hook) return LOG;
       return function hookWrappedLog(...args) {
@@ -2621,13 +2939,25 @@ var require_tools = __commonJS({
             msg = n.shift();
             formatParams = n;
           }
-          if (typeof this[msgPrefixSym] === "string" && msg !== void 0 && msg !== null) {
+          if (
+            typeof this[msgPrefixSym] === "string" &&
+            msg !== void 0 &&
+            msg !== null
+          ) {
             msg = this[msgPrefixSym] + msg;
           }
-          this[writeSym](o, format(msg, formatParams, this[formatOptsSym]), level);
+          this[writeSym](
+            o,
+            format(msg, formatParams, this[formatOptsSym]),
+            level,
+          );
         } else {
           let msg = o === void 0 ? n.shift() : o;
-          if (typeof this[msgPrefixSym] === "string" && msg !== void 0 && msg !== null) {
+          if (
+            typeof this[msgPrefixSym] === "string" &&
+            msg !== void 0 &&
+            msg !== null
+          ) {
             msg = this[msgPrefixSym] + msg;
           }
           this[writeSym](null, format(msg, n, this[formatOptsSym]), level);
@@ -2685,7 +3015,10 @@ var require_tools = __commonJS({
       let propStr = "";
       for (const key in obj) {
         value = obj[key];
-        if (Object.prototype.hasOwnProperty.call(obj, key) && value !== void 0) {
+        if (
+          Object.prototype.hasOwnProperty.call(obj, key) &&
+          value !== void 0
+        ) {
           if (serializers[key]) {
             value = serializers[key](value);
           } else if (key === errorKey && serializers.err) {
@@ -2741,7 +3074,9 @@ var require_tools = __commonJS({
         }
       }
       if (this[nestedKeySym] && propStr) {
-        return data + this[nestedKeyStrSym] + propStr.slice(1) + "}" + msgStr + end;
+        return (
+          data + this[nestedKeyStrSym] + propStr.slice(1) + "}" + msgStr + end
+        );
       } else {
         return data + propStr + msgStr + end;
       }
@@ -2758,10 +3093,20 @@ var require_tools = __commonJS({
       bindings = formatter(bindings);
       for (const key in bindings) {
         value = bindings[key];
-        const valid = (key.length < 5 || key !== "level" && key !== "serializers" && key !== "formatters" && key !== "customLevels") && bindings.hasOwnProperty(key) && value !== void 0;
+        const valid =
+          (key.length < 5 ||
+            (key !== "level" &&
+              key !== "serializers" &&
+              key !== "formatters" &&
+              key !== "customLevels")) &&
+          bindings.hasOwnProperty(key) &&
+          value !== void 0;
         if (valid === true) {
           value = serializers[key] ? serializers[key](value) : value;
-          value = (stringifiers[key] || wildcardStringifier || stringify2)(value, stringifySafe);
+          value = (stringifiers[key] || wildcardStringifier || stringify2)(
+            value,
+            stringifySafe,
+          );
           if (value === void 0) continue;
           data += ',"' + key + '":' + value;
         }
@@ -2776,7 +3121,7 @@ var require_tools = __commonJS({
       stream.on("error", filterBrokenPipe);
       if (!opts.sync && isMainThread) {
         onExit.register(stream, autoEnd);
-        stream.on("close", function() {
+        stream.on("close", function () {
           onExit.unregister(stream);
         });
       }
@@ -2799,7 +3144,7 @@ var require_tools = __commonJS({
       }
       if (eventName === "beforeExit") {
         stream.flush();
-        stream.on("drain", function() {
+        stream.on("drain", function () {
           stream.end();
         });
       } else {
@@ -2813,30 +3158,65 @@ var require_tools = __commonJS({
           opts = {};
         } else if (typeof stream === "string") {
           if (opts && opts.transport) {
-            throw Error("only one of option.transport or stream can be specified");
+            throw Error(
+              "only one of option.transport or stream can be specified",
+            );
           }
           stream = buildSafeSonicBoom({ dest: stream });
-        } else if (opts instanceof SonicBoom || opts.writable || opts._writableState) {
+        } else if (
+          opts instanceof SonicBoom ||
+          opts.writable ||
+          opts._writableState
+        ) {
           stream = opts;
           opts = {};
         } else if (opts.transport) {
-          if (opts.transport instanceof SonicBoom || opts.transport.writable || opts.transport._writableState) {
-            throw Error("option.transport do not allow stream, please pass to option directly. e.g. pino(transport)");
+          if (
+            opts.transport instanceof SonicBoom ||
+            opts.transport.writable ||
+            opts.transport._writableState
+          ) {
+            throw Error(
+              "option.transport do not allow stream, please pass to option directly. e.g. pino(transport)",
+            );
           }
-          if (opts.transport.targets && opts.transport.targets.length && opts.formatters && typeof opts.formatters.level === "function") {
-            throw Error("option.transport.targets do not allow custom level formatters");
+          if (
+            opts.transport.targets &&
+            opts.transport.targets.length &&
+            opts.formatters &&
+            typeof opts.formatters.level === "function"
+          ) {
+            throw Error(
+              "option.transport.targets do not allow custom level formatters",
+            );
           }
           let customLevels;
           if (opts.customLevels) {
-            customLevels = opts.useOnlyCustomLevels ? opts.customLevels : Object.assign({}, opts.levels, opts.customLevels);
+            customLevels = opts.useOnlyCustomLevels
+              ? opts.customLevels
+              : Object.assign({}, opts.levels, opts.customLevels);
           }
-          stream = transport({ caller, ...opts.transport, levels: customLevels });
+          stream = transport({
+            caller,
+            ...opts.transport,
+            levels: customLevels,
+          });
         }
         opts = Object.assign({}, defaultOptions, opts);
-        opts.serializers = Object.assign({}, defaultOptions.serializers, opts.serializers);
-        opts.formatters = Object.assign({}, defaultOptions.formatters, opts.formatters);
+        opts.serializers = Object.assign(
+          {},
+          defaultOptions.serializers,
+          opts.serializers,
+        );
+        opts.formatters = Object.assign(
+          {},
+          defaultOptions.formatters,
+          opts.formatters,
+        );
         if (opts.prettyPrint) {
-          throw new Error("prettyPrint option is no longer supported, see the pino-pretty package (https://github.com/pinojs/pino-pretty)");
+          throw new Error(
+            "prettyPrint option is no longer supported, see the pino-pretty package (https://github.com/pinojs/pino-pretty)",
+          );
         }
         const { enabled, onChild } = opts;
         if (enabled === false) opts.level = "silent";
@@ -2867,7 +3247,7 @@ var require_tools = __commonJS({
       return {
         level,
         bindings,
-        log
+        log,
       };
     }
     function normalizeDestFileDescriptor(destination) {
@@ -2889,36 +3269,42 @@ var require_tools = __commonJS({
       createArgsNormalizer,
       stringify,
       buildFormatters,
-      normalizeDestFileDescriptor
+      normalizeDestFileDescriptor,
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/constants.js
 var require_constants = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/constants.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/constants.js"(
+    exports,
+    module,
+  ) {
     var DEFAULT_LEVELS = {
       trace: 10,
       debug: 20,
       info: 30,
       warn: 40,
       error: 50,
-      fatal: 60
+      fatal: 60,
     };
     var SORTING_ORDER = {
       ASC: "ASC",
-      DESC: "DESC"
+      DESC: "DESC",
     };
     module.exports = {
       DEFAULT_LEVELS,
-      SORTING_ORDER
+      SORTING_ORDER,
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/levels.js
 var require_levels = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/levels.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/levels.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var {
       lsCacheSym,
@@ -2927,21 +3313,20 @@ var require_levels = __commonJS({
       streamSym,
       formattersSym,
       hooksSym,
-      levelCompSym
+      levelCompSym,
     } = require_symbols();
     var { noop, genLog } = require_tools();
     var { DEFAULT_LEVELS, SORTING_ORDER } = require_constants();
     var levelMethods = {
       fatal: (hook) => {
         const logFatal = genLog(DEFAULT_LEVELS.fatal, hook);
-        return function(...args) {
+        return function (...args) {
           const stream = this[streamSym];
           logFatal.call(this, ...args);
           if (typeof stream.flushSync === "function") {
             try {
               stream.flushSync();
-            } catch (e) {
-            }
+            } catch (e) {}
           }
         };
       },
@@ -2949,7 +3334,7 @@ var require_levels = __commonJS({
       warn: (hook) => genLog(DEFAULT_LEVELS.warn, hook),
       info: (hook) => genLog(DEFAULT_LEVELS.info, hook),
       debug: (hook) => genLog(DEFAULT_LEVELS.debug, hook),
-      trace: (hook) => genLog(DEFAULT_LEVELS.trace, hook)
+      trace: (hook) => genLog(DEFAULT_LEVELS.trace, hook),
     };
     var nums = Object.keys(DEFAULT_LEVELS).reduce((o, k) => {
       o[DEFAULT_LEVELS[k]] = k;
@@ -2989,12 +3374,13 @@ var require_levels = __commonJS({
     function setLevel(level) {
       const { labels, values } = this.levels;
       if (typeof level === "number") {
-        if (labels[level] === void 0) throw Error("unknown level value" + level);
+        if (labels[level] === void 0)
+          throw Error("unknown level value" + level);
         level = labels[level];
       }
       if (values[level] === void 0) throw Error("unknown level " + level);
       const preLevelVal = this[levelValSym];
-      const levelVal = this[levelValSym] = values[level];
+      const levelVal = (this[levelValSym] = values[level]);
       const useOnlyCustomLevelsVal = this[useOnlyCustomLevelsSym];
       const levelComparison = this[levelCompSym];
       const hook = this[hooksSym].logMethod;
@@ -3003,7 +3389,9 @@ var require_levels = __commonJS({
           this[key] = noop;
           continue;
         }
-        this[key] = isStandardLevel(key, useOnlyCustomLevelsVal) ? levelMethods[key](hook) : genLog(values[key], hook);
+        this[key] = isStandardLevel(key, useOnlyCustomLevelsVal)
+          ? levelMethods[key](hook)
+          : genLog(values[key], hook);
       }
       this.emit(
         "level-change",
@@ -3011,7 +3399,7 @@ var require_levels = __commonJS({
         levelVal,
         labels[preLevelVal],
         preLevelVal,
-        this
+        this,
       );
     }
     function getLevel(level) {
@@ -3021,7 +3409,10 @@ var require_levels = __commonJS({
     function isLevelEnabled(logLevel) {
       const { values } = this.levels;
       const logLevelVal = values[logLevel];
-      return logLevelVal !== void 0 && this[levelCompSym](logLevelVal, this[levelValSym]);
+      return (
+        logLevelVal !== void 0 &&
+        this[levelCompSym](logLevelVal, this[levelValSym])
+      );
     }
     function compareLevel(direction, current, expected) {
       if (direction === SORTING_ORDER.DESC) {
@@ -3036,41 +3427,51 @@ var require_levels = __commonJS({
       return levelComparison;
     }
     function mappings(customLevels = null, useOnlyCustomLevels = false) {
-      const customNums = customLevels ? Object.keys(customLevels).reduce((o, k) => {
-        o[customLevels[k]] = k;
-        return o;
-      }, {}) : null;
+      const customNums = customLevels
+        ? Object.keys(customLevels).reduce((o, k) => {
+            o[customLevels[k]] = k;
+            return o;
+          }, {})
+        : null;
       const labels = Object.assign(
         Object.create(Object.prototype, { Infinity: { value: "silent" } }),
         useOnlyCustomLevels ? null : nums,
-        customNums
+        customNums,
       );
       const values = Object.assign(
         Object.create(Object.prototype, { silent: { value: Infinity } }),
         useOnlyCustomLevels ? null : DEFAULT_LEVELS,
-        customLevels
+        customLevels,
       );
       return { labels, values };
     }
-    function assertDefaultLevelFound(defaultLevel, customLevels, useOnlyCustomLevels) {
+    function assertDefaultLevelFound(
+      defaultLevel,
+      customLevels,
+      useOnlyCustomLevels,
+    ) {
       if (typeof defaultLevel === "number") {
         const values = [].concat(
           Object.keys(customLevels || {}).map((key) => customLevels[key]),
           useOnlyCustomLevels ? [] : Object.keys(nums).map((level) => +level),
-          Infinity
+          Infinity,
         );
         if (!values.includes(defaultLevel)) {
-          throw Error(`default level:${defaultLevel} must be included in custom levels`);
+          throw Error(
+            `default level:${defaultLevel} must be included in custom levels`,
+          );
         }
         return;
       }
       const labels = Object.assign(
         Object.create(Object.prototype, { silent: { value: Infinity } }),
         useOnlyCustomLevels ? null : DEFAULT_LEVELS,
-        customLevels
+        customLevels,
       );
       if (!(defaultLevel in labels)) {
-        throw Error(`default level:${defaultLevel} must be included in custom levels`);
+        throw Error(
+          `default level:${defaultLevel} must be included in custom levels`,
+        );
       }
     }
     function assertNoLevelCollisions(levels, customLevels) {
@@ -3080,7 +3481,9 @@ var require_levels = __commonJS({
           throw Error("levels cannot be overridden");
         }
         if (customLevels[k] in labels) {
-          throw Error("pre-existing level values cannot be used for new levels");
+          throw Error(
+            "pre-existing level values cannot be used for new levels",
+          );
         }
       }
     }
@@ -3088,10 +3491,15 @@ var require_levels = __commonJS({
       if (typeof levelComparison === "function") {
         return;
       }
-      if (typeof levelComparison === "string" && Object.values(SORTING_ORDER).includes(levelComparison)) {
+      if (
+        typeof levelComparison === "string" &&
+        Object.values(SORTING_ORDER).includes(levelComparison)
+      ) {
         return;
       }
-      throw new Error('Levels comparison should be one of "ASC", "DESC" or "function" type');
+      throw new Error(
+        'Levels comparison should be one of "ASC", "DESC" or "function" type',
+      );
     }
     module.exports = {
       initialLsCache,
@@ -3104,22 +3512,28 @@ var require_levels = __commonJS({
       assertNoLevelCollisions,
       assertDefaultLevelFound,
       genLevelComparison,
-      assertLevelComparison
+      assertLevelComparison,
     };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/meta.js
 var require_meta = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/meta.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/meta.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     module.exports = { version: "9.14.0" };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/proto.js
 var require_proto = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/proto.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/proto.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var { EventEmitter } = __require("node:events");
     var {
@@ -3147,7 +3561,7 @@ var require_proto = __commonJS({
       formatOptsSym,
       stringifiersSym,
       msgPrefixSym,
-      hooksSym
+      hooksSym,
     } = require_symbols();
     var {
       getLevel,
@@ -3156,21 +3570,13 @@ var require_proto = __commonJS({
       mappings,
       initialLsCache,
       genLsCache,
-      assertNoLevelCollisions
+      assertNoLevelCollisions,
     } = require_levels();
-    var {
-      asChindings,
-      asJson,
-      buildFormatters,
-      stringify,
-      noop
-    } = require_tools();
-    var {
-      version
-    } = require_meta();
+    var { asChindings, asJson, buildFormatters, stringify, noop } =
+      require_tools();
+    var { version } = require_meta();
     var redaction = require_redaction();
-    var constructor = class Pino {
-    };
+    var constructor = class Pino {};
     var prototype = {
       constructor,
       child,
@@ -3201,10 +3607,10 @@ var require_proto = __commonJS({
       [writeSym]: write,
       [asJsonSym]: asJson,
       [getLevelSym]: getLevel,
-      [setLevelSym]: setLevel
+      [setLevelSym]: setLevel,
     };
     Object.setPrototypeOf(prototype, EventEmitter.prototype);
-    module.exports = function() {
+    module.exports = function () {
       return Object.create(prototype);
     };
     var resetChildingsFormatter = (bindings2) => bindings2;
@@ -3220,7 +3626,7 @@ var require_proto = __commonJS({
           instance[formattersSym] = buildFormatters(
             formatters.level,
             resetChildingsFormatter,
-            formatters.log
+            formatters.log,
           );
         }
         instance[chindingsSym] = asChindings(instance, bindings2);
@@ -3243,7 +3649,9 @@ var require_proto = __commonJS({
         for (const bk in options.serializers) {
           instance[serializersSym][bk] = options.serializers[bk];
         }
-        const bindingsSymbols = Object.getOwnPropertySymbols(options.serializers);
+        const bindingsSymbols = Object.getOwnPropertySymbols(
+          options.serializers,
+        );
         for (var bi = 0; bi < bindingsSymbols.length; bi++) {
           const bks = bindingsSymbols[bi];
           instance[serializersSym][bks] = options.serializers[bks];
@@ -3254,21 +3662,27 @@ var require_proto = __commonJS({
         instance[formattersSym] = buildFormatters(
           level || formatters.level,
           chindings || resetChildingsFormatter,
-          log || formatters.log
+          log || formatters.log,
         );
       } else {
         instance[formattersSym] = buildFormatters(
           formatters.level,
           resetChildingsFormatter,
-          formatters.log
+          formatters.log,
         );
       }
       if (options.hasOwnProperty("customLevels") === true) {
         assertNoLevelCollisions(this.levels, options.customLevels);
-        instance.levels = mappings(options.customLevels, instance[useOnlyCustomLevelsSym]);
+        instance.levels = mappings(
+          options.customLevels,
+          instance[useOnlyCustomLevelsSym],
+        );
         genLsCache(instance);
       }
-      if (typeof options.redact === "object" && options.redact !== null || Array.isArray(options.redact)) {
+      if (
+        (typeof options.redact === "object" && options.redact !== null) ||
+        Array.isArray(options.redact)
+      ) {
         instance.redact = options.redact;
         const stringifiers = redaction(instance.redact, stringify);
         const formatOpts = { stringify: stringifiers[redactFmtSym] };
@@ -3306,7 +3720,8 @@ var require_proto = __commonJS({
       const mixin = this[mixinSym];
       const errorKey = this[errorKeySym];
       const messageKey = this[messageKeySym];
-      const mixinMergeStrategy = this[mixinMergeStrategySym] || defaultMixinMergeStrategy;
+      const mixinMergeStrategy =
+        this[mixinMergeStrategySym] || defaultMixinMergeStrategy;
       let obj;
       const streamWriteHook = this[hooksSym].streamWrite;
       if (_obj === void 0 || _obj === null) {
@@ -3345,12 +3760,15 @@ var require_proto = __commonJS({
         stream.flush(cb || noop);
       } else if (cb) cb();
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/safe-stable-stringify@2.5.0/node_modules/safe-stable-stringify/index.js
 var require_safe_stable_stringify = __commonJS({
-  "../../node_modules/.pnpm/safe-stable-stringify@2.5.0/node_modules/safe-stable-stringify/index.js"(exports, module) {
+  "../../node_modules/.pnpm/safe-stable-stringify@2.5.0/node_modules/safe-stable-stringify/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var { hasOwnProperty } = Object.prototype;
     var stringify = configure();
@@ -3382,16 +3800,16 @@ var require_safe_stable_stringify = __commonJS({
       }
       return array;
     }
-    var typedArrayPrototypeGetSymbolToStringTag = Object.getOwnPropertyDescriptor(
-      Object.getPrototypeOf(
-        Object.getPrototypeOf(
-          new Int8Array()
-        )
-      ),
-      Symbol.toStringTag
-    ).get;
+    var typedArrayPrototypeGetSymbolToStringTag =
+      Object.getOwnPropertyDescriptor(
+        Object.getPrototypeOf(Object.getPrototypeOf(new Int8Array())),
+        Symbol.toStringTag,
+      ).get;
     function isTypedArrayWithEntries(value) {
-      return typedArrayPrototypeGetSymbolToStringTag.call(value) !== void 0 && value.length !== 0;
+      return (
+        typedArrayPrototypeGetSymbolToStringTag.call(value) !== void 0 &&
+        value.length !== 0
+      );
     }
     function stringifyTypedArray(array, separator, maximumBreadth) {
       if (array.length < maximumBreadth) {
@@ -3417,10 +3835,12 @@ var require_safe_stable_stringify = __commonJS({
           return {
             toString() {
               throw new TypeError("Converting circular structure to JSON");
-            }
+            },
           };
         }
-        throw new TypeError('The "circularValue" argument must be of type string or the value null or undefined');
+        throw new TypeError(
+          'The "circularValue" argument must be of type string or the value null or undefined',
+        );
       }
       return '"[Circular]"';
     }
@@ -3429,7 +3849,9 @@ var require_safe_stable_stringify = __commonJS({
       if (hasOwnProperty.call(options, "deterministic")) {
         value = options.deterministic;
         if (typeof value !== "boolean" && typeof value !== "function") {
-          throw new TypeError('The "deterministic" argument must be of type boolean or comparator function');
+          throw new TypeError(
+            'The "deterministic" argument must be of type boolean or comparator function',
+          );
         }
       }
       return value === void 0 ? true : value;
@@ -3484,7 +3906,8 @@ var require_safe_stable_stringify = __commonJS({
         if (value) {
           return (value2) => {
             let message = `Object can not safely be stringified. Received type ${typeof value2}`;
-            if (typeof value2 !== "function") message += ` (${value2.toString()})`;
+            if (typeof value2 !== "function")
+              message += ` (${value2.toString()})`;
             throw new Error(message);
           };
         }
@@ -3504,12 +3927,27 @@ var require_safe_stable_stringify = __commonJS({
       const circularValue = getCircularValueOption(options);
       const bigint = getBooleanOption(options, "bigint");
       const deterministic = getDeterministicOption(options);
-      const comparator = typeof deterministic === "function" ? deterministic : void 0;
+      const comparator =
+        typeof deterministic === "function" ? deterministic : void 0;
       const maximumDepth = getPositiveIntegerOption(options, "maximumDepth");
-      const maximumBreadth = getPositiveIntegerOption(options, "maximumBreadth");
-      function stringifyFnReplacer(key, parent, stack, replacer, spacer, indentation) {
+      const maximumBreadth = getPositiveIntegerOption(
+        options,
+        "maximumBreadth",
+      );
+      function stringifyFnReplacer(
+        key,
+        parent,
+        stack,
+        replacer,
+        spacer,
+        indentation,
+      ) {
         let value = parent[key];
-        if (typeof value === "object" && value !== null && typeof value.toJSON === "function") {
+        if (
+          typeof value === "object" &&
+          value !== null &&
+          typeof value.toJSON === "function"
+        ) {
           value = value.toJSON(key);
         }
         value = replacer.call(parent, key, value);
@@ -3541,14 +3979,31 @@ ${indentation}`;
                 join = `,
 ${indentation}`;
               }
-              const maximumValuesToStringify = Math.min(value.length, maximumBreadth);
+              const maximumValuesToStringify = Math.min(
+                value.length,
+                maximumBreadth,
+              );
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
-                const tmp2 = stringifyFnReplacer(String(i), value, stack, replacer, spacer, indentation);
+                const tmp2 = stringifyFnReplacer(
+                  String(i),
+                  value,
+                  stack,
+                  replacer,
+                  spacer,
+                  indentation,
+                );
                 res += tmp2 !== void 0 ? tmp2 : "null";
                 res += join;
               }
-              const tmp = stringifyFnReplacer(String(i), value, stack, replacer, spacer, indentation);
+              const tmp = stringifyFnReplacer(
+                String(i),
+                value,
+                stack,
+                replacer,
+                spacer,
+                indentation,
+              );
               res += tmp !== void 0 ? tmp : "null";
               if (value.length - 1 > maximumBreadth) {
                 const removedKeys = value.length - maximumBreadth - 1;
@@ -3577,14 +4032,24 @@ ${originalIndentation}`;
 ${indentation}`;
               whitespace = " ";
             }
-            const maximumPropertiesToStringify = Math.min(keyLength, maximumBreadth);
+            const maximumPropertiesToStringify = Math.min(
+              keyLength,
+              maximumBreadth,
+            );
             if (deterministic && !isTypedArrayWithEntries(value)) {
               keys = sort(keys, comparator);
             }
             stack.push(value);
             for (let i = 0; i < maximumPropertiesToStringify; i++) {
               const key2 = keys[i];
-              const tmp = stringifyFnReplacer(key2, value, stack, replacer, spacer, indentation);
+              const tmp = stringifyFnReplacer(
+                key2,
+                value,
+                stack,
+                replacer,
+                spacer,
+                indentation,
+              );
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}:${whitespace}${tmp}`;
                 separator = join;
@@ -3604,7 +4069,11 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value) ? String(value) : fail ? fail(value) : "null";
+            return isFinite(value)
+              ? String(value)
+              : fail
+                ? fail(value)
+                : "null";
           case "boolean":
             return value === true ? "true" : "false";
           case "undefined":
@@ -3618,8 +4087,19 @@ ${originalIndentation}`;
             return fail ? fail(value) : void 0;
         }
       }
-      function stringifyArrayReplacer(key, value, stack, replacer, spacer, indentation) {
-        if (typeof value === "object" && value !== null && typeof value.toJSON === "function") {
+      function stringifyArrayReplacer(
+        key,
+        value,
+        stack,
+        replacer,
+        spacer,
+        indentation,
+      ) {
+        if (
+          typeof value === "object" &&
+          value !== null &&
+          typeof value.toJSON === "function"
+        ) {
           value = value.toJSON(key);
         }
         switch (typeof value) {
@@ -3650,14 +4130,31 @@ ${indentation}`;
                 join = `,
 ${indentation}`;
               }
-              const maximumValuesToStringify = Math.min(value.length, maximumBreadth);
+              const maximumValuesToStringify = Math.min(
+                value.length,
+                maximumBreadth,
+              );
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
-                const tmp2 = stringifyArrayReplacer(String(i), value[i], stack, replacer, spacer, indentation);
+                const tmp2 = stringifyArrayReplacer(
+                  String(i),
+                  value[i],
+                  stack,
+                  replacer,
+                  spacer,
+                  indentation,
+                );
                 res += tmp2 !== void 0 ? tmp2 : "null";
                 res += join;
               }
-              const tmp = stringifyArrayReplacer(String(i), value[i], stack, replacer, spacer, indentation);
+              const tmp = stringifyArrayReplacer(
+                String(i),
+                value[i],
+                stack,
+                replacer,
+                spacer,
+                indentation,
+              );
               res += tmp !== void 0 ? tmp : "null";
               if (value.length - 1 > maximumBreadth) {
                 const removedKeys = value.length - maximumBreadth - 1;
@@ -3680,7 +4177,14 @@ ${indentation}`;
             }
             let separator = "";
             for (const key2 of replacer) {
-              const tmp = stringifyArrayReplacer(key2, value[key2], stack, replacer, spacer, indentation);
+              const tmp = stringifyArrayReplacer(
+                key2,
+                value[key2],
+                stack,
+                replacer,
+                spacer,
+                indentation,
+              );
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}:${whitespace}${tmp}`;
                 separator = join;
@@ -3695,7 +4199,11 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value) ? String(value) : fail ? fail(value) : "null";
+            return isFinite(value)
+              ? String(value)
+              : fail
+                ? fail(value)
+                : "null";
           case "boolean":
             return value === true ? "true" : "false";
           case "undefined":
@@ -3743,14 +4251,29 @@ ${originalIndentation}`;
 ${indentation}`;
               const join2 = `,
 ${indentation}`;
-              const maximumValuesToStringify = Math.min(value.length, maximumBreadth);
+              const maximumValuesToStringify = Math.min(
+                value.length,
+                maximumBreadth,
+              );
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
-                const tmp2 = stringifyIndent(String(i), value[i], stack, spacer, indentation);
+                const tmp2 = stringifyIndent(
+                  String(i),
+                  value[i],
+                  stack,
+                  spacer,
+                  indentation,
+                );
                 res2 += tmp2 !== void 0 ? tmp2 : "null";
                 res2 += join2;
               }
-              const tmp = stringifyIndent(String(i), value[i], stack, spacer, indentation);
+              const tmp = stringifyIndent(
+                String(i),
+                value[i],
+                stack,
+                spacer,
+                indentation,
+              );
               res2 += tmp !== void 0 ? tmp : "null";
               if (value.length - 1 > maximumBreadth) {
                 const removedKeys = value.length - maximumBreadth - 1;
@@ -3774,7 +4297,10 @@ ${originalIndentation}`;
 ${indentation}`;
             let res = "";
             let separator = "";
-            let maximumPropertiesToStringify = Math.min(keyLength, maximumBreadth);
+            let maximumPropertiesToStringify = Math.min(
+              keyLength,
+              maximumBreadth,
+            );
             if (isTypedArrayWithEntries(value)) {
               res += stringifyTypedArray(value, join, maximumBreadth);
               keys = keys.slice(value.length);
@@ -3787,7 +4313,13 @@ ${indentation}`;
             stack.push(value);
             for (let i = 0; i < maximumPropertiesToStringify; i++) {
               const key2 = keys[i];
-              const tmp = stringifyIndent(key2, value[key2], stack, spacer, indentation);
+              const tmp = stringifyIndent(
+                key2,
+                value[key2],
+                stack,
+                spacer,
+                indentation,
+              );
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}: ${tmp}`;
                 separator = join;
@@ -3807,7 +4339,11 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value) ? String(value) : fail ? fail(value) : "null";
+            return isFinite(value)
+              ? String(value)
+              : fail
+                ? fail(value)
+                : "null";
           case "boolean":
             return value === true ? "true" : "false";
           case "undefined":
@@ -3851,7 +4387,10 @@ ${originalIndentation}`;
                 return '"[Array]"';
               }
               stack.push(value);
-              const maximumValuesToStringify = Math.min(value.length, maximumBreadth);
+              const maximumValuesToStringify = Math.min(
+                value.length,
+                maximumBreadth,
+              );
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
                 const tmp2 = stringifySimple(String(i), value[i], stack);
@@ -3876,7 +4415,10 @@ ${originalIndentation}`;
               return '"[Object]"';
             }
             let separator = "";
-            let maximumPropertiesToStringify = Math.min(keyLength, maximumBreadth);
+            let maximumPropertiesToStringify = Math.min(
+              keyLength,
+              maximumBreadth,
+            );
             if (hasLength && isTypedArrayWithEntries(value)) {
               res += stringifyTypedArray(value, ",", maximumBreadth);
               keys = keys.slice(value.length);
@@ -3903,7 +4445,11 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value) ? String(value) : fail ? fail(value) : "null";
+            return isFinite(value)
+              ? String(value)
+              : fail
+                ? fail(value)
+                : "null";
           case "boolean":
             return value === true ? "true" : "false";
           case "undefined":
@@ -3927,10 +4473,24 @@ ${originalIndentation}`;
           }
           if (replacer != null) {
             if (typeof replacer === "function") {
-              return stringifyFnReplacer("", { "": value }, [], replacer, spacer, "");
+              return stringifyFnReplacer(
+                "",
+                { "": value },
+                [],
+                replacer,
+                spacer,
+                "",
+              );
             }
             if (Array.isArray(replacer)) {
-              return stringifyArrayReplacer("", value, [], getUniqueReplacerSet(replacer), spacer, "");
+              return stringifyArrayReplacer(
+                "",
+                value,
+                [],
+                getUniqueReplacerSet(replacer),
+                spacer,
+                "",
+              );
             }
           }
           if (spacer.length !== 0) {
@@ -3941,12 +4501,15 @@ ${originalIndentation}`;
       }
       return stringify2;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/multistream.js
 var require_multistream = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/multistream.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/multistream.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var metadata = /* @__PURE__ */ Symbol.for("pino.metadata");
     var { DEFAULT_LEVELS } = require_constants();
@@ -3973,7 +4536,7 @@ var require_multistream = __commonJS({
         streams: [],
         clone,
         [metadata]: true,
-        streamLevels
+        streamLevels,
       };
       if (Array.isArray(streamsArray)) {
         streamsArray.forEach(add, res);
@@ -3988,7 +4551,11 @@ var require_multistream = __commonJS({
         const { streams } = this;
         let recordedLevel = 0;
         let stream;
-        for (let i = initLoopVar(streams.length, opts.dedupe); checkLoopVar(i, streams.length, opts.dedupe); i = adjustLoopVar(i, opts.dedupe)) {
+        for (
+          let i = initLoopVar(streams.length, opts.dedupe);
+          checkLoopVar(i, streams.length, opts.dedupe);
+          i = adjustLoopVar(i, opts.dedupe)
+        ) {
           dest = streams[i];
           if (dest.level <= level) {
             if (recordedLevel !== 0 && recordedLevel !== dest.level) {
@@ -4033,7 +4600,9 @@ var require_multistream = __commonJS({
         const isStream = typeof dest.write === "function" || dest.stream;
         const stream_ = dest.write ? dest : dest.stream;
         if (!isStream) {
-          throw Error("stream object needs to implement either StreamEntry or DestinationStream interface");
+          throw Error(
+            "stream object needs to implement either StreamEntry or DestinationStream interface",
+          );
         }
         const { streams, streamLevels: streamLevels2 } = this;
         let level;
@@ -4050,7 +4619,7 @@ var require_multistream = __commonJS({
           stream: stream_,
           level,
           levelVal: void 0,
-          id: ++res.lastId
+          id: ++res.lastId,
         };
         streams.unshift(dest_);
         streams.sort(compareByLevel);
@@ -4080,7 +4649,7 @@ var require_multistream = __commonJS({
         for (let i = 0; i < streams.length; i++) {
           streams[i] = {
             level,
-            stream: this.streams[i].stream
+            stream: this.streams[i].stream,
           };
         }
         return {
@@ -4092,7 +4661,7 @@ var require_multistream = __commonJS({
           clone,
           emit,
           flushSync,
-          [metadata]: true
+          [metadata]: true,
         };
       }
     }
@@ -4109,23 +4678,37 @@ var require_multistream = __commonJS({
       return dedupe ? i >= 0 : i < length;
     }
     module.exports = multistream;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/pino.js
 var require_pino = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/pino.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/pino.js"(
+    exports,
+    module,
+  ) {
     function pinoBundlerAbsolutePath(p) {
       try {
         const path = __require("path");
         const outputDir = "/home/runner/workspace/artifacts/api-server/dist";
         return path.resolve(outputDir, p.replace(/^\.\//, ""));
       } catch (e) {
-        const f = new Function("p", "return new URL(p, import.meta.url).pathname");
+        const f = new Function(
+          "p",
+          "return new URL(p, import.meta.url).pathname",
+        );
         return f(p);
       }
     }
-    globalThis.__bundlerPathsOverrides = { ...globalThis.__bundlerPathsOverrides || {}, "thread-stream-worker": pinoBundlerAbsolutePath("./thread-stream-worker.mjs"), "pino-worker": pinoBundlerAbsolutePath("./pino-worker.mjs"), "pino/file": pinoBundlerAbsolutePath("./pino-file.mjs"), "pino-pretty": pinoBundlerAbsolutePath("./pino-pretty.mjs") };
+    globalThis.__bundlerPathsOverrides = {
+      ...(globalThis.__bundlerPathsOverrides || {}),
+      "thread-stream-worker": pinoBundlerAbsolutePath(
+        "./thread-stream-worker.mjs",
+      ),
+      "pino-worker": pinoBundlerAbsolutePath("./pino-worker.mjs"),
+      "pino/file": pinoBundlerAbsolutePath("./pino-file.mjs"),
+      "pino-pretty": pinoBundlerAbsolutePath("./pino-pretty.mjs"),
+    };
     var os = __require("node:os");
     var stdSerializers = require_pino_std_serializers();
     var caller = require_caller();
@@ -4134,7 +4717,13 @@ var require_pino = __commonJS({
     var proto = require_proto();
     var symbols = require_symbols();
     var { configure } = require_safe_stable_stringify();
-    var { assertDefaultLevelFound, mappings, genLsCache, genLevelComparison, assertLevelComparison } = require_levels();
+    var {
+      assertDefaultLevelFound,
+      mappings,
+      genLsCache,
+      genLevelComparison,
+      assertLevelComparison,
+    } = require_levels();
     var { DEFAULT_LEVELS, SORTING_ORDER } = require_constants();
     var {
       createArgsNormalizer,
@@ -4143,7 +4732,7 @@ var require_pino = __commonJS({
       buildFormatters,
       stringify,
       normalizeDestFileDescriptor,
-      noop
+      noop,
     } = require_tools();
     var { version } = require_meta();
     var {
@@ -4169,7 +4758,7 @@ var require_pino = __commonJS({
       hooksSym,
       nestedKeyStrSym,
       mixinMergeStrategySym,
-      msgPrefixSym
+      msgPrefixSym,
     } = symbols;
     var { epochTime, nullTime } = time;
     var { pid } = process;
@@ -4185,7 +4774,7 @@ var require_pino = __commonJS({
       enabled: true,
       base: { pid, hostname },
       serializers: Object.assign(/* @__PURE__ */ Object.create(null), {
-        err: defaultErrorSerializer
+        err: defaultErrorSerializer,
       }),
       formatters: Object.assign(/* @__PURE__ */ Object.create(null), {
         bindings(bindings) {
@@ -4193,11 +4782,11 @@ var require_pino = __commonJS({
         },
         level(label, number) {
           return { level: number };
-        }
+        },
       }),
       hooks: {
         logMethod: void 0,
-        streamWrite: void 0
+        streamWrite: void 0,
       },
       timestamp: epochTime,
       name: void 0,
@@ -4205,14 +4794,22 @@ var require_pino = __commonJS({
       customLevels: null,
       useOnlyCustomLevels: false,
       depthLimit: 5,
-      edgeLimit: 100
+      edgeLimit: 100,
     };
     var normalize = createArgsNormalizer(defaultOptions);
-    var serializers = Object.assign(/* @__PURE__ */ Object.create(null), stdSerializers);
+    var serializers = Object.assign(
+      /* @__PURE__ */ Object.create(null),
+      stdSerializers,
+    );
     function pino(...args) {
       const instance = {};
       const { opts, stream } = normalize(instance, caller(), ...args);
-      if (opts.level && typeof opts.level === "string" && DEFAULT_LEVELS[opts.level.toLowerCase()] !== void 0) opts.level = opts.level.toLowerCase();
+      if (
+        opts.level &&
+        typeof opts.level === "string" &&
+        DEFAULT_LEVELS[opts.level.toLowerCase()] !== void 0
+      )
+        opts.level = opts.level.toLowerCase();
       const {
         redact,
         crlf,
@@ -4234,22 +4831,24 @@ var require_pino = __commonJS({
         depthLimit,
         edgeLimit,
         onChild,
-        msgPrefix
+        msgPrefix,
       } = opts;
       const stringifySafe = configure({
         maximumDepth: depthLimit,
-        maximumBreadth: edgeLimit
+        maximumBreadth: edgeLimit,
       });
       const allFormatters = buildFormatters(
         formatters.level,
         formatters.bindings,
-        formatters.log
+        formatters.log,
       );
       const stringifyFn = stringify.bind({
-        [stringifySafeSym]: stringifySafe
+        [stringifySafeSym]: stringifySafe,
       });
       const stringifiers = redact ? redaction(redact, stringifyFn) : {};
-      const formatOpts = redact ? { stringify: stringifiers[redactFmtSym] } : { stringify: stringifyFn };
+      const formatOpts = redact
+        ? { stringify: stringifiers[redactFmtSym] }
+        : { stringify: stringifyFn };
       const end = "}" + (crlf ? "\r\n" : "\n");
       const coreChindings = asChindings.bind(null, {
         [chindingsSym]: "",
@@ -4257,7 +4856,7 @@ var require_pino = __commonJS({
         [stringifiersSym]: stringifiers,
         [stringifySym]: stringify,
         [stringifySafeSym]: stringifySafe,
-        [formattersSym]: allFormatters
+        [formattersSym]: allFormatters,
       });
       let chindings = "";
       if (base !== null) {
@@ -4267,15 +4866,32 @@ var require_pino = __commonJS({
           chindings = coreChindings(Object.assign({}, base, { name }));
         }
       }
-      const time2 = timestamp instanceof Function ? timestamp : timestamp ? epochTime : nullTime;
+      const time2 =
+        timestamp instanceof Function
+          ? timestamp
+          : timestamp
+            ? epochTime
+            : nullTime;
       const timeSliceIndex = time2().indexOf(":") + 1;
-      if (useOnlyCustomLevels && !customLevels) throw Error("customLevels is required if useOnlyCustomLevels is set true");
-      if (mixin && typeof mixin !== "function") throw Error(`Unknown mixin type "${typeof mixin}" - expected "function"`);
-      if (msgPrefix && typeof msgPrefix !== "string") throw Error(`Unknown msgPrefix type "${typeof msgPrefix}" - expected "string"`);
+      if (useOnlyCustomLevels && !customLevels)
+        throw Error(
+          "customLevels is required if useOnlyCustomLevels is set true",
+        );
+      if (mixin && typeof mixin !== "function")
+        throw Error(
+          `Unknown mixin type "${typeof mixin}" - expected "function"`,
+        );
+      if (msgPrefix && typeof msgPrefix !== "string")
+        throw Error(
+          `Unknown msgPrefix type "${typeof msgPrefix}" - expected "string"`,
+        );
       assertDefaultLevelFound(level, customLevels, useOnlyCustomLevels);
       const levels = mappings(customLevels, useOnlyCustomLevels);
       if (typeof stream.emit === "function") {
-        stream.emit("message", { code: "PINO_CONFIG", config: { levels, messageKey, errorKey } });
+        stream.emit("message", {
+          code: "PINO_CONFIG",
+          config: { levels, messageKey, errorKey },
+        });
       }
       assertLevelComparison(levelComparison);
       const levelCompFunc = genLevelComparison(levelComparison);
@@ -4304,7 +4920,7 @@ var require_pino = __commonJS({
         [hooksSym]: hooks,
         silent: noop,
         onChild,
-        [msgPrefixSym]: msgPrefix
+        [msgPrefixSym]: msgPrefix,
       });
       Object.setPrototypeOf(instance, proto());
       genLsCache(instance);
@@ -4317,7 +4933,10 @@ var require_pino = __commonJS({
         dest.dest = normalizeDestFileDescriptor(dest.dest || process.stdout.fd);
         return buildSafeSonicBoom(dest);
       } else {
-        return buildSafeSonicBoom({ dest: normalizeDestFileDescriptor(dest), minLength: 0 });
+        return buildSafeSonicBoom({
+          dest: normalizeDestFileDescriptor(dest),
+          minLength: 0,
+        });
       }
     };
     module.exports.transport = require_transport();
@@ -4329,12 +4948,15 @@ var require_pino = __commonJS({
     module.exports.version = version;
     module.exports.default = pino;
     module.exports.pino = pino;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/split2@4.2.0/node_modules/split2/index.js
 var require_split2 = __commonJS({
-  "../../node_modules/.pnpm/split2@4.2.0/node_modules/split2/index.js"(exports, module) {
+  "../../node_modules/.pnpm/split2@4.2.0/node_modules/split2/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var { Transform } = __require("stream");
     var { StringDecoder } = __require("string_decoder");
@@ -4395,7 +5017,11 @@ var require_split2 = __commonJS({
           if (typeof matcher === "function") {
             mapper = matcher;
             matcher = /\r?\n/;
-          } else if (typeof matcher === "object" && !(matcher instanceof RegExp) && !matcher[Symbol.split]) {
+          } else if (
+            typeof matcher === "object" &&
+            !(matcher instanceof RegExp) &&
+            !matcher[Symbol.split]
+          ) {
             options = matcher;
             matcher = /\r?\n/;
           }
@@ -4423,19 +5049,22 @@ var require_split2 = __commonJS({
       stream.maxLength = options.maxLength;
       stream.skipOverflow = options.skipOverflow || false;
       stream.overflow = false;
-      stream._destroy = function(err, cb) {
+      stream._destroy = function (err, cb) {
         this._writableState.errorEmitted = false;
         cb(err);
       };
       return stream;
     }
     module.exports = split;
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino-abstract-transport@2.0.0/node_modules/pino-abstract-transport/index.js
 var require_pino_abstract_transport = __commonJS({
-  "../../node_modules/.pnpm/pino-abstract-transport@2.0.0/node_modules/pino-abstract-transport/index.js"(exports, module) {
+  "../../node_modules/.pnpm/pino-abstract-transport@2.0.0/node_modules/pino-abstract-transport/index.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var metadata = /* @__PURE__ */ Symbol.for("pino.metadata");
     var split = require_split2();
@@ -4453,47 +5082,61 @@ var require_pino_abstract_transport = __commonJS({
       return promise;
     }
     module.exports = function build(fn, opts = {}) {
-      const waitForConfig = opts.expectPinoConfig === true && workerData?.workerData?.pinoWillSendConfig === true;
+      const waitForConfig =
+        opts.expectPinoConfig === true &&
+        workerData?.workerData?.pinoWillSendConfig === true;
       const parseLines = opts.parse === "lines";
-      const parseLine = typeof opts.parseLine === "function" ? opts.parseLine : JSON.parse;
+      const parseLine =
+        typeof opts.parseLine === "function" ? opts.parseLine : JSON.parse;
       const close = opts.close || defaultClose;
-      const stream = split(function(line) {
-        let value;
-        try {
-          value = parseLine(line);
-        } catch (error) {
-          this.emit("unknown", line, error);
-          return;
-        }
-        if (value === null) {
-          this.emit("unknown", line, "Null value ignored");
-          return;
-        }
-        if (typeof value !== "object") {
-          value = {
-            data: value,
-            time: Date.now()
-          };
-        }
-        if (stream[metadata]) {
-          stream.lastTime = value.time;
-          stream.lastLevel = value.level;
-          stream.lastObj = value;
-        }
-        if (parseLines) {
-          return line;
-        }
-        return value;
-      }, { autoDestroy: true });
-      stream._destroy = function(err, cb) {
+      const stream = split(
+        function (line) {
+          let value;
+          try {
+            value = parseLine(line);
+          } catch (error) {
+            this.emit("unknown", line, error);
+            return;
+          }
+          if (value === null) {
+            this.emit("unknown", line, "Null value ignored");
+            return;
+          }
+          if (typeof value !== "object") {
+            value = {
+              data: value,
+              time: Date.now(),
+            };
+          }
+          if (stream[metadata]) {
+            stream.lastTime = value.time;
+            stream.lastLevel = value.level;
+            stream.lastObj = value;
+          }
+          if (parseLines) {
+            return line;
+          }
+          return value;
+        },
+        { autoDestroy: true },
+      );
+      stream._destroy = function (err, cb) {
         const promise = close(err, cb);
         if (promise && typeof promise.then === "function") {
           promise.then(cb, cb);
         }
       };
-      if (opts.expectPinoConfig === true && workerData?.workerData?.pinoWillSendConfig !== true) {
+      if (
+        opts.expectPinoConfig === true &&
+        workerData?.workerData?.pinoWillSendConfig !== true
+      ) {
         setImmediate(() => {
-          stream.emit("error", new Error("This transport is not compatible with the current version of pino. Please upgrade pino to the latest version."));
+          stream.emit(
+            "error",
+            new Error(
+              "This transport is not compatible with the current version of pino. Please upgrade pino to the latest version.",
+            ),
+          );
         });
       }
       if (opts.metadata !== false) {
@@ -4516,18 +5159,18 @@ var require_pino_abstract_transport = __commonJS({
           levels: {
             get() {
               return pinoConfig.levels;
-            }
+            },
           },
           messageKey: {
             get() {
               return pinoConfig.messageKey;
-            }
+            },
           },
           errorKey: {
             get() {
               return pinoConfig.errorKey;
-            }
-          }
+            },
+          },
         });
         return configReceived.then(finish);
       }
@@ -4548,12 +5191,15 @@ var require_pino_abstract_transport = __commonJS({
     function defaultClose(err, cb) {
       process.nextTick(cb, err);
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/real-require@0.2.0/node_modules/real-require/src/index.js
 var require_src = __commonJS({
-  "../../node_modules/.pnpm/real-require@0.2.0/node_modules/real-require/src/index.js"(exports, module) {
+  "../../node_modules/.pnpm/real-require@0.2.0/node_modules/real-require/src/index.js"(
+    exports,
+    module,
+  ) {
     var realImport = new Function("modulePath", "return import(modulePath)");
     function realRequire(modulePath) {
       if (typeof __non_webpack__require__ === "function") {
@@ -4562,21 +5208,28 @@ var require_src = __commonJS({
       return __require(modulePath);
     }
     module.exports = { realImport, realRequire };
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/transport-stream.js
 var require_transport_stream = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/transport-stream.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/transport-stream.js"(
+    exports,
+    module,
+  ) {
     "use strict";
     var { realImport, realRequire } = require_src();
     module.exports = loadTransportStreamBuilder;
     async function loadTransportStreamBuilder(target) {
       let fn;
       try {
-        const toLoad = target.startsWith("file://") ? target : "file://" + target;
+        const toLoad = target.startsWith("file://")
+          ? target
+          : "file://" + target;
         if (toLoad.endsWith(".ts") || toLoad.endsWith(".cts")) {
-          if (process[/* @__PURE__ */ Symbol.for("ts-node.register.instance")]) {
+          if (
+            process[/* @__PURE__ */ Symbol.for("ts-node.register.instance")]
+          ) {
             realRequire("ts-node/register");
           } else if (process.env && process.env.TS_NODE_DEV) {
             realRequire("ts-node-dev");
@@ -4588,7 +5241,10 @@ var require_transport_stream = __commonJS({
       } catch (error) {
         if (error.code === "ENOTDIR" || error.code === "ERR_MODULE_NOT_FOUND") {
           fn = realRequire(target);
-        } else if (error.code === void 0 || error.code === "ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING") {
+        } else if (
+          error.code === void 0 ||
+          error.code === "ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING"
+        ) {
           try {
             fn = realRequire(decodeURIComponent(target));
           } catch {
@@ -4600,31 +5256,37 @@ var require_transport_stream = __commonJS({
       }
       if (typeof fn === "object") fn = fn.default;
       if (typeof fn === "object") fn = fn.default;
-      if (typeof fn !== "function") throw Error("exported worker is not a function");
+      if (typeof fn !== "function")
+        throw Error("exported worker is not a function");
       return fn;
     }
-  }
+  },
 });
 
 // ../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/worker.js
 var require_worker = __commonJS({
-  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/worker.js"(exports, module) {
+  "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/lib/worker.js"(
+    exports,
+    module,
+  ) {
     var EE = __require("node:events");
     var { pipeline, PassThrough } = __require("node:stream");
     var pino = require_pino();
     var build = require_pino_abstract_transport();
     var loadTransportStreamBuilder = require_transport_stream();
-    module.exports = async function({ targets, pipelines, levels, dedupe }) {
+    module.exports = async function ({ targets, pipelines, levels, dedupe }) {
       const targetStreams = [];
       if (targets && targets.length) {
-        targets = await Promise.all(targets.map(async (t) => {
-          const fn = await loadTransportStreamBuilder(t.target);
-          const stream = await fn(t.options);
-          return {
-            level: t.level,
-            stream
-          };
-        }));
+        targets = await Promise.all(
+          targets.map(async (t) => {
+            const fn = await loadTransportStreamBuilder(t.target);
+            const stream = await fn(t.options);
+            return {
+              level: t.level,
+              stream,
+            };
+          }),
+        );
         targetStreams.push(...targets);
       }
       if (pipelines && pipelines.length) {
@@ -4632,20 +5294,18 @@ var require_worker = __commonJS({
           pipelines.map(async (p) => {
             let level;
             const pipeDests = await Promise.all(
-              p.map(
-                async (t) => {
-                  level = t.level;
-                  const fn = await loadTransportStreamBuilder(t.target);
-                  const stream = await fn(t.options);
-                  return stream;
-                }
-              )
+              p.map(async (t) => {
+                level = t.level;
+                const fn = await loadTransportStreamBuilder(t.target);
+                const stream = await fn(t.options);
+                return stream;
+              }),
             );
             return {
               level,
-              stream: createPipeline(pipeDests)
+              stream: createPipeline(pipeDests),
             };
-          })
+          }),
         );
         targetStreams.push(...pipelines);
       }
@@ -4667,12 +5327,12 @@ var require_worker = __commonJS({
                 cb(err);
               }
             }
-          }
+          },
         });
       }
       function process2(stream) {
         const multi = pino.multistream(targetStreams, { levels, dedupe });
-        stream.on("data", function(chunk) {
+        stream.on("data", function (chunk) {
           const { lastTime, lastMsg, lastObj, lastLevel } = this;
           multi.lastLevel = lastLevel;
           multi.lastTime = lastTime;
@@ -4688,9 +5348,9 @@ var require_worker = __commonJS({
           destroy(_, cb) {
             ee.on("error", cb);
             ee.on("closed", cb);
-          }
+          },
         });
-        pipeline(stream, ...streams, function(err) {
+        pipeline(stream, ...streams, function (err) {
           if (err && err.code !== "ERR_STREAM_PREMATURE_CLOSE") {
             ee.emit("error", err);
             return;
@@ -4700,7 +5360,7 @@ var require_worker = __commonJS({
         return stream;
       }
     };
-  }
+  },
 });
 export default require_worker();
 //# sourceMappingURL=pino-worker.mjs.map

@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { resumeAudio, playTongueHit, playTongueRelease, playWinFanfare } from "@/lib/gameAudio";
+import {
+  resumeAudio,
+  playTongueHit,
+  playTongueRelease,
+  playWinFanfare,
+} from "@/lib/gameAudio";
 
 interface Props {
   stress: number;
@@ -8,8 +13,15 @@ interface Props {
   onLose: (reason: string) => void;
 }
 
-const SEQUENCE = ["left", "center", "right", "left", "center", "right"] as const;
-type Dir = typeof SEQUENCE[number];
+const SEQUENCE = [
+  "left",
+  "center",
+  "right",
+  "left",
+  "center",
+  "right",
+] as const;
+type Dir = (typeof SEQUENCE)[number];
 
 const DIALOGUE = [
   "I am moving my tongue. This is quite strange.",
@@ -39,7 +51,8 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
   const wonRef = useRef(false);
 
   const showMsg = useCallback((msg: string) => {
-    setDialogue(msg); setShowDialogue(true);
+    setDialogue(msg);
+    setShowDialogue(true);
     setTimeout(() => setShowDialogue(false), 2200);
   }, []);
 
@@ -49,9 +62,9 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
       if (wonRef.current) return;
       if (!draggingRef.current) {
         // Spring back to center with damping (slimy physics)
-        setTongueX(prev => {
+        setTongueX((prev) => {
           const vel = velRef.current;
-          const spring = -prev * 0.04;  // pull toward center
+          const spring = -prev * 0.04; // pull toward center
           const damp = -vel * 0.12;
           const newVel = vel + spring + damp;
           velRef.current = newVel;
@@ -88,7 +101,10 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
       if (next >= SEQUENCE.length && !wonRef.current) {
         wonRef.current = true;
         setWon(true);
-        setTimeout(() => { playWinFanfare(); onWin(); }, 400);
+        setTimeout(() => {
+          playWinFanfare();
+          onWin();
+        }, 400);
       }
     }
   }, [tongueX, step, onWin, onStressChange, showMsg]);
@@ -103,13 +119,16 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
     setTongueVelX(0);
   }, []);
 
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const dx = (e.clientX - dragStartX) / 180;
-    const newX = Math.max(-1, Math.min(1, dragStartTongue + dx));
-    setTongueX(newX);
-    tongueRef.current = newX;
-  }, [isDragging, dragStartX, dragStartTongue]);
+  const onMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isDragging) return;
+      const dx = (e.clientX - dragStartX) / 180;
+      const newX = Math.max(-1, Math.min(1, dragStartTongue + dx));
+      setTongueX(newX);
+      tongueRef.current = newX;
+    },
+    [isDragging, dragStartX, dragStartTongue],
+  );
 
   const onMouseUp = useCallback(() => {
     if (!isDragging) return;
@@ -131,7 +150,11 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
   return (
     <div
       className="w-full h-full flex flex-col items-center justify-center relative select-none"
-      style={{ background: "radial-gradient(ellipse 78% 82% at 50% 52%, rgba(5,8,14,0.80) 0%, rgba(5,8,14,0.05) 100%)", cursor: isDragging ? "grabbing" : "grab" }}
+      style={{
+        background:
+          "radial-gradient(ellipse 78% 82% at 50% 52%, rgba(5,8,14,0.80) 0%, rgba(5,8,14,0.05) 100%)",
+        cursor: isDragging ? "grabbing" : "grab",
+      }}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseUp}
@@ -145,12 +168,24 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
 
       {/* Sequence progress */}
       <div className="absolute top-20 right-8 z-20">
-        <div className="text-xs text-muted-foreground/50 tracking-widest uppercase mb-2">Sequence</div>
+        <div className="text-xs text-muted-foreground/50 tracking-widest uppercase mb-2">
+          Sequence
+        </div>
         <div className="flex flex-col gap-1">
           {SEQUENCE.map((dir, i) => (
             <div key={i} className="flex items-center gap-2 text-xs">
-              <div className={`w-3 h-3 border ${i < step ? "bg-primary border-primary" : i === step ? "border-primary animate-pulse" : "border-border"}`} />
-              <span className={i < step ? "text-primary line-through" : i === step ? "text-primary" : "text-muted-foreground/40"}>
+              <div
+                className={`w-3 h-3 border ${i < step ? "bg-primary border-primary" : i === step ? "border-primary animate-pulse" : "border-border"}`}
+              />
+              <span
+                className={
+                  i < step
+                    ? "text-primary line-through"
+                    : i === step
+                      ? "text-primary"
+                      : "text-muted-foreground/40"
+                }
+              >
                 {dir.toUpperCase()}
               </span>
             </div>
@@ -167,56 +202,204 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
           onMouseDown={onMouseDown}
         >
           {/* Face / chin area */}
-          <ellipse cx="185" cy="100" rx="120" ry="40" fill="hsl(35,55%,62%)" stroke="hsl(35,45%,50%)" strokeWidth="2" />
+          <ellipse
+            cx="185"
+            cy="100"
+            rx="120"
+            ry="40"
+            fill="hsl(35,55%,62%)"
+            stroke="hsl(35,45%,50%)"
+            strokeWidth="2"
+          />
 
           {/* Open mouth cavity */}
-          <ellipse cx="185" cy="220" rx="130" ry="90" fill="hsl(10,40%,18%)" stroke="hsl(10,30%,14%)" strokeWidth="2" />
+          <ellipse
+            cx="185"
+            cy="220"
+            rx="130"
+            ry="90"
+            fill="hsl(10,40%,18%)"
+            stroke="hsl(10,30%,14%)"
+            strokeWidth="2"
+          />
 
           {/* Upper teeth */}
-          <rect x="90" y="148" width="190" height="20" rx="3" fill="hsl(200,15%,85%)" stroke="hsl(200,10%,70%)" strokeWidth="1" />
+          <rect
+            x="90"
+            y="148"
+            width="190"
+            height="20"
+            rx="3"
+            fill="hsl(200,15%,85%)"
+            stroke="hsl(200,10%,70%)"
+            strokeWidth="1"
+          />
           {Array.from({ length: 9 }).map((_, i) => (
-            <rect key={i} x={93 + i * 20} y="150" width="17" height="16" rx="2" fill="white" stroke="hsl(200,10%,75%)" strokeWidth="0.5" />
+            <rect
+              key={i}
+              x={93 + i * 20}
+              y="150"
+              width="17"
+              height="16"
+              rx="2"
+              fill="white"
+              stroke="hsl(200,10%,75%)"
+              strokeWidth="0.5"
+            />
           ))}
 
           {/* Lower teeth */}
-          <rect x="90" y="278" width="190" height="20" rx="3" fill="hsl(200,15%,85%)" stroke="hsl(200,10%,70%)" strokeWidth="1" />
+          <rect
+            x="90"
+            y="278"
+            width="190"
+            height="20"
+            rx="3"
+            fill="hsl(200,15%,85%)"
+            stroke="hsl(200,10%,70%)"
+            strokeWidth="1"
+          />
           {Array.from({ length: 9 }).map((_, i) => (
-            <rect key={i} x={93 + i * 20} y="280" width="17" height="14" rx="2" fill="white" stroke="hsl(200,10%,75%)" strokeWidth="0.5" />
+            <rect
+              key={i}
+              x={93 + i * 20}
+              y="280"
+              width="17"
+              height="14"
+              rx="2"
+              fill="white"
+              stroke="hsl(200,10%,75%)"
+              strokeWidth="0.5"
+            />
           ))}
 
           {/* Gum lines */}
-          <ellipse cx="185" cy="168" rx="110" ry="12" fill="hsl(350,40%,50%)" opacity="0.6" />
-          <ellipse cx="185" cy="278" rx="110" ry="10" fill="hsl(350,40%,50%)" opacity="0.6" />
+          <ellipse
+            cx="185"
+            cy="168"
+            rx="110"
+            ry="12"
+            fill="hsl(350,40%,50%)"
+            opacity="0.6"
+          />
+          <ellipse
+            cx="185"
+            cy="278"
+            rx="110"
+            ry="10"
+            fill="hsl(350,40%,50%)"
+            opacity="0.6"
+          />
 
           {/* Direction indicators */}
           {/* Left target */}
           <g opacity={targetDir === "left" ? 1 : 0.15}>
-            <rect x="95" y="200" width="50" height="30" rx="4"
-              fill={flashDir === "left" ? "rgba(100,255,200,0.4)" : "rgba(100,255,200,0.08)"}
-              stroke={flashDir === "left" ? "hsl(180,60%,55%)" : "rgba(100,255,200,0.3)"} strokeWidth="1.5" strokeDasharray="4 3" />
-            <text x="120" y="220" textAnchor="middle" fill="rgba(100,255,200,0.5)" fontSize="9" fontFamily="monospace">← LEFT</text>
+            <rect
+              x="95"
+              y="200"
+              width="50"
+              height="30"
+              rx="4"
+              fill={
+                flashDir === "left"
+                  ? "rgba(100,255,200,0.4)"
+                  : "rgba(100,255,200,0.08)"
+              }
+              stroke={
+                flashDir === "left"
+                  ? "hsl(180,60%,55%)"
+                  : "rgba(100,255,200,0.3)"
+              }
+              strokeWidth="1.5"
+              strokeDasharray="4 3"
+            />
+            <text
+              x="120"
+              y="220"
+              textAnchor="middle"
+              fill="rgba(100,255,200,0.5)"
+              fontSize="9"
+              fontFamily="monospace"
+            >
+              ← LEFT
+            </text>
           </g>
           {/* Center target */}
           <g opacity={targetDir === "center" ? 1 : 0.15}>
-            <rect x="160" y="200" width="50" height="30" rx="4"
-              fill={flashDir === "center" ? "rgba(100,255,200,0.4)" : "rgba(100,255,200,0.08)"}
-              stroke={flashDir === "center" ? "hsl(180,60%,55%)" : "rgba(100,255,200,0.3)"} strokeWidth="1.5" strokeDasharray="4 3" />
-            <text x="185" y="220" textAnchor="middle" fill="rgba(100,255,200,0.5)" fontSize="9" fontFamily="monospace">CENTER</text>
+            <rect
+              x="160"
+              y="200"
+              width="50"
+              height="30"
+              rx="4"
+              fill={
+                flashDir === "center"
+                  ? "rgba(100,255,200,0.4)"
+                  : "rgba(100,255,200,0.08)"
+              }
+              stroke={
+                flashDir === "center"
+                  ? "hsl(180,60%,55%)"
+                  : "rgba(100,255,200,0.3)"
+              }
+              strokeWidth="1.5"
+              strokeDasharray="4 3"
+            />
+            <text
+              x="185"
+              y="220"
+              textAnchor="middle"
+              fill="rgba(100,255,200,0.5)"
+              fontSize="9"
+              fontFamily="monospace"
+            >
+              CENTER
+            </text>
           </g>
           {/* Right target */}
           <g opacity={targetDir === "right" ? 1 : 0.15}>
-            <rect x="225" y="200" width="50" height="30" rx="4"
-              fill={flashDir === "right" ? "rgba(100,255,200,0.4)" : "rgba(100,255,200,0.08)"}
-              stroke={flashDir === "right" ? "hsl(180,60%,55%)" : "rgba(100,255,200,0.3)"} strokeWidth="1.5" strokeDasharray="4 3" />
-            <text x="250" y="220" textAnchor="middle" fill="rgba(100,255,200,0.5)" fontSize="9" fontFamily="monospace">RIGHT →</text>
+            <rect
+              x="225"
+              y="200"
+              width="50"
+              height="30"
+              rx="4"
+              fill={
+                flashDir === "right"
+                  ? "rgba(100,255,200,0.4)"
+                  : "rgba(100,255,200,0.08)"
+              }
+              stroke={
+                flashDir === "right"
+                  ? "hsl(180,60%,55%)"
+                  : "rgba(100,255,200,0.3)"
+              }
+              strokeWidth="1.5"
+              strokeDasharray="4 3"
+            />
+            <text
+              x="250"
+              y="220"
+              textAnchor="middle"
+              fill="rgba(100,255,200,0.5)"
+              fontSize="9"
+              fontFamily="monospace"
+            >
+              RIGHT →
+            </text>
           </g>
 
           {/* Tongue body — physics-driven */}
           <g style={{ cursor: isDragging ? "grabbing" : "grab" }}>
             {/* Tongue base */}
             <ellipse
-              cx={centerX} cy="270" rx="90" ry="25"
-              fill="hsl(350,55%,48%)" stroke="hsl(350,45%,38%)" strokeWidth="2"
+              cx={centerX}
+              cy="270"
+              rx="90"
+              ry="25"
+              fill="hsl(350,55%,48%)"
+              stroke="hsl(350,45%,38%)"
+              strokeWidth="2"
             />
             {/* Tongue main body - distorts based on position */}
             <path
@@ -224,24 +407,74 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
                   Q ${centerX - 40} 240 ${depX - 30} 230 
                   Q ${depX} 215 ${depX + 30} 230 
                   Q ${centerX + 40} 240 ${centerX + 70} 270 Z`}
-              fill="hsl(350,55%,52%)" stroke="hsl(350,45%,40%)" strokeWidth="2"
+              fill="hsl(350,55%,52%)"
+              stroke="hsl(350,45%,40%)"
+              strokeWidth="2"
             />
             {/* Tongue tip */}
             <ellipse
-              cx={depX} cy="222" rx="28" ry="20"
-              fill="hsl(350,60%,55%)" stroke="hsl(350,50%,43%)" strokeWidth="2"
+              cx={depX}
+              cy="222"
+              rx="28"
+              ry="20"
+              fill="hsl(350,60%,55%)"
+              stroke="hsl(350,50%,43%)"
+              strokeWidth="2"
             />
             {/* Tongue texture */}
-            <line x1={depX - 10} y1="215" x2={depX - 10} y2="228" stroke="hsl(350,45%,44%)" strokeWidth="1" opacity="0.5" />
-            <line x1={depX} y1="212" x2={depX} y2="228" stroke="hsl(350,45%,44%)" strokeWidth="1.5" opacity="0.5" />
-            <line x1={depX + 10} y1="215" x2={depX + 10} y2="228" stroke="hsl(350,45%,44%)" strokeWidth="1" opacity="0.5" />
+            <line
+              x1={depX - 10}
+              y1="215"
+              x2={depX - 10}
+              y2="228"
+              stroke="hsl(350,45%,44%)"
+              strokeWidth="1"
+              opacity="0.5"
+            />
+            <line
+              x1={depX}
+              y1="212"
+              x2={depX}
+              y2="228"
+              stroke="hsl(350,45%,44%)"
+              strokeWidth="1.5"
+              opacity="0.5"
+            />
+            <line
+              x1={depX + 10}
+              y1="215"
+              x2={depX + 10}
+              y2="228"
+              stroke="hsl(350,45%,44%)"
+              strokeWidth="1"
+              opacity="0.5"
+            />
             {/* Gloss effect */}
-            <ellipse cx={depX - 6} cy="218" rx="8" ry="5" fill="rgba(255,200,200,0.25)" />
+            <ellipse
+              cx={depX - 6}
+              cy="218"
+              rx="8"
+              ry="5"
+              fill="rgba(255,200,200,0.25)"
+            />
           </g>
 
           {/* Uvula */}
-          <path d="M 185 168 Q 180 190 185 200 Q 190 190 185 168" fill="hsl(350,50%,52%)" stroke="hsl(350,40%,42%)" strokeWidth="1.5" />
-          <ellipse cx="185" cy="200" rx="10" ry="14" fill="hsl(350,50%,52%)" stroke="hsl(350,40%,42%)" strokeWidth="1.5" />
+          <path
+            d="M 185 168 Q 180 190 185 200 Q 190 190 185 168"
+            fill="hsl(350,50%,52%)"
+            stroke="hsl(350,40%,42%)"
+            strokeWidth="1.5"
+          />
+          <ellipse
+            cx="185"
+            cy="200"
+            rx="10"
+            ry="14"
+            fill="hsl(350,50%,52%)"
+            stroke="hsl(350,40%,42%)"
+            strokeWidth="1.5"
+          />
         </svg>
       </div>
 
@@ -253,18 +486,24 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
           <span>RIGHT</span>
         </div>
         <div className="relative h-2 bg-secondary">
-          <div className="absolute top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-primary bg-background transition-none"
-            style={{ left: `calc(${(tongueX + 1) / 2 * 100}% - 8px)` }} />
+          <div
+            className="absolute top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-primary bg-background transition-none"
+            style={{ left: `calc(${((tongueX + 1) / 2) * 100}% - 8px)` }}
+          />
         </div>
         <div className="text-xs text-muted-foreground/40 mt-2 text-center tracking-widest">
-          NEXT: <span className="text-primary">{SEQUENCE[step]?.toUpperCase()}</span>
+          NEXT:{" "}
+          <span className="text-primary">{SEQUENCE[step]?.toUpperCase()}</span>
         </div>
       </div>
 
       {/* Win */}
       {won && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-40">
-          <div className="text-4xl font-bold text-primary" style={{ textShadow: "0 0 30px hsl(180,60%,50%)" }}>
+          <div
+            className="text-4xl font-bold text-primary"
+            style={{ textShadow: "0 0 30px hsl(180,60%,50%)" }}
+          >
             TONGUE FUNCTION VERIFIED
           </div>
         </div>
@@ -272,8 +511,15 @@ export default function Level9Hypoglossal({ onStressChange, onWin }: Props) {
 
       {/* Dialogue */}
       {showDialogue && (
-        <div className="absolute top-40 right-8 z-30 max-w-xs"
-          style={{ background: "hsl(210,18%,14%)", border: "1px solid hsl(210,15%,25%)", padding: "10px 14px", borderRadius: 4 }}>
+        <div
+          className="absolute top-40 right-8 z-30 max-w-xs"
+          style={{
+            background: "hsl(210,18%,14%)",
+            border: "1px solid hsl(210,15%,25%)",
+            padding: "10px 14px",
+            borderRadius: 4,
+          }}
+        >
           <p className="text-xs text-muted-foreground italic">"{dialogue}"</p>
         </div>
       )}

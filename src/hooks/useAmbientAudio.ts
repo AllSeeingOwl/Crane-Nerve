@@ -113,7 +113,11 @@ export function useAmbientAudio(active: boolean) {
         masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.2);
         setTimeout(() => {
           try {
-            drone1.stop(); drone2.stop(); drone3.stop(); lfo.stop(); hissLoop.stop();
+            drone1.stop();
+            drone2.stop();
+            drone3.stop();
+            lfo.stop();
+            hissLoop.stop();
             void audioCtx.close();
           } catch {
             // already stopped

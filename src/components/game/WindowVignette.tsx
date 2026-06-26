@@ -10,9 +10,21 @@ interface VignetteScene {
 
 function drawStars(ctx: CanvasRenderingContext2D, seed: number) {
   const stars = [
-    [30, 20], [80, 15], [120, 35], [60, 50], [150, 10],
-    [200, 28], [250, 18], [300, 40], [350, 12], [180, 55],
-    [320, 30], [90, 65], [270, 50], [140, 75], [380, 22],
+    [30, 20],
+    [80, 15],
+    [120, 35],
+    [60, 50],
+    [150, 10],
+    [200, 28],
+    [250, 18],
+    [300, 40],
+    [350, 12],
+    [180, 55],
+    [320, 30],
+    [90, 65],
+    [270, 50],
+    [140, 75],
+    [380, 22],
   ];
   ctx.fillStyle = "rgba(200,220,255,0.6)";
   stars.forEach(([x, y]) => {
@@ -98,7 +110,14 @@ const SCENES: VignetteScene[] = [
       }
 
       // Dark vignette frame
-      const vignette = ctx.createRadialGradient(width / 2, height / 2, height * 0.2, width / 2, height / 2, height * 0.85);
+      const vignette = ctx.createRadialGradient(
+        width / 2,
+        height / 2,
+        height * 0.2,
+        width / 2,
+        height / 2,
+        height * 0.85,
+      );
       vignette.addColorStop(0, "transparent");
       vignette.addColorStop(1, "rgba(0,2,5,0.75)");
       ctx.fillStyle = vignette;
@@ -120,13 +139,15 @@ const SCENES: VignetteScene[] = [
 
       // Clouds
       ctx.fillStyle = "rgba(40,42,55,0.7)";
-      [[60, 30, 80, 25], [200, 20, 100, 30], [350, 35, 70, 22]].forEach(
-        ([x, y, rx, ry]) => {
-          ctx.beginPath();
-          ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      );
+      [
+        [60, 30, 80, 25],
+        [200, 20, 100, 30],
+        [350, 35, 70, 22],
+      ].forEach(([x, y, rx, ry]) => {
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
 
       // Ground / field
       const ground = ctx.createLinearGradient(0, height * 0.65, 0, height);
@@ -193,13 +214,24 @@ const SCENES: VignetteScene[] = [
       // Warning sign
       ctx.fillStyle = "rgba(220,180,0,0.7)";
       ctx.beginPath();
-      ctx.moveTo(168, 85); ctx.lineTo(178, 65); ctx.lineTo(188, 85); ctx.closePath();
+      ctx.moveTo(168, 85);
+      ctx.lineTo(178, 65);
+      ctx.lineTo(188, 85);
+      ctx.closePath();
       ctx.fill();
       ctx.fillStyle = "rgba(20,18,10,0.9)";
-      ctx.fillRect(175, 72, 2, 8); ctx.fillRect(175, 82, 2, 2);
+      ctx.fillRect(175, 72, 2, 8);
+      ctx.fillRect(175, 82, 2, 2);
 
       // Vignette
-      const vignette = ctx.createRadialGradient(width / 2, height / 2, height * 0.15, width / 2, height / 2, height * 0.8);
+      const vignette = ctx.createRadialGradient(
+        width / 2,
+        height / 2,
+        height * 0.15,
+        width / 2,
+        height / 2,
+        height * 0.8,
+      );
       vignette.addColorStop(0, "transparent");
       vignette.addColorStop(1, "rgba(0,0,2,0.8)");
       ctx.fillStyle = vignette;
@@ -232,7 +264,7 @@ const SCENES: VignetteScene[] = [
 
       // Road markings
       for (let i = 0; i < 6; i++) {
-        const prog = (i / 6 + (t * 0.04 % (1 / 6))) % 1;
+        const prog = (i / 6 + ((t * 0.04) % (1 / 6))) % 1;
         const yp = height * 0.5 + prog * height * 0.5;
         const xCenter = width * 0.5;
         const wMark = 4 + prog * 12;
@@ -259,10 +291,16 @@ const SCENES: VignetteScene[] = [
         ctx.fill();
       };
 
-      [[30, height * 0.7, 0.9], [10, height * 0.8, 1.1], [45, height * 0.92, 1.3],
-       [width - 30, height * 0.7, 0.9], [width - 10, height * 0.8, 1.1], [width - 45, height * 0.92, 1.3],
-       [70, height * 0.62, 0.6], [width - 70, height * 0.62, 0.6]].forEach(([x, y, s]) =>
-        drawTree(x as number, y as number, s as number));
+      [
+        [30, height * 0.7, 0.9],
+        [10, height * 0.8, 1.1],
+        [45, height * 0.92, 1.3],
+        [width - 30, height * 0.7, 0.9],
+        [width - 10, height * 0.8, 1.1],
+        [width - 45, height * 0.92, 1.3],
+        [70, height * 0.62, 0.6],
+        [width - 70, height * 0.62, 0.6],
+      ].forEach(([x, y, s]) => drawTree(x as number, y as number, s as number));
 
       // Headlights approaching
       const headlightDist = (phase % 30) / 30;
@@ -274,10 +312,26 @@ const SCENES: VignetteScene[] = [
         ctx.shadowBlur = 20;
         ctx.fillStyle = `rgba(200,220,255,${0.6 + headlightDist * 0.3})`;
         ctx.beginPath();
-        ctx.ellipse(hX - hSize * 0.8, hY, hSize * 0.4, hSize * 0.2, 0, 0, Math.PI * 2);
+        ctx.ellipse(
+          hX - hSize * 0.8,
+          hY,
+          hSize * 0.4,
+          hSize * 0.2,
+          0,
+          0,
+          Math.PI * 2,
+        );
         ctx.fill();
         ctx.beginPath();
-        ctx.ellipse(hX + hSize * 0.8, hY, hSize * 0.4, hSize * 0.2, 0, 0, Math.PI * 2);
+        ctx.ellipse(
+          hX + hSize * 0.8,
+          hY,
+          hSize * 0.4,
+          hSize * 0.2,
+          0,
+          0,
+          Math.PI * 2,
+        );
         ctx.fill();
         ctx.shadowBlur = 0;
 
@@ -302,7 +356,14 @@ const SCENES: VignetteScene[] = [
       ctx.fill();
 
       // Vignette
-      const vignette = ctx.createRadialGradient(width / 2, height / 2, height * 0.1, width / 2, height / 2, height * 0.85);
+      const vignette = ctx.createRadialGradient(
+        width / 2,
+        height / 2,
+        height * 0.1,
+        width / 2,
+        height / 2,
+        height * 0.85,
+      );
       vignette.addColorStop(0, "transparent");
       vignette.addColorStop(1, "rgba(0,0,0,0.85)");
       ctx.fillStyle = vignette;
@@ -316,7 +377,10 @@ interface WindowVignetteProps {
   size: [number, number];
 }
 
-export default function WindowVignette({ position, size }: WindowVignetteProps) {
+export default function WindowVignette({
+  position,
+  size,
+}: WindowVignetteProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const textureRef = useRef<THREE.CanvasTexture | null>(null);
@@ -355,7 +419,7 @@ export default function WindowVignette({ position, size }: WindowVignetteProps) 
     textureRef.current.needsUpdate = true;
 
     // Apply texture to mesh
-    const mat = (meshRef.current.material as THREE.MeshBasicMaterial);
+    const mat = meshRef.current.material as THREE.MeshBasicMaterial;
     if (!mat.map) mat.map = textureRef.current;
   });
 

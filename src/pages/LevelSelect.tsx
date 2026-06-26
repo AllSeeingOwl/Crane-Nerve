@@ -1,4 +1,3 @@
-
 import { LevelId, LEVELS } from "@/types/types";
 
 import { LevelId, LEVELS } from "../types";
@@ -10,15 +9,25 @@ interface Props {
   onBack: () => void;
 }
 
-export default function LevelSelect({ completedLevels, score, onSelectLevel, onBack }: Props) {
+export default function LevelSelect({
+  completedLevels,
+  score,
+  onSelectLevel,
+  onBack,
+}: Props) {
   return (
     <div className="w-screen h-screen flex flex-col bg-background overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-8 py-4 border-b border-border">
-        <button onClick={onBack} className="text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors">
+        <button
+          onClick={onBack}
+          className="text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors"
+        >
           ← BACK
         </button>
-        <h2 className="text-primary text-lg tracking-widest uppercase">SELECT EXAMINATION</h2>
+        <h2 className="text-primary text-lg tracking-widest uppercase">
+          SELECT EXAMINATION
+        </h2>
         <div className="text-muted-foreground text-sm">
           SCORE: <span className="text-primary">{score.toLocaleString()}</span>
         </div>
@@ -27,7 +36,9 @@ export default function LevelSelect({ completedLevels, score, onSelectLevel, onB
       {/* Progress */}
       <div className="px-8 py-3 border-b border-border/50">
         <div className="flex items-center gap-3">
-          <span className="text-xs text-muted-foreground uppercase tracking-widest">Progress</span>
+          <span className="text-xs text-muted-foreground uppercase tracking-widest">
+            Progress
+          </span>
           <div className="flex-1 h-1 bg-secondary rounded-none overflow-hidden">
             <div
               className="h-full bg-primary transition-all"
@@ -41,7 +52,7 @@ export default function LevelSelect({ completedLevels, score, onSelectLevel, onB
       {/* Level grid */}
       <div className="flex-1 overflow-y-auto px-8 py-6">
         <div className="grid grid-cols-3 gap-4 max-w-5xl mx-auto">
-          {LEVELS.map(level => {
+          {LEVELS.map((level) => {
             const isComplete = completedLevels.has(level.id);
             const isAvailable = level.implemented;
 
@@ -52,11 +63,12 @@ export default function LevelSelect({ completedLevels, score, onSelectLevel, onB
                 onClick={() => isAvailable && onSelectLevel(level.id)}
                 className={`
                   relative p-4 border text-left transition-all duration-150
-                  ${isAvailable
-                    ? isComplete
-                      ? "border-primary/60 bg-primary/10 hover:bg-primary/20 cursor-pointer"
-                      : "border-border hover:border-primary/50 hover:bg-secondary/50 cursor-pointer"
-                    : "border-border/30 bg-secondary/20 cursor-not-allowed opacity-40"
+                  ${
+                    isAvailable
+                      ? isComplete
+                        ? "border-primary/60 bg-primary/10 hover:bg-primary/20 cursor-pointer"
+                        : "border-border hover:border-primary/50 hover:bg-secondary/50 cursor-pointer"
+                      : "border-border/30 bg-secondary/20 cursor-not-allowed opacity-40"
                   }
                 `}
               >
@@ -69,12 +81,16 @@ export default function LevelSelect({ completedLevels, score, onSelectLevel, onB
                     <span className="text-xs text-primary">✓ DONE</span>
                   )}
                   {!isAvailable && (
-                    <span className="text-xs text-muted-foreground/50">LOCKED</span>
+                    <span className="text-xs text-muted-foreground/50">
+                      LOCKED
+                    </span>
                   )}
                 </div>
 
                 {/* Title */}
-                <h3 className={`text-base font-bold mb-1 ${isAvailable ? "text-foreground" : "text-muted-foreground"}`}>
+                <h3
+                  className={`text-base font-bold mb-1 ${isAvailable ? "text-foreground" : "text-muted-foreground"}`}
+                >
                   {level.title.toUpperCase()}
                 </h3>
 

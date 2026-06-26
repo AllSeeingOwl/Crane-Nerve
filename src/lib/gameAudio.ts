@@ -36,7 +36,7 @@ function sine(
   gainVal: number,
   duration: number,
   startTime?: number,
-  freqEnd?: number
+  freqEnd?: number,
 ) {
   const c = ctx();
   const t = startTime ?? c.currentTime;
@@ -45,7 +45,10 @@ function sine(
   osc.type = "sine";
   osc.frequency.setValueAtTime(freq, t);
   if (freqEnd !== undefined) {
-    osc.frequency.exponentialRampToValueAtTime(Math.max(freqEnd, 1), t + duration);
+    osc.frequency.exponentialRampToValueAtTime(
+      Math.max(freqEnd, 1),
+      t + duration,
+    );
   }
   g.gain.setValueAtTime(gainVal, t);
   g.gain.exponentialRampToValueAtTime(0.0001, t + duration);
@@ -55,7 +58,12 @@ function sine(
   osc.stop(t + duration + 0.01);
 }
 
-function square(freq: number, gainVal: number, duration: number, startTime?: number) {
+function square(
+  freq: number,
+  gainVal: number,
+  duration: number,
+  startTime?: number,
+) {
   const c = ctx();
   const t = startTime ?? c.currentTime;
   const osc = c.createOscillator();
@@ -70,7 +78,12 @@ function square(freq: number, gainVal: number, duration: number, startTime?: num
   osc.stop(t + duration + 0.01);
 }
 
-function noise(gainVal: number, duration: number, lpFreq: number, startTime?: number) {
+function noise(
+  gainVal: number,
+  duration: number,
+  lpFreq: number,
+  startTime?: number,
+) {
   const c = ctx();
   const t = startTime ?? c.currentTime;
   const bufLen = Math.ceil(c.sampleRate * duration);

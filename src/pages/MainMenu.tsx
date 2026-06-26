@@ -18,22 +18,24 @@ export default function MainMenu({ onPlay }: Props) {
 
   useEffect(() => {
     const t = setInterval(() => {
-      setWarningIdx(i => (i + 1) % WARNINGS.length);
+      setWarningIdx((i) => (i + 1) % WARNINGS.length);
     }, 3000);
     return () => clearInterval(t);
   }, []);
 
   useEffect(() => {
-    const t = setInterval(() => setBlink(b => !b), 600);
+    const t = setInterval(() => setBlink((b) => !b), 600);
     return () => clearInterval(t);
   }, []);
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-background relative overflow-hidden crt-flicker">
       {/* Ambient grid */}
-      <div className="absolute inset-0 opacity-10"
+      <div
+        className="absolute inset-0 opacity-10"
         style={{
-          backgroundImage: "linear-gradient(hsl(180,60%,50%) 1px, transparent 1px), linear-gradient(90deg, hsl(180,60%,50%) 1px, transparent 1px)",
+          backgroundImage:
+            "linear-gradient(hsl(180,60%,50%) 1px, transparent 1px), linear-gradient(90deg, hsl(180,60%,50%) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -43,7 +45,8 @@ export default function MainMenu({ onPlay }: Props) {
         <div className="text-xs tracking-[0.4em] text-primary/60 uppercase mb-2">
           Replit Medical Simulations Inc. presents
         </div>
-        <h1 className="text-7xl font-bold tracking-tight text-center leading-none"
+        <h1
+          className="text-7xl font-bold tracking-tight text-center leading-none"
           style={{
             color: "hsl(180,60%,50%)",
             textShadow: "0 0 40px hsl(180,60%,50%), 0 0 80px hsl(180,60%,30%)",
@@ -51,7 +54,8 @@ export default function MainMenu({ onPlay }: Props) {
         >
           CRANIAL
         </h1>
-        <h1 className="text-7xl font-bold tracking-tight text-center leading-none mb-1"
+        <h1
+          className="text-7xl font-bold tracking-tight text-center leading-none mb-1"
           style={{
             color: "hsl(0,70%,60%)",
             textShadow: "0 0 40px hsl(0,70%,50%), 0 0 80px hsl(0,70%,30%)",
@@ -59,7 +63,8 @@ export default function MainMenu({ onPlay }: Props) {
         >
           NERVE
         </h1>
-        <h1 className="text-7xl font-bold tracking-tight text-center leading-none"
+        <h1
+          className="text-7xl font-bold tracking-tight text-center leading-none"
           style={{
             color: "hsl(180,60%,50%)",
             textShadow: "0 0 40px hsl(180,60%,50%), 0 0 80px hsl(180,60%,30%)",
@@ -104,7 +109,11 @@ export default function MainMenu({ onPlay }: Props) {
 
       {/* Decorative EKG line */}
       <div className="absolute bottom-12 left-0 right-0 h-8 z-10 opacity-20">
-        <svg viewBox="0 0 1000 50" className="w-full h-full" preserveAspectRatio="none">
+        <svg
+          viewBox="0 0 1000 50"
+          className="w-full h-full"
+          preserveAspectRatio="none"
+        >
           <polyline
             points="0,25 100,25 120,25 130,5 140,45 150,25 170,25 200,25 220,25 230,10 240,40 250,25 280,25 400,25 420,25 430,5 440,45 450,25 470,25 500,25 520,25 530,10 540,40 550,25 580,25 700,25 720,25 730,5 740,45 750,25 770,25 800,25 820,25 830,10 840,40 850,25 880,25 1000,25"
             fill="none"
