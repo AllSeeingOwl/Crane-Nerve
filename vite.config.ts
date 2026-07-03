@@ -14,24 +14,24 @@ export default defineConfig(async ({ command, mode }) => {
 
   const basePath = process.env.BASE_PATH || "/";
 
-  const plugins = [
-    mockupPreviewPlugin(),
-    react(),
-    tailwindcss(),
-  ];
+  const plugins = [mockupPreviewPlugin(), react(), tailwindcss()];
 
   if (process.env.NODE_ENV !== "production") {
     try {
-        const runtimeErrorOverlay = (await import("@replit/vite-plugin-runtime-error-modal")).default;
-        plugins.push(runtimeErrorOverlay());
-    } catch(e) {}
+      const runtimeErrorOverlay = (
+        await import("@replit/vite-plugin-runtime-error-modal")
+      ).default;
+      plugins.push(runtimeErrorOverlay());
+    } catch (e) {}
     if (process.env.REPL_ID !== undefined) {
-        try {
-            const m = await import("@replit/vite-plugin-cartographer");
-            plugins.push(m.cartographer({
+      try {
+        const m = await import("@replit/vite-plugin-cartographer");
+        plugins.push(
+          m.cartographer({
             root: path.resolve(__dirname, ".."),
-            }));
-        } catch(e) {}
+          }),
+        );
+      } catch (e) {}
     }
   }
 
