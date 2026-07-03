@@ -3,6 +3,10 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import { mockupPreviewPlugin } from "./mockupPreviewPlugin";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig(async ({ command, mode }) => {
   const rawPort = process.env.PORT || "3000";
@@ -22,7 +26,9 @@ export default defineConfig(async ({ command, mode }) => {
         await import("@replit/vite-plugin-runtime-error-modal")
       ).default;
       plugins.push(runtimeErrorOverlay());
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
     if (process.env.REPL_ID !== undefined) {
       try {
         const m = await import("@replit/vite-plugin-cartographer");
@@ -31,7 +37,9 @@ export default defineConfig(async ({ command, mode }) => {
             root: path.resolve(__dirname, ".."),
           }),
         );
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
