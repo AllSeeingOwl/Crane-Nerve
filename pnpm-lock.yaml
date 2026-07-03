@@ -24,12 +24,6 @@ catalogs:
     '@vitejs/plugin-react':
       specifier: ^5.2.0
       version: 5.2.0
-    react:
-      specifier: 19.1.0
-      version: 19.1.0
-    react-dom:
-      specifier: 19.1.0
-      version: 19.1.0
     vite:
       specifier: ^7.3.6
       version: 7.3.6
@@ -163,10 +157,10 @@ importers:
         specifier: ^3.8.1
         version: 3.8.1
       react:
-        specifier: 'catalog:'
+        specifier: 19.1.0
         version: 19.1.0
       react-dom:
-        specifier: 'catalog:'
+        specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
       tw-animate-css:
         specifier: ^1.4.0

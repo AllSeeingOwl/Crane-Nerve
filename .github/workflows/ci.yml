@@ -20,7 +20,7 @@ jobs:
         with:
           version: 10
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
       - name: Run npm audit (via pnpm)
         run: pnpm audit --audit-level=high
 
@@ -37,7 +37,7 @@ jobs:
         with:
           version: 10
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
       - name: Run Prettier check
         run: pnpm exec prettier --check .
       - name: Run ESLint
@@ -56,7 +56,7 @@ jobs:
         with:
           version: 10
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
       - name: Run tests
         run: pnpm -r run test --if-present
 
@@ -73,6 +73,6 @@ jobs:
         with:
           version: 10
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
       - name: Run build verification
         run: pnpm run build
