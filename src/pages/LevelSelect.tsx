@@ -1,7 +1,5 @@
 import { LevelId, LEVELS } from "@/types/types";
 
-import { LevelId, LEVELS } from "../types";
-
 interface Props {
   completedLevels: Set<LevelId>;
   score: number;
