@@ -16,7 +16,7 @@ export default defineConfig(async ({ command, mode }) => {
     throw new Error(`Invalid PORT value: "${rawPort}"`);
   }
 
-  const basePath = process.env.BASE_PATH || "/";
+  const basePath = process.env.BASE_PATH || "/Crane-Nerve/";
 
   const plugins = [mockupPreviewPlugin(), react(), tailwindcss()];
 
