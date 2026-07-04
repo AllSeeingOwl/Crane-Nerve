@@ -11,7 +11,9 @@ export default function App() {
   const [currentLevel, setCurrentLevel] = useState<LevelId>(1);
   const [score, setScore] = useState<number>(0);
   const [stress, setStress] = useState<number>(0);
-  const [completedLevels, setCompletedLevels] = useState<Set<LevelId>>(new Set());
+  const [completedLevels, setCompletedLevels] = useState<Set<LevelId>>(
+    new Set(),
+  );
 
   const handlePlay = () => setScreen("level-select");
   const handleSelectLevel = (id: LevelId) => {
@@ -42,7 +44,9 @@ export default function App() {
         <GameEngine
           levelId={currentLevel}
           stress={stress}
-          onStressChange={(delta) => setStress((s) => Math.max(0, Math.min(100, s + delta)))}
+          onStressChange={(delta) =>
+            setStress((s) => Math.max(0, Math.min(100, s + delta)))
+          }
           onWin={handleLevelWin}
           onLose={handleLevelLose}
           onQuit={handleQuit}

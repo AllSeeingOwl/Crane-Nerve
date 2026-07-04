@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 
 import { LevelId, LEVELS, DEADPAN_DIALOGUE } from "@/types/types";
 
-
-
 interface Props {
   levelId: LevelId;
   stress: number;

@@ -16,9 +16,6 @@ import { useAmbientAudio } from "@/hooks/useAmbientAudio";
 import { cameraState } from "@/lib/cameraState";
 import { Level9Hypoglossal } from "../levels/Level9Hypoglossal";
 
-
-
-
 interface Props {
   levelId: LevelId;
   stress: number;
