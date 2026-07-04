@@ -4,22 +4,20 @@ import { LevelId, LEVELS } from "@/types/types";
 import GameUI from "./GameUI";
 import WindowDistraction from "./WindowDistraction";
 import DoctorsOffice3D from "./DoctorsOffice3D";
-import Level1Olfactory from "./levels/Level1Olfactory";
-import Level2Optic from "./levels/Level2Optic";
-import Level3EyeMovement from "./levels/Level3EyeMovement";
-import Level4Trigeminal from "./levels/Level4Trigeminal";
-import Level5FacialNerve from "./levels/Level5FacialNerve";
-import Level6Tuning from "./levels/Level6Tuning";
-import Level7GagReflex from "./levels/Level7GagReflex";
-import Level8Accessory from "./levels/Level8Accessory";
-import Level9Hypoglossal from "./levels/Level9Hypoglossal";
-
+import { Level1Olfactory } from "../levels/Level1Olfactory";
+import { Level2Optic } from "../levels/Level2Optic";
+import { Level3EyeMovement } from "../levels/Level3EyeMovement";
+import { Level4Trigeminal } from "../levels/Level4Trigeminal";
+import { Level5FacialNerve } from "../levels/Level5FacialNerve";
+import { Level6Tuning } from "../levels/Level6Tuning";
+import { Level7GagReflex } from "../levels/Level7GagReflex";
+import { Level8Accessory } from "../levels/Level8Accessory";
 import { useAmbientAudio } from "@/hooks/useAmbientAudio";
-
 import { cameraState } from "@/lib/cameraState";
+import { Level9Hypoglossal } from "../levels/Level9Hypoglossal";
 
-import { useAmbientAudio } from "@/hooks/useAmbientAudio";
-import { cameraState } from "./cameraState";
+
+
 
 interface Props {
   levelId: LevelId;
