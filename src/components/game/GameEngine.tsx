@@ -56,9 +56,9 @@ export default function GameEngine({
   }, []);
 
   return (
-    <div className="w-screen h-screen relative overflow-hidden">
+    <div className="w-screen h-screen relative overflow-hidden pointer-events-auto">
       {/* ── 3D Doctor's Office — full-screen background ── */}
-      <div className="absolute inset-0 z-0" style={{ pointerEvents: "none" }}>
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <Canvas
           shadows
           camera={{ position: [0, 1.9, 6.2], fov: 62, near: 0.1, far: 60 }}
@@ -72,7 +72,7 @@ export default function GameEngine({
       </div>
 
       {/* ── Level UI — overlays the 3D scene ── */}
-      <div className="absolute inset-0 z-10">
+      <div className="absolute inset-0 z-10 pointer-events-none">
         {levelId === 1 && <Level1Olfactory {...levelProps} />}
         {levelId === 2 && <Level2Optic {...levelProps} />}
         {levelId === 3 && <Level3EyeMovement {...levelProps} />}
@@ -88,7 +88,7 @@ export default function GameEngine({
       <WindowDistraction />
 
       {/* ── HUD — always topmost ── */}
-      <div className="absolute inset-0 z-50">
+      <div className="absolute inset-0 z-50 pointer-events-none">
         <GameUI level={level} stress={stress} onQuit={onQuit} />
       </div>
     </div>

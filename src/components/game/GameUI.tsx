@@ -18,7 +18,7 @@ export default function GameUI({ level, stress, onQuit }: Props) {
     <>
       {/* Top bar */}
       <div
-        className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3"
+        className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 pointer-events-none"
         style={{
           background:
             "linear-gradient(to bottom, rgba(10,14,20,0.95) 0%, transparent 100%)",
@@ -73,7 +73,7 @@ export default function GameUI({ level, stress, onQuit }: Props) {
         {/* Quit */}
         <button
           onClick={onQuit}
-          className="text-xs text-muted-foreground hover:text-destructive tracking-widest uppercase transition-colors"
+          className="text-xs text-muted-foreground hover:text-destructive tracking-widest uppercase transition-colors pointer-events-auto"
         >
           QUIT →
         </button>
@@ -81,7 +81,7 @@ export default function GameUI({ level, stress, onQuit }: Props) {
 
       {/* Bottom controls bar */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-50 px-6 py-3"
+        className="absolute bottom-0 left-0 right-0 z-50 px-6 py-3 pointer-events-none"
         style={{
           background:
             "linear-gradient(to top, rgba(10,14,20,0.95) 0%, transparent 100%)",
