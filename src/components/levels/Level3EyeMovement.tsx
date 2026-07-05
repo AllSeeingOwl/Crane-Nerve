@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Progress } from "@/components/ui/progress";
 
 export function Level3EyeMovement({
   stress,
@@ -121,7 +120,13 @@ export function Level3EyeMovement({
       <div className="absolute top-8 left-1/2 -translate-x-1/2 w-96 text-center text-white bg-black/50 p-4 rounded">
         <h2 className="text-xl font-bold mb-2">Level 3: Eye Movement</h2>
         <p className="text-sm mb-2">Trace the H-pattern with the penlight.</p>
-        <Progress value={progress} className="w-full" />
+        {/* Custom Progress Bar */}
+        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-blue-500 transition-all duration-300 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
 
       {/* Nodes */}

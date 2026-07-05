@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Progress } from "@/components/ui/progress";
 
 export function Level4Trigeminal({
   stress,
@@ -138,7 +137,13 @@ export function Level4Trigeminal({
           <br />
           Right Click = Soft cotton
         </p>
-        <Progress value={progress} className="w-full mb-2" />
+        {/* Custom Progress Bar */}
+        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden mb-2">
+          <div
+            className="h-full bg-blue-500 transition-all duration-300 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
         {feedback && (
           <p className="text-sm text-blue-300 font-semibold">{feedback}</p>
         )}
