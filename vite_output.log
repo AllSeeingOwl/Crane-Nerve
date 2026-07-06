@@ -1,0 +1,371 @@
+
+  VITE v7.3.6  ready in 528 ms
+
+  ➜  Local:   http://localhost:3000/Crane-Nerve/
+  ➜  Network: http://192.168.0.2:3000/Crane-Nerve/
+7:10:38 PM [vite] (client) Pre-transform error: /app/src/components/game/DoctorsOffice3D.tsx: Identifier 'cameraState' has already been declared. (6:9)
+
+  4 | import WindowVignette from "./WindowVignette";
+  5 | import { cameraState } from "@/lib/cameraState";
+> 6 | import { cameraState } from "../../lib/cameraState";
+    |          ^
+  7 |
+  8 | /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+  9 | function CameraRig() {
+  Plugin: vite:react-babel
+  File: /app/src/components/game/DoctorsOffice3D.tsx:6:9
+  4  |  import WindowVignette from "./WindowVignette";
+  5  |  import { cameraState } from "@/lib/cameraState";
+  6  |  import { cameraState } from "../../lib/cameraState";
+     |           ^
+  7  |
+  8  |  /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+7:10:38 PM [vite] Internal server error: /app/src/components/game/DoctorsOffice3D.tsx: Identifier 'cameraState' has already been declared. (6:9)
+
+  4 | import WindowVignette from "./WindowVignette";
+  5 | import { cameraState } from "@/lib/cameraState";
+> 6 | import { cameraState } from "../../lib/cameraState";
+    |          ^
+  7 |
+  8 | /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+  9 | function CameraRig() {
+  Plugin: vite:react-babel
+  File: /app/src/components/game/DoctorsOffice3D.tsx:6:9
+  4  |  import WindowVignette from "./WindowVignette";
+  5  |  import { cameraState } from "@/lib/cameraState";
+  6  |  import { cameraState } from "../../lib/cameraState";
+     |           ^
+  7  |
+  8  |  /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+      at constructor (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:365:19)
+      at TypeScriptParserMixin.raise (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:6616:19)
+      at TypeScriptScopeHandler.declareName (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:4878:21)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7584:16)
+      at TypeScriptParserMixin.checkIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7580:12)
+      at TypeScriptParserMixin.checkLVal (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7517:12)
+      at TypeScriptParserMixin.finishImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14283:10)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14436:17)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10165:18)
+      at TypeScriptParserMixin.parseNamedImportSpecifiers (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14415:36)
+      at TypeScriptParserMixin.parseImportSpecifiersAndAfter (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14259:37)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14252:17)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9370:26)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12893:27)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12629:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14505:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10143:18)
+      at parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14539:38)
+      at parser (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:261:32)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:189:28
+      at /app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:113:33
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:287:14)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+7:11:46 PM [vite] Internal server error: /app/src/components/game/DoctorsOffice3D.tsx: Identifier 'cameraState' has already been declared. (6:9)
+
+  4 | import WindowVignette from "./WindowVignette";
+  5 | import { cameraState } from "@/lib/cameraState";
+> 6 | import { cameraState } from "../../lib/cameraState";
+    |          ^
+  7 |
+  8 | /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+  9 | function CameraRig() {
+  Plugin: vite:react-babel
+  File: /app/src/components/game/DoctorsOffice3D.tsx:6:9
+  4  |  import WindowVignette from "./WindowVignette";
+  5  |  import { cameraState } from "@/lib/cameraState";
+  6  |  import { cameraState } from "../../lib/cameraState";
+     |           ^
+  7  |
+  8  |  /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+      at constructor (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:365:19)
+      at TypeScriptParserMixin.raise (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:6616:19)
+      at TypeScriptScopeHandler.declareName (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:4878:21)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7584:16)
+      at TypeScriptParserMixin.checkIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7580:12)
+      at TypeScriptParserMixin.checkLVal (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7517:12)
+      at TypeScriptParserMixin.finishImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14283:10)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14436:17)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10165:18)
+      at TypeScriptParserMixin.parseNamedImportSpecifiers (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14415:36)
+      at TypeScriptParserMixin.parseImportSpecifiersAndAfter (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14259:37)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14252:17)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9370:26)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12893:27)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12629:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14505:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10143:18)
+      at parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14539:38)
+      at parser (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:261:32)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:189:28
+      at /app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:113:33
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:287:14)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+7:15:01 PM [vite] Internal server error: /app/src/components/game/DoctorsOffice3D.tsx: Identifier 'cameraState' has already been declared. (6:9)
+
+  4 | import WindowVignette from "./WindowVignette";
+  5 | import { cameraState } from "@/lib/cameraState";
+> 6 | import { cameraState } from "../../lib/cameraState";
+    |          ^
+  7 |
+  8 | /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+  9 | function CameraRig() {
+  Plugin: vite:react-babel
+  File: /app/src/components/game/DoctorsOffice3D.tsx:6:9
+  4  |  import WindowVignette from "./WindowVignette";
+  5  |  import { cameraState } from "@/lib/cameraState";
+  6  |  import { cameraState } from "../../lib/cameraState";
+     |           ^
+  7  |
+  8  |  /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+      at constructor (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:365:19)
+      at TypeScriptParserMixin.raise (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:6616:19)
+      at TypeScriptScopeHandler.declareName (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:4878:21)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7584:16)
+      at TypeScriptParserMixin.checkIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7580:12)
+      at TypeScriptParserMixin.checkLVal (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7517:12)
+      at TypeScriptParserMixin.finishImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14283:10)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14436:17)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10165:18)
+      at TypeScriptParserMixin.parseNamedImportSpecifiers (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14415:36)
+      at TypeScriptParserMixin.parseImportSpecifiersAndAfter (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14259:37)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14252:17)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9370:26)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12893:27)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12629:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14505:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10143:18)
+      at parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14539:38)
+      at parser (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:261:32)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:189:28
+      at /app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:113:33
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:287:14)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+7:15:57 PM [vite] Internal server error: /app/src/components/game/DoctorsOffice3D.tsx: Identifier 'cameraState' has already been declared. (6:9)
+
+  4 | import WindowVignette from "./WindowVignette";
+  5 | import { cameraState } from "@/lib/cameraState";
+> 6 | import { cameraState } from "../../lib/cameraState";
+    |          ^
+  7 |
+  8 | /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+  9 | function CameraRig() {
+  Plugin: vite:react-babel
+  File: /app/src/components/game/DoctorsOffice3D.tsx:6:9
+  4  |  import WindowVignette from "./WindowVignette";
+  5  |  import { cameraState } from "@/lib/cameraState";
+  6  |  import { cameraState } from "../../lib/cameraState";
+     |           ^
+  7  |
+  8  |  /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+      at constructor (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:365:19)
+      at TypeScriptParserMixin.raise (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:6616:19)
+      at TypeScriptScopeHandler.declareName (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:4878:21)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7584:16)
+      at TypeScriptParserMixin.checkIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7580:12)
+      at TypeScriptParserMixin.checkLVal (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7517:12)
+      at TypeScriptParserMixin.finishImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14283:10)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14436:17)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10165:18)
+      at TypeScriptParserMixin.parseNamedImportSpecifiers (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14415:36)
+      at TypeScriptParserMixin.parseImportSpecifiersAndAfter (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14259:37)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14252:17)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9370:26)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12893:27)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12629:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14505:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10143:18)
+      at parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14539:38)
+      at parser (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:261:32)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:189:28
+      at /app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:113:33
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:287:14)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+7:16:50 PM [vite] Internal server error: /app/src/components/game/DoctorsOffice3D.tsx: Identifier 'cameraState' has already been declared. (6:9)
+
+  4 | import WindowVignette from "./WindowVignette";
+  5 | import { cameraState } from "@/lib/cameraState";
+> 6 | import { cameraState } from "../../lib/cameraState";
+    |          ^
+  7 |
+  8 | /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+  9 | function CameraRig() {
+  Plugin: vite:react-babel
+  File: /app/src/components/game/DoctorsOffice3D.tsx:6:9
+  4  |  import WindowVignette from "./WindowVignette";
+  5  |  import { cameraState } from "@/lib/cameraState";
+  6  |  import { cameraState } from "../../lib/cameraState";
+     |           ^
+  7  |
+  8  |  /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+      at constructor (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:365:19)
+      at TypeScriptParserMixin.raise (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:6616:19)
+      at TypeScriptScopeHandler.declareName (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:4878:21)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7584:16)
+      at TypeScriptParserMixin.checkIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7580:12)
+      at TypeScriptParserMixin.checkLVal (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7517:12)
+      at TypeScriptParserMixin.finishImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14283:10)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14436:17)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10165:18)
+      at TypeScriptParserMixin.parseNamedImportSpecifiers (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14415:36)
+      at TypeScriptParserMixin.parseImportSpecifiersAndAfter (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14259:37)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14252:17)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9370:26)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12893:27)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12629:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14505:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10143:18)
+      at parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14539:38)
+      at parser (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:261:32)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:189:28
+      at /app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:113:33
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:287:14)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+7:18:03 PM [vite] Internal server error: /app/src/components/game/DoctorsOffice3D.tsx: Identifier 'cameraState' has already been declared. (6:9)
+
+  4 | import WindowVignette from "./WindowVignette";
+  5 | import { cameraState } from "@/lib/cameraState";
+> 6 | import { cameraState } from "../../lib/cameraState";
+    |          ^
+  7 |
+  8 | /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+  9 | function CameraRig() {
+  Plugin: vite:react-babel
+  File: /app/src/components/game/DoctorsOffice3D.tsx:6:9
+  4  |  import WindowVignette from "./WindowVignette";
+  5  |  import { cameraState } from "@/lib/cameraState";
+  6  |  import { cameraState } from "../../lib/cameraState";
+     |           ^
+  7  |
+  8  |  /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
+      at constructor (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:365:19)
+      at TypeScriptParserMixin.raise (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:6616:19)
+      at TypeScriptScopeHandler.declareName (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:4878:21)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7584:16)
+      at TypeScriptParserMixin.checkIdentifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7580:12)
+      at TypeScriptParserMixin.checkLVal (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:7517:12)
+      at TypeScriptParserMixin.finishImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14283:10)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14436:17)
+      at TypeScriptParserMixin.parseImportSpecifier (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10165:18)
+      at TypeScriptParserMixin.parseNamedImportSpecifiers (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14415:36)
+      at TypeScriptParserMixin.parseImportSpecifiersAndAfter (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14259:37)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14252:17)
+      at TypeScriptParserMixin.parseImport (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9370:26)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12893:27)
+      at TypeScriptParserMixin.parseStatementContent (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:12629:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14505:25)
+      at TypeScriptParserMixin.parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:10143:18)
+      at parse (/app/node_modules/.pnpm/@babel+parser@7.29.7/node_modules/@babel/parser/lib/index.js:14539:38)
+      at parser (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:261:32)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:189:28
+      at /app/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:113:33
+      at step (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:287:14)
+      at /app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/app/node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:223:11)
+7:18:58 PM [vite] (client) hmr update /src/styles/index.css
