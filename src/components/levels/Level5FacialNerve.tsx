@@ -101,7 +101,8 @@ export function Level5FacialNerve({
       cursorRef.current.y - targetY,
     );
 
-    if (dist < 80) { // Hit
+    if (dist < 80) {
+      // Hit
       setFeedback("Good! Patient executed: " + targetPrompt.label);
       const nextIndex = currentPromptIndex + 1;
       setCurrentPromptIndex(nextIndex);
@@ -110,7 +111,8 @@ export function Level5FacialNerve({
       if (nextIndex >= prompts.length) {
         setTimeout(() => onWin(), 1000);
       }
-    } else { // Miss
+    } else {
+      // Miss
       setFeedback("Wrong facial area!");
       onStressChange(10);
     }
@@ -168,12 +170,14 @@ export function Level5FacialNerve({
               i < currentPromptIndex
                 ? "bg-green-500/10 border-green-500/50"
                 : isActive
-                ? "bg-white/10 border-white/50 border-dashed animate-[spin_4s_linear_infinite]"
-                : "bg-white/5 border-white/20"
+                  ? "bg-white/10 border-white/50 border-dashed animate-[spin_4s_linear_infinite]"
+                  : "bg-white/5 border-white/20"
             } pointer-events-none flex items-center justify-center`}
             style={{ left: `${prompt.x * 100}%`, top: `${prompt.y * 100}%` }}
           >
-            <span className="text-white/30 text-xs font-bold uppercase tracking-wider">{prompt.target}</span>
+            <span className="text-white/30 text-xs font-bold uppercase tracking-wider">
+              {prompt.target}
+            </span>
           </div>
         );
       })}

@@ -32,11 +32,36 @@ export function Level6Tuning({
 
   // Tuning fork sequence
   const sequence = [
-    { label: "Weber Test: Center of Forehead", target: "Forehead", x: 0.5, y: 0.2 },
-    { label: "Rinne Test (Left): Left Mastoid", target: "Left Bone", x: 0.35, y: 0.45 },
-    { label: "Rinne Test (Left): Left Ear", target: "Left Ear", x: 0.3, y: 0.5 },
-    { label: "Rinne Test (Right): Right Mastoid", target: "Right Bone", x: 0.65, y: 0.45 },
-    { label: "Rinne Test (Right): Right Ear", target: "Right Ear", x: 0.7, y: 0.5 },
+    {
+      label: "Weber Test: Center of Forehead",
+      target: "Forehead",
+      x: 0.5,
+      y: 0.2,
+    },
+    {
+      label: "Rinne Test (Left): Left Mastoid",
+      target: "Left Bone",
+      x: 0.35,
+      y: 0.45,
+    },
+    {
+      label: "Rinne Test (Left): Left Ear",
+      target: "Left Ear",
+      x: 0.3,
+      y: 0.5,
+    },
+    {
+      label: "Rinne Test (Right): Right Mastoid",
+      target: "Right Bone",
+      x: 0.65,
+      y: 0.45,
+    },
+    {
+      label: "Rinne Test (Right): Right Ear",
+      target: "Right Ear",
+      x: 0.7,
+      y: 0.5,
+    },
   ];
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -82,9 +107,13 @@ export function Level6Tuning({
           forkRef.current.y - targetY,
         );
 
-        if (dist < 80) { // In zone
+        if (dist < 80) {
+          // In zone
           holdFramesRef.current += 1;
-          const currentHoldProgress = Math.min((holdFramesRef.current / HOLD_DURATION_FRAMES) * 100, 100);
+          const currentHoldProgress = Math.min(
+            (holdFramesRef.current / HOLD_DURATION_FRAMES) * 100,
+            100,
+          );
           setHoldProgress(currentHoldProgress);
 
           if (holdFramesRef.current >= HOLD_DURATION_FRAMES) {
@@ -134,12 +163,14 @@ export function Level6Tuning({
       forkRef.current.y - targetY,
     );
 
-    if (dist < 80) { // Hit target to strike
+    if (dist < 80) {
+      // Hit target to strike
       setIsStriking(true);
       holdFramesRef.current = 0;
       setHoldProgress(0);
       setFeedback("Tuning fork struck! Hold steady...");
-    } else { // Miss
+    } else {
+      // Miss
       setFeedback("You missed the target area.");
       onStressChange(10);
     }
@@ -159,7 +190,9 @@ export function Level6Tuning({
       }}
     >
       <div className="absolute top-8 left-1/2 -translate-x-1/2 w-96 text-center text-white bg-black/50 p-4 rounded z-20 pointer-events-none">
-        <h2 className="text-xl font-bold mb-2">Level 6: Vestibulocochlear Nerve</h2>
+        <h2 className="text-xl font-bold mb-2">
+          Level 6: Vestibulocochlear Nerve
+        </h2>
         <p className="text-sm mb-2">
           Move the tuning fork to the target, click to strike, and hold steady!
         </p>
@@ -209,10 +242,10 @@ export function Level6Tuning({
               i < currentStepIndex
                 ? "bg-green-500/10 border-green-500/50"
                 : isActive
-                ? isStriking
-                  ? "bg-yellow-400/20 border-yellow-400 border-dashed animate-pulse"
-                  : "bg-white/10 border-white/50 border-dashed"
-                : "hidden"
+                  ? isStriking
+                    ? "bg-yellow-400/20 border-yellow-400 border-dashed animate-pulse"
+                    : "bg-white/10 border-white/50 border-dashed"
+                  : "hidden"
             } pointer-events-none flex items-center justify-center`}
             style={{ left: `${step.x * 100}%`, top: `${step.y * 100}%` }}
           >
@@ -234,12 +267,16 @@ export function Level6Tuning({
         }}
       >
         {/* Prongs */}
-        <div className={`flex gap-2 ${isStriking ? 'animate-[bounce_0.05s_infinite]' : ''}`}>
+        <div
+          className={`flex gap-2 ${isStriking ? "animate-[bounce_0.05s_infinite]" : ""}`}
+        >
           <div className="w-1.5 h-12 bg-gray-300 rounded-t-sm shadow-[0_0_10px_rgba(209,213,219,0.5)]" />
           <div className="w-1.5 h-12 bg-gray-300 rounded-t-sm shadow-[0_0_10px_rgba(209,213,219,0.5)]" />
         </div>
         {/* Base connecting prongs */}
-        <div className={`w-6 h-2 bg-gray-300 rounded-b-md ${isStriking ? 'animate-[bounce_0.05s_infinite]' : ''}`} />
+        <div
+          className={`w-6 h-2 bg-gray-300 rounded-b-md ${isStriking ? "animate-[bounce_0.05s_infinite]" : ""}`}
+        />
         {/* Handle */}
         <div className="w-2 h-10 bg-gray-400 rounded-b-sm shadow-[0_0_5px_rgba(156,163,175,0.5)]" />
 
