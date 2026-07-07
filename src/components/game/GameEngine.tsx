@@ -15,6 +15,7 @@ import { Level8Accessory } from "../levels/Level8Accessory";
 import { useAmbientAudio } from "@/hooks/useAmbientAudio";
 import { cameraState } from "@/lib/cameraState";
 import { Level9Hypoglossal } from "../levels/Level9Hypoglossal";
+import { Level10Crisis } from "../levels/Level10Crisis";
 
 interface Props {
   levelId: LevelId;
@@ -82,6 +83,7 @@ export default function GameEngine({
         {levelId === 7 && <Level7GagReflex {...levelProps} />}
         {levelId === 8 && <Level8Accessory {...levelProps} />}
         {levelId === 9 && <Level9Hypoglossal {...levelProps} />}
+        {levelId === 10 && <Level10Crisis {...levelProps} />}
       </div>
 
       {/* ── Window of Distraction — floats bottom-right ── */}
