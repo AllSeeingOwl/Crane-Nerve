@@ -36,13 +36,21 @@ export function Level9Hypoglossal({
 
   const [currentTargetIndex, setCurrentTargetIndex] = useState(0);
 
-  const mouseRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const mouseRef = useRef({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  });
   const isDraggingRef = useRef(false);
 
   const segmentsRef = useRef<Point[]>([]);
   if (segmentsRef.current.length === 0) {
     for (let i = 0; i < NUM_SEGMENTS; i++) {
-      segmentsRef.current.push({ x: window.innerWidth / 2, y: window.innerHeight * 0.8 - i * SEGMENT_LENGTH, vx: 0, vy: 0 });
+      segmentsRef.current.push({
+        x: window.innerWidth / 2,
+        y: window.innerHeight * 0.8 - i * SEGMENT_LENGTH,
+        vx: 0,
+        vy: 0,
+      });
     }
   }
 
@@ -138,10 +146,10 @@ export function Level9Hypoglossal({
 
       let snapStress = 0;
       if (Math.hypot(tip.vx, tip.vy) > 1000) {
-          snapStress = dt * 10;
-          onStressChange(snapStress);
+        snapStress = dt * 10;
+        onStressChange(snapStress);
       } else if (Math.random() < 0.01) {
-          onStressChange(0.1);
+        onStressChange(0.1);
       }
 
       if (currentTargetIndexRef.current < targets.length) {
@@ -153,7 +161,8 @@ export function Level9Hypoglossal({
 
         if (distToTarget < 60) {
           holdTimeRef.current += dt;
-          if (holdTimeRef.current > 1.0) { // Hold for 1 second
+          if (holdTimeRef.current > 1.0) {
+            // Hold for 1 second
             currentTargetIndexRef.current += 1;
             setCurrentTargetIndex(currentTargetIndexRef.current);
             setProgress((currentTargetIndexRef.current / targets.length) * 100);
@@ -192,7 +201,10 @@ export function Level9Hypoglossal({
   }, [stress, onLose]);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 pointer-events-auto overflow-hidden">
+    <div
+      ref={containerRef}
+      className="absolute inset-0 pointer-events-auto overflow-hidden"
+    >
       <div className="absolute top-8 left-1/2 -translate-x-1/2 w-96 text-center text-white bg-black/50 p-4 rounded z-20 pointer-events-none">
         <h2 className="text-xl font-bold mb-2">Level 9: Hypoglossal</h2>
         <p className="text-sm mb-2">Drag the tongue to the target locations.</p>
@@ -268,9 +280,13 @@ export function Level9Hypoglossal({
           left: tipPos.x,
           top: tipPos.y,
         }}
-        onMouseDown={() => { isDraggingRef.current = true; }}
+        onMouseDown={() => {
+          isDraggingRef.current = true;
+        }}
       >
-        <div className={`w-8 h-8 rounded-full border-2 border-white/50 bg-white/10 ${isDraggingRef.current ? 'scale-90 bg-white/30' : 'scale-100'} transition-transform`} />
+        <div
+          className={`w-8 h-8 rounded-full border-2 border-white/50 bg-white/10 ${isDraggingRef.current ? "scale-90 bg-white/30" : "scale-100"} transition-transform`}
+        />
       </div>
     </div>
   );

@@ -14,7 +14,10 @@ export function Level10Crisis({
   const [timeRemaining, setTimeRemaining] = useState(30);
 
   // --- Task 1: Mouse Tracking (Trace the circle) ---
-  const mouseRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const mouseRef = useRef({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  });
   const [mouseTaskHealth, setMouseTaskHealth] = useState(100);
   const [targetPos, setTargetPos] = useState({ x: 0, y: 0 });
 
@@ -33,10 +36,14 @@ export function Level10Crisis({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") gazeRef.current.x = Math.max(-1, gazeRef.current.x - 0.2);
-      if (e.key === "ArrowRight") gazeRef.current.x = Math.min(1, gazeRef.current.x + 0.2);
-      if (e.key === "ArrowUp") gazeRef.current.y = Math.max(-1, gazeRef.current.y - 0.2);
-      if (e.key === "ArrowDown") gazeRef.current.y = Math.min(1, gazeRef.current.y + 0.2);
+      if (e.key === "ArrowLeft")
+        gazeRef.current.x = Math.max(-1, gazeRef.current.x - 0.2);
+      if (e.key === "ArrowRight")
+        gazeRef.current.x = Math.min(1, gazeRef.current.x + 0.2);
+      if (e.key === "ArrowUp")
+        gazeRef.current.y = Math.max(-1, gazeRef.current.y - 0.2);
+      if (e.key === "ArrowDown")
+        gazeRef.current.y = Math.min(1, gazeRef.current.y + 0.2);
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -60,7 +67,6 @@ export function Level10Crisis({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onStressChange]);
-
 
   // Game loop
   const frameRef = useRef<number>(null);
@@ -117,7 +123,8 @@ export function Level10Crisis({
 
       // --- Task 3 Logic ---
       faceTimer += dt;
-      if (faceTimer > 3) { // New prompt every 3 seconds
+      if (faceTimer > 3) {
+        // New prompt every 3 seconds
         faceTimer = 0;
         const newKey = Math.floor(Math.random() * 4) + 1;
         currentFaceKeyRef.current = newKey;
@@ -125,7 +132,6 @@ export function Level10Crisis({
       }
       faceHealth -= 10 * dt;
       setFaceTaskHealth(faceHealth);
-
 
       // Stress calculation based on healths
       if (mouseHealth < 30 || gazeHealth < 30 || faceHealth < 30) {
@@ -152,7 +158,6 @@ export function Level10Crisis({
 
   return (
     <div className="absolute inset-0 pointer-events-auto bg-black/40">
-
       {/* Timer */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center text-white bg-red-600/80 p-4 rounded-xl z-20 shadow-lg shadow-red-500/50">
         <h1 className="text-3xl font-black animate-pulse">CRISIS MODE</h1>
@@ -161,47 +166,67 @@ export function Level10Crisis({
 
       {/* Task 1: Mouse */}
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-black/50 rounded-xl border border-white/20 flex items-center justify-center pointer-events-none">
-        <h3 className="absolute top-2 text-white/50 font-bold text-sm">MOUSE</h3>
+        <h3 className="absolute top-2 text-white/50 font-bold text-sm">
+          MOUSE
+        </h3>
 
         {/* Target */}
         <div
           className="absolute w-12 h-12 border-2 border-yellow-400 rounded-full bg-yellow-400/20"
-          style={{ left: targetPos.x - (window.innerWidth * 0.2) + 128 - 24, top: targetPos.y - (window.innerHeight * 0.5) + 128 - 24 }}
+          style={{
+            left: targetPos.x - window.innerWidth * 0.2 + 128 - 24,
+            top: targetPos.y - window.innerHeight * 0.5 + 128 - 24,
+          }}
         />
 
         {/* Cursor representation for local widget */}
         <div
           className="absolute w-4 h-4 bg-white rounded-full"
-          style={{ left: mouseRef.current.x - (window.innerWidth * 0.2) + 128 - 8, top: mouseRef.current.y - (window.innerHeight * 0.5) + 128 - 8 }}
+          style={{
+            left: mouseRef.current.x - window.innerWidth * 0.2 + 128 - 8,
+            top: mouseRef.current.y - window.innerHeight * 0.5 + 128 - 8,
+          }}
         />
 
         {/* Health Bar */}
         <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
-          <div className={`h-full ${mouseTaskHealth > 30 ? 'bg-green-500' : 'bg-red-500 animate-pulse'}`} style={{ width: `${mouseTaskHealth}%` }} />
+          <div
+            className={`h-full ${mouseTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+            style={{ width: `${mouseTaskHealth}%` }}
+          />
         </div>
       </div>
 
       {/* Task 2: Gaze (Arrow Keys) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-black/50 rounded-xl border border-white/20 flex flex-col items-center justify-center pointer-events-none">
-        <h3 className="absolute top-2 text-white/50 font-bold text-sm">ARROWS</h3>
+        <h3 className="absolute top-2 text-white/50 font-bold text-sm">
+          ARROWS
+        </h3>
 
         <div className="relative w-32 h-32 border-4 border-white/30 rounded-full flex items-center justify-center bg-white/5">
           <div className="w-8 h-8 border-2 border-green-500 rounded-full" />
           <div
             className="absolute w-6 h-6 bg-blue-500 rounded-full"
-            style={{ transform: `translate(${gazePos.x * 64}px, ${gazePos.y * 64}px)` }}
+            style={{
+              transform: `translate(${gazePos.x * 64}px, ${gazePos.y * 64}px)`,
+            }}
           />
         </div>
 
         {/* Health Bar */}
         <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
-          <div className={`h-full ${gazeTaskHealth > 30 ? 'bg-green-500' : 'bg-red-500 animate-pulse'}`} style={{ width: `${gazeTaskHealth}%` }} />
+          <div
+            className={`h-full ${gazeTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+            style={{ width: `${gazeTaskHealth}%` }}
+          />
         </div>
       </div>
 
       {/* Task 3: Face (Number Keys) */}
       <div className="absolute top-1/2 left-3/4 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-black/50 rounded-xl border border-white/20 flex flex-col items-center justify-center pointer-events-none">
-        <h3 className="absolute top-2 text-white/50 font-bold text-sm">KEYS 1-4</h3>
+        <h3 className="absolute top-2 text-white/50 font-bold text-sm">
+          KEYS 1-4
+        </h3>
 
         <div className="text-5xl font-black text-white/80 animate-bounce">
           PRESS {facePrompt}
@@ -209,10 +234,12 @@ export function Level10Crisis({
 
         {/* Health Bar */}
         <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
-          <div className={`h-full ${faceTaskHealth > 30 ? 'bg-green-500' : 'bg-red-500 animate-pulse'}`} style={{ width: `${faceTaskHealth}%` }} />
+          <div
+            className={`h-full ${faceTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+            style={{ width: `${faceTaskHealth}%` }}
+          />
         </div>
       </div>
-
     </div>
   );
 }
