@@ -104,7 +104,7 @@ export const LEVELS: LevelInfo[] = [
     title: "Crisis Mode",
     description: "All nerves are failing at once. Godspeed.",
     controls: "All of the above, simultaneously",
-    implemented: false,
+    implemented: true,
   },
   {
     id: 11,
