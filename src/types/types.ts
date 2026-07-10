@@ -112,7 +112,7 @@ export const LEVELS: LevelInfo[] = [
     title: "Night Shift",
     description: "Everything is the same, but you've been awake 36 hours.",
     controls: "Same as before, but worse",
-    implemented: false,
+    implemented: true,
   },
   {
     id: 12,
@@ -120,7 +120,7 @@ export const LEVELS: LevelInfo[] = [
     title: "The Debrief",
     description: "Explain to the patient what just happened. Good luck.",
     controls: "Type your apology",
-    implemented: false,
+    implemented: true,
   },
 ];
 

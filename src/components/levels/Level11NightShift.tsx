@@ -1,0 +1,352 @@
+import React, { useEffect, useRef, useState } from "react";
+
+export function Level11NightShift({
+  stress,
+  onStressChange,
+  onWin,
+  onLose,
+}: {
+  stress: number;
+  onStressChange: (delta: number) => void;
+  onWin: () => void;
+  onLose: (reason: string) => void;
+}) {
+  const [timeRemaining, setTimeRemaining] = useState(120);
+  const [mistakes, setMistakes] = useState(0);
+  const [showWarning, setShowWarning] = useState(false);
+
+  // Visual effects state
+  const [blurAmount, setBlurAmount] = useState(0);
+  const [shakeAmount, setShakeAmount] = useState(0);
+  const [darkenAmount, setDarkenAmount] = useState(0); // For microsleeps
+
+  // --- Task 1: Mouse Tracking (Trace the circle) ---
+  const mouseRef = useRef({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  });
+  const [mouseTaskHealth, setMouseTaskHealth] = useState(100);
+  const [targetPos, setTargetPos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // --- Task 2: Arrow Keys (Keep gaze centered) ---
+  const gazeRef = useRef({ x: 0, y: 0 }); // -1 to 1
+  const [gazeTaskHealth, setGazeTaskHealth] = useState(100);
+  const [gazePos, setGazePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft")
+        gazeRef.current.x = Math.max(-1, gazeRef.current.x - 0.2);
+      if (e.key === "ArrowRight")
+        gazeRef.current.x = Math.min(1, gazeRef.current.x + 0.2);
+      if (e.key === "ArrowUp")
+        gazeRef.current.y = Math.max(-1, gazeRef.current.y - 0.2);
+      if (e.key === "ArrowDown")
+        gazeRef.current.y = Math.min(1, gazeRef.current.y + 0.2);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // --- Task 3: Number Keys (Facial expressions) ---
+  const [facePrompt, setFacePrompt] = useState(1);
+  const [faceTaskHealth, setFaceTaskHealth] = useState(100);
+  const currentFaceKeyRef = useRef(1);
+
+  // Track mistakes without causing loops
+  const handleMistake = () => {
+    setMistakes((prev) => {
+      const newMistakes = prev + 1;
+      if (newMistakes === 1) {
+        setShowWarning(true);
+        setTimeout(() => setShowWarning(false), 2000);
+        return newMistakes;
+      }
+      return newMistakes; // Let the useEffect handle the game over
+    });
+  };
+
+  const hasMistakenRef = useRef(false);
+  const mistakeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const registerMistake = () => {
+    if (hasMistakenRef.current) return; // Prevent multiple mistakes at once
+    hasMistakenRef.current = true;
+    handleMistake();
+
+    // Reset the healths so they don't instantly lose again
+
+    // Cooldown before they can make another mistake
+    mistakeTimeoutRef.current = setTimeout(() => {
+      hasMistakenRef.current = false;
+    }, 2000);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (["1", "2", "3", "4"].includes(e.key)) {
+        if (parseInt(e.key) === currentFaceKeyRef.current) {
+          setFaceTaskHealth(100);
+        } else {
+          registerMistake();
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Game loop
+  const frameRef = useRef<number>(null);
+  const lastTimeRef = useRef<number>(performance.now());
+  const elapsedRef = useRef(0);
+
+  useEffect(() => {
+    let mouseHealth = 100;
+    let gazeHealth = 100;
+    let faceHealth = 100;
+    let faceTimer = 0;
+
+    let vfxTimer = 0;
+    const currentVfxState = { blur: 0, shake: 0, darken: 0 };
+
+    const loop = (time: number) => {
+      const dt = Math.min((time - lastTimeRef.current) / 1000, 0.1);
+      lastTimeRef.current = time;
+      elapsedRef.current += dt;
+
+      // Update timer display
+      setTimeRemaining(Math.max(0, 120 - Math.floor(elapsedRef.current)));
+      if (elapsedRef.current >= 120) {
+        onWin();
+        return;
+      }
+
+      // --- VFX Logic (Night Shift effects) ---
+      vfxTimer += dt;
+      // Randomly change effects every 3-7 seconds
+      if (Math.random() < dt / 5) {
+        // Microsleep (darken)
+        if (Math.random() < 0.3) {
+          currentVfxState.darken = 0.8 + Math.random() * 0.2; // 80-100% black
+          setTimeout(
+            () => {
+              currentVfxState.darken = 0;
+            },
+            500 + Math.random() * 1500,
+          ); // 0.5 to 2 seconds of microsleep
+        }
+
+        // Blurry vision
+        currentVfxState.blur = Math.random() < 0.5 ? Math.random() * 8 : 0;
+
+        // Shakes (caffeine jitters)
+        currentVfxState.shake = Math.random() < 0.4 ? Math.random() * 15 : 0;
+      }
+
+      // Decay effects slightly over time unless it's a microsleep
+      if (currentVfxState.darken === 0) {
+        currentVfxState.blur = Math.max(0, currentVfxState.blur - dt);
+        currentVfxState.shake = Math.max(0, currentVfxState.shake - dt * 5);
+      }
+
+      setBlurAmount(currentVfxState.blur);
+      setShakeAmount(currentVfxState.shake);
+      setDarkenAmount(currentVfxState.darken);
+
+      // --- Task 1 Logic ---
+      // Move target in a figure-8 or chaotic pattern (harder than Level 10)
+      const tX =
+        window.innerWidth * 0.2 +
+        Math.cos(time / 800) * 120 +
+        Math.sin(time / 400) * 40;
+      const tY =
+        window.innerHeight * 0.5 +
+        Math.sin(time / 600) * 120 +
+        Math.cos(time / 300) * 40;
+      setTargetPos({ x: tX, y: tY });
+
+      const dist = Math.hypot(mouseRef.current.x - tX, mouseRef.current.y - tY);
+      if (dist < 100) {
+        mouseHealth = Math.min(100, mouseHealth + 20 * dt);
+      } else {
+        mouseHealth -= 15 * dt;
+      }
+      setMouseTaskHealth(mouseHealth);
+
+      // --- Task 2 Logic ---
+      // Gaze drifts away randomly (faster drift)
+      gazeRef.current.x += (Math.random() - 0.5) * 1.5 * dt;
+      gazeRef.current.y += (Math.random() - 0.5) * 1.5 * dt;
+      gazeRef.current.x = Math.max(-1, Math.min(1, gazeRef.current.x));
+      gazeRef.current.y = Math.max(-1, Math.min(1, gazeRef.current.y));
+      setGazePos({ x: gazeRef.current.x, y: gazeRef.current.y });
+
+      const gazeDist = Math.hypot(gazeRef.current.x, gazeRef.current.y);
+      if (gazeDist > 0.6) {
+        gazeHealth -= 25 * dt;
+      } else {
+        gazeHealth = Math.min(100, gazeHealth + 15 * dt);
+      }
+      setGazeTaskHealth(gazeHealth);
+
+      // --- Task 3 Logic ---
+      faceTimer += dt;
+      if (faceTimer > 2.5) {
+        // Faster prompt (2.5s instead of 3s)
+        faceTimer = 0;
+        const newKey = Math.floor(Math.random() * 4) + 1;
+        currentFaceKeyRef.current = newKey;
+        setFacePrompt(newKey);
+      }
+      faceHealth -= 15 * dt;
+      setFaceTaskHealth(faceHealth);
+
+      // Check healths for mistake
+      if (mouseHealth <= 0 || gazeHealth <= 0 || faceHealth <= 0) {
+        registerMistake();
+        // Reset healths to prevent immediate double mistake
+        if (mouseHealth <= 0) mouseHealth = 100;
+        if (gazeHealth <= 0) gazeHealth = 100;
+        if (faceHealth <= 0) faceHealth = 100;
+      }
+
+      frameRef.current = requestAnimationFrame(loop);
+    };
+
+    frameRef.current = requestAnimationFrame(loop);
+    return () => {
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+      if (mistakeTimeoutRef.current) clearTimeout(mistakeTimeoutRef.current);
+    };
+  }, [onWin]);
+
+  useEffect(() => {
+    if (mistakes >= 2) {
+      onLose("You fell asleep on the job. The patient is very disappointed.");
+    }
+  }, [mistakes, onLose]);
+
+  // Dynamic styles for VFX
+  const containerStyle = {
+    filter: `blur(${blurAmount}px)`,
+    transform: `translate(${(Math.random() - 0.5) * shakeAmount}px, ${(Math.random() - 0.5) * shakeAmount}px)`,
+  };
+
+  return (
+    <div className="absolute inset-0 pointer-events-auto bg-black/40 overflow-hidden">
+      {/* Microsleep Overlay */}
+      <div
+        className="absolute inset-0 z-50 pointer-events-none transition-colors duration-100"
+        style={{ backgroundColor: `rgba(0,0,0,${darkenAmount})` }}
+      />
+
+      {showWarning && (
+        <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none bg-red-900/30">
+          <h1
+            className="text-9xl font-black text-red-600 uppercase animate-bounce"
+            style={{ textShadow: "0 0 40px red" }}
+          >
+            WARNING! WAKE UP!
+          </h1>
+        </div>
+      )}
+
+      <div style={containerStyle} className="w-full h-full relative">
+        {/* Timer */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center text-white bg-blue-900/80 p-4 rounded-xl z-20 shadow-lg shadow-blue-500/50">
+          <h1 className="text-3xl font-black opacity-80">
+            NIGHT SHIFT: 36 HOURS IN
+          </h1>
+          <p className="text-2xl font-mono">{timeRemaining}s</p>
+          <p className="text-red-400 font-bold">{mistakes} / 2 Mistakes</p>
+        </div>
+
+        {/* Task 1: Mouse */}
+        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-black/50 rounded-xl border border-white/20 flex items-center justify-center pointer-events-none">
+          <h3 className="absolute top-2 text-white/50 font-bold text-sm">
+            MOUSE
+          </h3>
+
+          {/* Target */}
+          <div
+            className="absolute w-12 h-12 border-2 border-yellow-400 rounded-full bg-yellow-400/20"
+            style={{
+              left: targetPos.x - window.innerWidth * 0.2 + 128 - 24,
+              top: targetPos.y - window.innerHeight * 0.5 + 128 - 24,
+            }}
+          />
+
+          {/* Cursor representation for local widget */}
+          <div
+            className="absolute w-4 h-4 bg-white rounded-full"
+            style={{
+              left: mouseRef.current.x - window.innerWidth * 0.2 + 128 - 8,
+              top: mouseRef.current.y - window.innerHeight * 0.5 + 128 - 8,
+            }}
+          />
+
+          {/* Health Bar */}
+          <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div
+              className={`h-full ${mouseTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+              style={{ width: `${mouseTaskHealth}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Task 2: Gaze (Arrow Keys) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-black/50 rounded-xl border border-white/20 flex flex-col items-center justify-center pointer-events-none">
+          <h3 className="absolute top-2 text-white/50 font-bold text-sm">
+            ARROWS
+          </h3>
+
+          <div className="relative w-32 h-32 border-4 border-white/30 rounded-full flex items-center justify-center bg-white/5">
+            <div className="w-8 h-8 border-2 border-green-500 rounded-full" />
+            <div
+              className="absolute w-6 h-6 bg-blue-500 rounded-full"
+              style={{
+                transform: `translate(${gazePos.x * 64}px, ${gazePos.y * 64}px)`,
+              }}
+            />
+          </div>
+
+          {/* Health Bar */}
+          <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div
+              className={`h-full ${gazeTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+              style={{ width: `${gazeTaskHealth}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Task 3: Face (Number Keys) */}
+        <div className="absolute top-1/2 left-3/4 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-black/50 rounded-xl border border-white/20 flex flex-col items-center justify-center pointer-events-none">
+          <h3 className="absolute top-2 text-white/50 font-bold text-sm">
+            KEYS 1-4
+          </h3>
+
+          <div className="text-5xl font-black text-white/80 animate-bounce">
+            PRESS {facePrompt}
+          </div>
+
+          {/* Health Bar */}
+          <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div
+              className={`h-full ${faceTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+              style={{ width: `${faceTaskHealth}%` }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
