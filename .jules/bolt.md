@@ -1,3 +1,4 @@
 ## 2024-03-24 - [GameEngine Re-render Teardown Cycle]
+
 **Learning:** High-frequency state updates (like 60fps `stress` from a `requestAnimationFrame` loop) managed in a parent component (`App.tsx`) cause inline callbacks to be recreated every frame. When these volatile callbacks are passed into child components and used inside `useEffect` dependency arrays, it triggers full `useEffect` teardowns 60 times a second. In this app, it was actively destroying and recreating the `requestAnimationFrame` game loops every single frame!
 **Action:** Use the "latest ref" pattern (`useRef` + `useCallback`) in the intermediary parent (`GameEngine.tsx`) to stabilize callback references sent to heavy/looping child components. Combine with `useMemo` for sibling components (like heavy R3F `<Canvas>`) that don't need to respond to the 60fps state changes.

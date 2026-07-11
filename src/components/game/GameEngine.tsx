@@ -73,12 +73,15 @@ export default function GameEngine({
     onLoseRef.current(reason);
   }, []);
 
-  const levelProps: LevelProps = useMemo(() => ({
-    stress,
-    onStressChange: stableOnStressChange,
-    onWin: stableOnWin,
-    onLose: stableOnLose,
-  }), [stress, stableOnStressChange, stableOnWin, stableOnLose]);
+  const levelProps: LevelProps = useMemo(
+    () => ({
+      stress,
+      onStressChange: stableOnStressChange,
+      onWin: stableOnWin,
+      onLose: stableOnLose,
+    }),
+    [stress, stableOnStressChange, stableOnWin, stableOnLose],
+  );
 
   useAmbientAudio(true);
 
@@ -95,20 +98,23 @@ export default function GameEngine({
   // ⚡ BOLT OPTIMIZATION:
   // Memoize heavy sibling components that don't depend on the high-frequency `stress` state.
   // This prevents React from diffing the huge R3F canvas tree 60 times a second.
-  const backgroundCanvas = useMemo(() => (
-    <div className="absolute inset-0 z-0 pointer-events-none">
-      <Canvas
-        shadows
-        camera={{ position: [0, 1.9, 6.2], fov: 62, near: 0.1, far: 60 }}
-        gl={{ antialias: true, alpha: false }}
-        style={{ background: "hsl(210,18%,11%)" }}
-      >
-        <Suspense fallback={null}>
-          <DoctorsOffice3D />
-        </Suspense>
-      </Canvas>
-    </div>
-  ), []);
+  const backgroundCanvas = useMemo(
+    () => (
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Canvas
+          shadows
+          camera={{ position: [0, 1.9, 6.2], fov: 62, near: 0.1, far: 60 }}
+          gl={{ antialias: true, alpha: false }}
+          style={{ background: "hsl(210,18%,11%)" }}
+        >
+          <Suspense fallback={null}>
+            <DoctorsOffice3D />
+          </Suspense>
+        </Canvas>
+      </div>
+    ),
+    [],
+  );
 
   const windowDistraction = useMemo(() => <WindowDistraction />, []);
 
