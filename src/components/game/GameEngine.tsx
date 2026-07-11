@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useMemo, useRef, useCallback } from "react";
 import { Canvas } from "@react-three/fiber";
 import { LevelId, LEVELS } from "@/types/types";
 import GameUI from "./GameUI";
@@ -44,7 +44,41 @@ export default function GameEngine({
   onQuit,
 }: Props) {
   const level = LEVELS.find((l) => l.id === levelId)!;
-  const levelProps: LevelProps = { stress, onStressChange, onWin, onLose };
+
+  // ⚡ BOLT OPTIMIZATION:
+  // App.tsx passes inline functions that change reference on every render.
+  // Because stress changes at 60fps, these callbacks recreate constantly,
+  // forcing all child levels to tear down their requestAnimationFrame
+  // useEffects 60 times a second!
+  // We use the "latest ref" pattern to provide stable callbacks.
+  const onStressChangeRef = useRef(onStressChange);
+  const onWinRef = useRef(onWin);
+  const onLoseRef = useRef(onLose);
+
+  useEffect(() => {
+    onStressChangeRef.current = onStressChange;
+    onWinRef.current = onWin;
+    onLoseRef.current = onLose;
+  }, [onStressChange, onWin, onLose]);
+
+  const stableOnStressChange = useCallback((delta: number) => {
+    onStressChangeRef.current(delta);
+  }, []);
+
+  const stableOnWin = useCallback(() => {
+    onWinRef.current();
+  }, []);
+
+  const stableOnLose = useCallback((reason: string) => {
+    onLoseRef.current(reason);
+  }, []);
+
+  const levelProps: LevelProps = useMemo(() => ({
+    stress,
+    onStressChange: stableOnStressChange,
+    onWin: stableOnWin,
+    onLose: stableOnLose,
+  }), [stress, stableOnStressChange, stableOnWin, stableOnLose]);
 
   useAmbientAudio(true);
 
@@ -58,21 +92,30 @@ export default function GameEngine({
     return () => window.removeEventListener("mousemove", handleMove);
   }, []);
 
+  // ⚡ BOLT OPTIMIZATION:
+  // Memoize heavy sibling components that don't depend on the high-frequency `stress` state.
+  // This prevents React from diffing the huge R3F canvas tree 60 times a second.
+  const backgroundCanvas = useMemo(() => (
+    <div className="absolute inset-0 z-0 pointer-events-none">
+      <Canvas
+        shadows
+        camera={{ position: [0, 1.9, 6.2], fov: 62, near: 0.1, far: 60 }}
+        gl={{ antialias: true, alpha: false }}
+        style={{ background: "hsl(210,18%,11%)" }}
+      >
+        <Suspense fallback={null}>
+          <DoctorsOffice3D />
+        </Suspense>
+      </Canvas>
+    </div>
+  ), []);
+
+  const windowDistraction = useMemo(() => <WindowDistraction />, []);
+
   return (
     <div className="w-screen h-screen relative overflow-hidden pointer-events-auto">
       {/* ── 3D Doctor's Office — full-screen background ── */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <Canvas
-          shadows
-          camera={{ position: [0, 1.9, 6.2], fov: 62, near: 0.1, far: 60 }}
-          gl={{ antialias: true, alpha: false }}
-          style={{ background: "hsl(210,18%,11%)" }}
-        >
-          <Suspense fallback={null}>
-            <DoctorsOffice3D />
-          </Suspense>
-        </Canvas>
-      </div>
+      {backgroundCanvas}
 
       {/* ── Level UI — overlays the 3D scene ── */}
       <div className="absolute inset-0 z-10 pointer-events-none">
@@ -91,7 +134,7 @@ export default function GameEngine({
       </div>
 
       {/* ── Window of Distraction — floats bottom-right ── */}
-      <WindowDistraction />
+      {windowDistraction}
 
       {/* ── HUD — always topmost ── */}
       <div className="absolute inset-0 z-50 pointer-events-none">
