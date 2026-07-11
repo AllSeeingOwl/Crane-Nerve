@@ -73,7 +73,7 @@ export default function GameUI({ level, stress, onQuit }: Props) {
         {/* Quit */}
         <button
           onClick={onQuit}
-          className="text-xs text-muted-foreground hover:text-destructive tracking-widest uppercase transition-colors pointer-events-auto"
+          className="text-xs text-muted-foreground hover:text-destructive tracking-widest uppercase transition-colors pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           QUIT →
         </button>

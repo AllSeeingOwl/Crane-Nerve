@@ -19,7 +19,7 @@ export default function LevelSelect({
       <div className="flex items-center justify-between px-8 py-4 border-b border-border">
         <button
           onClick={onBack}
-          className="text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors"
+          className="text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           ← BACK
         </button>
@@ -60,7 +60,7 @@ export default function LevelSelect({
                 disabled={!isAvailable}
                 onClick={() => isAvailable && onSelectLevel(level.id)}
                 className={`
-                  relative p-4 border text-left transition-all duration-150
+                  relative p-4 border text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background
                   ${
                     isAvailable
                       ? isComplete

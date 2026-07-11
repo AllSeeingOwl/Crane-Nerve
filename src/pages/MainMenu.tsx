@@ -87,7 +87,7 @@ export default function MainMenu({ onPlay }: Props) {
       {/* Play button */}
       <button
         onClick={onPlay}
-        className="relative z-10 px-16 py-4 border-2 border-primary text-primary text-xl tracking-widest uppercase hover:bg-primary hover:text-background transition-all duration-200 mb-12"
+        className="relative z-10 px-16 py-4 border-2 border-primary text-primary text-xl tracking-widest uppercase hover:bg-primary hover:text-background transition-all duration-200 mb-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         style={{ fontFamily: "Courier New, monospace" }}
       >
         {blink ? "[ PROCEED ]" : "  PROCEED  "}
