@@ -97,7 +97,9 @@ export function Level10Crisis({
       const tY = window.innerHeight * 0.5 + Math.sin(time / 1000) * 100;
       setTargetPos({ x: tX, y: tY });
 
-      const dist = Math.hypot(mouseRef.current.x - tX, mouseRef.current.y - tY);
+      const dist = Math.sqrt(
+        (mouseRef.current.x - tX) ** 2 + (mouseRef.current.y - tY) ** 2,
+      );
       if (dist < 80) {
         mouseHealth = Math.min(100, mouseHealth + 20 * dt);
       } else {
@@ -113,7 +115,10 @@ export function Level10Crisis({
       gazeRef.current.y = Math.max(-1, Math.min(1, gazeRef.current.y));
       setGazePos({ x: gazeRef.current.x, y: gazeRef.current.y });
 
-      const gazeDist = Math.hypot(gazeRef.current.x, gazeRef.current.y);
+      const gazeDist = Math.sqrt(
+        gazeRef.current.x * gazeRef.current.x +
+          gazeRef.current.y * gazeRef.current.y,
+      );
       if (gazeDist > 0.5) {
         gazeHealth -= 20 * dt;
       } else {

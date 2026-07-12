@@ -96,9 +96,9 @@ export function Level5FacialNerve({
     const targetX = targetPrompt.x * window.innerWidth;
     const targetY = targetPrompt.y * window.innerHeight;
 
-    const dist = Math.hypot(
-      cursorRef.current.x - targetX,
-      cursorRef.current.y - targetY,
+    const dist = Math.sqrt(
+      (cursorRef.current.x - targetX) ** 2 +
+        (cursorRef.current.y - targetY) ** 2,
     );
 
     if (dist < 80) {

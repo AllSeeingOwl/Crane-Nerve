@@ -108,7 +108,7 @@ export function Level1Olfactory({
         nose.vy += (Math.random() - 0.5) * 2;
 
         // Limit speed
-        const speed = Math.hypot(nose.vx, nose.vy);
+        const speed = Math.sqrt(nose.vx * nose.vx + nose.vy * nose.vy);
         if (speed > 2) {
           nose.vx = (nose.vx / speed) * 2;
           nose.vy = (nose.vy / speed) * 2;
@@ -118,7 +118,7 @@ export function Level1Olfactory({
       const activeVialId = selectedVialRef.current;
       const vialDef = VIALS.find((v) => v.id === activeVialId);
 
-      const dist = Math.hypot(nose.x - mouse.x, nose.y - mouse.y);
+      const dist = Math.sqrt((nose.x - mouse.x) ** 2 + (nose.y - mouse.y) ** 2);
 
       if (activeVialId && !identifiedRef.current.includes(activeVialId)) {
         if (vialDef?.type === "bad") {

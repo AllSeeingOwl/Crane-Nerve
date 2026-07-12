@@ -174,7 +174,9 @@ export function Level11NightShift({
         Math.cos(time / 300) * 40;
       setTargetPos({ x: tX, y: tY });
 
-      const dist = Math.hypot(mouseRef.current.x - tX, mouseRef.current.y - tY);
+      const dist = Math.sqrt(
+        (mouseRef.current.x - tX) ** 2 + (mouseRef.current.y - tY) ** 2,
+      );
       if (dist < 100) {
         mouseHealth = Math.min(100, mouseHealth + 20 * dt);
       } else {
@@ -190,7 +192,10 @@ export function Level11NightShift({
       gazeRef.current.y = Math.max(-1, Math.min(1, gazeRef.current.y));
       setGazePos({ x: gazeRef.current.x, y: gazeRef.current.y });
 
-      const gazeDist = Math.hypot(gazeRef.current.x, gazeRef.current.y);
+      const gazeDist = Math.sqrt(
+        gazeRef.current.x * gazeRef.current.x +
+          gazeRef.current.y * gazeRef.current.y,
+      );
       if (gazeDist > 0.6) {
         gazeHealth -= 25 * dt;
       } else {
