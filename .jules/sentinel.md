@@ -1,0 +1,5 @@
+## 2025-02-20 - Global Error Handling and DoS Prevention in Express API
+
+**Vulnerability:** The Express API in `app.ts` lacked payload limits on body parsers (`express.json` and `express.urlencoded`), making it vulnerable to Denial of Service (DoS) attacks via oversized payloads. Additionally, there was no custom global error handler, which could allow the default Express error handler to leak stack traces or internal implementation details during an unhandled exception.
+**Learning:** Even simple API setups need explicit defense-in-depth measures against resource exhaustion and information leakage. Using `req.log.error()` (provided by `pino-http`) is safer and preserves request context better than importing the logger directly in global error handlers.
+**Prevention:** Always specify a `limit` when configuring body parsers (e.g., `limit: "100kb"`). Always add a custom 4-arity error handler (`(err, req, res, next)`) at the end of the Express middleware chain to catch unhandled errors and return a safe, generic response to the client.
