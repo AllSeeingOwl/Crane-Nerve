@@ -37,7 +37,14 @@ export default function LevelSelect({
           <span className="text-xs text-muted-foreground uppercase tracking-widest">
             Progress
           </span>
-          <div className="flex-1 h-1 bg-secondary rounded-none overflow-hidden">
+          <div
+            className="flex-1 h-1 bg-secondary rounded-none overflow-hidden"
+            role="progressbar"
+            aria-valuenow={completedLevels.size}
+            aria-valuemin={0}
+            aria-valuemax={9}
+            aria-label="Level progress"
+          >
             <div
               className="h-full bg-primary transition-all"
               style={{ width: `${(completedLevels.size / 9) * 100}%` }}

@@ -46,7 +46,7 @@ export default function GameUI({ level, stress, onQuit }: Props) {
           </div>
           <div className="flex items-center gap-2">
             {/* EKG Icon */}
-            <svg viewBox="0 0 40 20" width="40" height="20">
+            <svg viewBox="0 0 40 20" width="40" height="20" aria-hidden="true">
               <polyline
                 points="0,10 8,10 12,10 14,3 16,17 18,10 22,10 26,10 28,5 30,15 32,10 40,10"
                 fill="none"
@@ -55,7 +55,14 @@ export default function GameUI({ level, stress, onQuit }: Props) {
               />
             </svg>
             {/* Bar */}
-            <div className="w-40 h-3 bg-secondary/80 border border-border overflow-hidden">
+            <div
+              className="w-40 h-3 bg-secondary/80 border border-border overflow-hidden"
+              role="progressbar"
+              aria-valuenow={Math.round(stress)}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label="Patient stress"
+            >
               <div
                 className="h-full transition-all duration-300"
                 style={{ width: `${stress}%`, backgroundColor: stressColor }}
