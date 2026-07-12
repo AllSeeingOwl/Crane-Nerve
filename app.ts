@@ -1,4 +1,4 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import pinoHttp from "pino-http";
@@ -28,9 +28,15 @@ app.use(
   }),
 );
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "100kb" }));
+app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 
 app.use("/api", router);
+
+// Global error handler to prevent leaking stack traces
+app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
+  req.log.error(err, "Unhandled error in request");
+  res.status(500).json({ error: "Internal Server Error" });
+});
 
 export default app;
