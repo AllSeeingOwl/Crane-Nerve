@@ -102,9 +102,9 @@ export function Level6Tuning({
         const targetX = targetStep.x * window.innerWidth;
         const targetY = targetStep.y * window.innerHeight;
 
-        const dist = Math.hypot(
-          forkRef.current.x - targetX,
-          forkRef.current.y - targetY,
+        const dist = Math.sqrt(
+          (forkRef.current.x - targetX) ** 2 +
+            (forkRef.current.y - targetY) ** 2,
         );
 
         if (dist < 80) {
@@ -158,9 +158,8 @@ export function Level6Tuning({
     const targetX = targetStep.x * window.innerWidth;
     const targetY = targetStep.y * window.innerHeight;
 
-    const dist = Math.hypot(
-      forkRef.current.x - targetX,
-      forkRef.current.y - targetY,
+    const dist = Math.sqrt(
+      (forkRef.current.x - targetX) ** 2 + (forkRef.current.y - targetY) ** 2,
     );
 
     if (dist < 80) {

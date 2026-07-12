@@ -80,9 +80,8 @@ export function Level4Trigeminal({
     const targetX = targetRegion.x * window.innerWidth;
     const targetY = targetRegion.y * window.innerHeight;
 
-    const dist = Math.hypot(
-      toolRef.current.x - targetX,
-      toolRef.current.y - targetY,
+    const dist = Math.sqrt(
+      (toolRef.current.x - targetX) ** 2 + (toolRef.current.y - targetY) ** 2,
     );
 
     if (dist < 60) {

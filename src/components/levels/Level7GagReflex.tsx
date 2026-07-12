@@ -125,7 +125,9 @@ export function Level7GagReflex({
         state.cooldown -= dt;
       }
 
-      const distToThroat = Math.hypot(throat.x - mouse.x, throat.y - mouse.y);
+      const distToThroat = Math.sqrt(
+        (throat.x - mouse.x) ** 2 + (throat.y - mouse.y) ** 2,
+      );
       const isInsideThroat = distToThroat < throat.radius;
 
       // Determine if hitting wrong areas (teeth/tongue)
@@ -144,7 +146,7 @@ export function Level7GagReflex({
           state.timeInThroat = 0;
 
           // Check velocity
-          const speed = Math.hypot(mouse.vx, mouse.vy);
+          const speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
           if (speed > 1.0) {
             onStressChange(10); // Poked too hard!
           }
