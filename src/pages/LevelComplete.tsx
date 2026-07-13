@@ -36,6 +36,7 @@ export default function LevelComplete({
           viewBox="0 0 1000 50"
           className="w-full h-full"
           preserveAspectRatio="none"
+          aria-hidden="true"
         >
           <polyline
             points="0,25 100,25 120,25 130,5 140,45 150,25 170,25 300,25 320,25 330,5 340,45 350,25 370,25 600,25 620,25 630,5 640,45 650,25 670,25 900,25 920,25 930,5 940,45 950,25 970,25 1000,25"

@@ -43,7 +43,7 @@ export default function MainMenu({ onPlay }: Props) {
       {/* Header */}
       <div className="relative z-10 flex flex-col items-center gap-2 mb-8">
         <div className="text-xs tracking-[0.4em] text-primary/60 uppercase mb-2">
-          Replit Medical Simulations Inc. presents
+          Nobody Medical LLC presents
         </div>
         <h1
           className="text-7xl font-bold tracking-tight text-center leading-none"
@@ -113,6 +113,7 @@ export default function MainMenu({ onPlay }: Props) {
           viewBox="0 0 1000 50"
           className="w-full h-full"
           preserveAspectRatio="none"
+          aria-hidden="true"
         >
           <polyline
             points="0,25 100,25 120,25 130,5 140,45 150,25 170,25 200,25 220,25 230,10 240,40 250,25 280,25 400,25 420,25 430,5 440,45 450,25 470,25 500,25 520,25 530,10 540,40 550,25 580,25 700,25 720,25 730,5 740,45 750,25 770,25 800,25 820,25 830,10 840,40 850,25 880,25 1000,25"
