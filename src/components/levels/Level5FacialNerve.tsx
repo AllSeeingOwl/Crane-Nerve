@@ -96,12 +96,11 @@ export function Level5FacialNerve({
     const targetX = targetPrompt.x * window.innerWidth;
     const targetY = targetPrompt.y * window.innerHeight;
 
-    const dist = Math.sqrt(
+    const distSq =
       (cursorRef.current.x - targetX) ** 2 +
-        (cursorRef.current.y - targetY) ** 2,
-    );
+      (cursorRef.current.y - targetY) ** 2;
 
-    if (dist < 80) {
+    if (distSq < 6400) {
       // Hit
       setFeedback("Good! Patient executed: " + targetPrompt.label);
       const nextIndex = currentPromptIndex + 1;

@@ -63,10 +63,8 @@ export function Level9Hypoglossal({
     };
     const handleMouseDown = (e: MouseEvent) => {
       const tip = segmentsRef.current[NUM_SEGMENTS - 1];
-      const dist = Math.sqrt(
-        (e.clientX - tip.x) ** 2 + (e.clientY - tip.y) ** 2,
-      );
-      if (dist < 50) {
+      const distSq = (e.clientX - tip.x) ** 2 + (e.clientY - tip.y) ** 2;
+      if (distSq < 2500) {
         isDraggingRef.current = true;
       }
     };
@@ -147,7 +145,7 @@ export function Level9Hypoglossal({
       setTipPos({ x: tip.x, y: tip.y });
 
       let snapStress = 0;
-      if (Math.sqrt(tip.vx * tip.vx + tip.vy * tip.vy) > 1000) {
+      if (tip.vx * tip.vx + tip.vy * tip.vy > 1000000) {
         snapStress = dt * 10;
         onStressChange(snapStress);
       } else if (Math.random() < 0.01) {
@@ -159,11 +157,9 @@ export function Level9Hypoglossal({
         const targetX = target.x * window.innerWidth;
         const targetY = target.y * window.innerHeight;
 
-        const distToTarget = Math.sqrt(
-          (tip.x - targetX) ** 2 + (tip.y - targetY) ** 2,
-        );
+        const distToTargetSq = (tip.x - targetX) ** 2 + (tip.y - targetY) ** 2;
 
-        if (distToTarget < 60) {
+        if (distToTargetSq < 3600) {
           holdTimeRef.current += dt;
           if (holdTimeRef.current > 1.0) {
             // Hold for 1 second

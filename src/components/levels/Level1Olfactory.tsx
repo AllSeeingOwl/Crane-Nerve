@@ -108,8 +108,9 @@ export function Level1Olfactory({
         nose.vy += (Math.random() - 0.5) * 2;
 
         // Limit speed
-        const speed = Math.sqrt(nose.vx * nose.vx + nose.vy * nose.vy);
-        if (speed > 2) {
+        const speedSq = nose.vx * nose.vx + nose.vy * nose.vy;
+        if (speedSq > 4) {
+          const speed = Math.sqrt(speedSq);
           nose.vx = (nose.vx / speed) * 2;
           nose.vy = (nose.vy / speed) * 2;
         }
@@ -118,12 +119,12 @@ export function Level1Olfactory({
       const activeVialId = selectedVialRef.current;
       const vialDef = VIALS.find((v) => v.id === activeVialId);
 
-      const dist = Math.sqrt((nose.x - mouse.x) ** 2 + (nose.y - mouse.y) ** 2);
+      const distSq = (nose.x - mouse.x) ** 2 + (nose.y - mouse.y) ** 2;
 
       if (activeVialId && !identifiedRef.current.includes(activeVialId)) {
         if (vialDef?.type === "bad") {
           // If it's a bad smell, patient evades
-          if (dist < 300) {
+          if (distSq < 90000) {
             const dx = nose.x - mouse.x;
             const dy = nose.y - mouse.y;
             const angle = Math.atan2(dy, dx);
@@ -131,13 +132,13 @@ export function Level1Olfactory({
             nose.vy += Math.sin(angle) * 0.5;
 
             // Rapid stress increase if smelling something bad
-            if (dist < 150) {
+            if (distSq < 22500) {
               onStressChange(0.2);
             }
           }
         }
 
-        if (dist < 100) {
+        if (distSq < 10000) {
           // Inside smelling range
           progressRef.current += dt * 0.05; // 2 seconds to smell
           setSmellProgress(progressRef.current);
