@@ -78,12 +78,11 @@ export function Level3EyeMovement({
         const targetNodeX = targetNode.x * window.innerWidth;
         const targetNodeY = targetNode.y * window.innerHeight;
 
-        const dist = Math.sqrt(
+        const distSq =
           (penlightRef.current.x - targetNodeX) ** 2 +
-            (penlightRef.current.y - targetNodeY) ** 2,
-        );
+          (penlightRef.current.y - targetNodeY) ** 2;
 
-        if (dist < 50) {
+        if (distSq < 2500) {
           currentNodeIndexRef.current += 1;
           setCurrentNodeIndex(currentNodeIndexRef.current);
           setProgress((currentNodeIndexRef.current / nodes.length) * 100);

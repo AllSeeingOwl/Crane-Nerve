@@ -125,15 +125,14 @@ export function Level7GagReflex({
         state.cooldown -= dt;
       }
 
-      const distToThroat = Math.sqrt(
-        (throat.x - mouse.x) ** 2 + (throat.y - mouse.y) ** 2,
-      );
-      const isInsideThroat = distToThroat < throat.radius;
+      const distToThroatSq =
+        (throat.x - mouse.x) ** 2 + (throat.y - mouse.y) ** 2;
+      const isInsideThroat = distToThroatSq < throat.radius ** 2;
 
       // Determine if hitting wrong areas (teeth/tongue)
       // Simplification: if outside throat but within "mouth" radius
       const mouthRadius = 150;
-      const isInsideMouth = distToThroat < mouthRadius;
+      const isInsideMouth = distToThroatSq < mouthRadius ** 2;
 
       if (isInsideMouth && !isInsideThroat) {
         // Hitting wrong areas
@@ -146,8 +145,8 @@ export function Level7GagReflex({
           state.timeInThroat = 0;
 
           // Check velocity
-          const speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
-          if (speed > 1.0) {
+          const speedSq = mouse.vx * mouse.vx + mouse.vy * mouse.vy;
+          if (speedSq > 1.0) {
             onStressChange(10); // Poked too hard!
           }
         } else {
