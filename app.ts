@@ -36,12 +36,36 @@ app.use(cors());
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 
+interface HttpError extends Error {
+  status?: number;
+}
+
+// Security Enhancement: Request Timeout
+app.use((req: Request, res: Response, next: NextFunction) => {
+  req.setTimeout(30000, () => req.socket.destroy());
+  next();
+});
+
 app.use("/api", router);
 
 // Global error handler to prevent leaking stack traces
 app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
+  if (res.headersSent) {
+    return _next(err);
+  }
+
   req.log.error(err, "Unhandled error in request");
-  res.status(500).json({ error: "Internal Server Error" });
+
+  let status = 500;
+  let message = "Internal Server Error";
+
+  if (err instanceof Error) {
+    const httpErr = err as HttpError;
+    if (httpErr.status) status = httpErr.status;
+    if (status !== 500) message = httpErr.message;
+  }
+
+  res.status(status).json({ error: message });
 });
 
 export default app;
