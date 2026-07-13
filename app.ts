@@ -42,11 +42,7 @@ interface HttpError extends Error {
 
 // Security Enhancement: Request Timeout
 app.use((req: Request, res: Response, next: NextFunction) => {
-  req.setTimeout(30000, () => {
-    const err = new Error("Request Timeout") as HttpError;
-    err.status = 408;
-    next(err);
-  });
+  req.setTimeout(30000, () => req.socket.destroy());
   next();
 });
 
@@ -54,6 +50,10 @@ app.use("/api", router);
 
 // Global error handler to prevent leaking stack traces
 app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
+  if (res.headersSent) {
+    return _next(err);
+  }
+
   req.log.error(err, "Unhandled error in request");
 
   let status = 500;
