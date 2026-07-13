@@ -25,6 +25,7 @@ export default function GameOver({ levelId, onRetry, onLevelSelect }: Props) {
           viewBox="0 0 1000 60"
           className="w-full h-full"
           preserveAspectRatio="none"
+          aria-hidden="true"
         >
           <line
             x1="0"

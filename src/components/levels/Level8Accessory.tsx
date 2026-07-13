@@ -282,7 +282,10 @@ export function Level8Accessory({
 
       {/* Visual drag line */}
       {mouseRef.current.isDown && testActive && (
-        <svg className="absolute inset-0 pointer-events-none z-50 w-full h-full">
+        <svg
+          className="absolute inset-0 pointer-events-none z-50 w-full h-full"
+          aria-hidden="true"
+        >
           <line
             x1={startPosRef.current.x}
             y1={startPosRef.current.y}

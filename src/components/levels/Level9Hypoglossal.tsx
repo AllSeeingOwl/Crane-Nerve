@@ -225,7 +225,10 @@ export function Level9Hypoglossal({
       </div>
 
       {/* SVG for Tongue */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-lg z-10">
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-lg z-10"
+        aria-hidden="true"
+      >
         <path
           d={tonguePath}
           fill="none"

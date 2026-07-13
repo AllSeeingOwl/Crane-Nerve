@@ -272,6 +272,7 @@ export function Level1Olfactory({
                 fill="none"
                 stroke="currentColor"
                 className="text-white"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
