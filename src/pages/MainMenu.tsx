@@ -45,33 +45,38 @@ export default function MainMenu({ onPlay }: Props) {
         <div className="text-xs tracking-[0.4em] text-primary/60 uppercase mb-2">
           Nobody Medical LLC presents
         </div>
-        <h1
-          className="text-7xl font-bold tracking-tight text-center leading-none"
-          style={{
-            color: "hsl(180,60%,50%)",
-            textShadow: "0 0 40px hsl(180,60%,50%), 0 0 80px hsl(180,60%,30%)",
-          }}
-        >
-          CRANIAL
-        </h1>
-        <h1
-          className="text-7xl font-bold tracking-tight text-center leading-none mb-1"
-          style={{
-            color: "hsl(0,70%,60%)",
-            textShadow: "0 0 40px hsl(0,70%,50%), 0 0 80px hsl(0,70%,30%)",
-          }}
-        >
-          NERVE
-        </h1>
-        <h1
-          className="text-7xl font-bold tracking-tight text-center leading-none"
-          style={{
-            color: "hsl(180,60%,50%)",
-            textShadow: "0 0 40px hsl(180,60%,50%), 0 0 80px hsl(180,60%,30%)",
-          }}
-        >
-          CRISIS
-        </h1>
+        <h1 className="sr-only">Cranial Nerve Crisis</h1>
+        <div aria-hidden="true" className="flex flex-col items-center gap-2">
+          <div
+            className="text-7xl font-bold tracking-tight text-center leading-none"
+            style={{
+              color: "hsl(180,60%,50%)",
+              textShadow:
+                "0 0 40px hsl(180,60%,50%), 0 0 80px hsl(180,60%,30%)",
+            }}
+          >
+            CRANIAL
+          </div>
+          <div
+            className="text-7xl font-bold tracking-tight text-center leading-none mb-1"
+            style={{
+              color: "hsl(0,70%,60%)",
+              textShadow: "0 0 40px hsl(0,70%,50%), 0 0 80px hsl(0,70%,30%)",
+            }}
+          >
+            NERVE
+          </div>
+          <div
+            className="text-7xl font-bold tracking-tight text-center leading-none"
+            style={{
+              color: "hsl(180,60%,50%)",
+              textShadow:
+                "0 0 40px hsl(180,60%,50%), 0 0 80px hsl(180,60%,30%)",
+            }}
+          >
+            CRISIS
+          </div>
+        </div>
       </div>
 
       {/* Tagline */}
@@ -87,10 +92,11 @@ export default function MainMenu({ onPlay }: Props) {
       {/* Play button */}
       <button
         onClick={onPlay}
+        aria-label="Proceed"
         className="relative z-10 px-16 py-4 border-2 border-primary text-primary text-xl tracking-widest uppercase hover:bg-primary hover:text-background transition-all duration-200 mb-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         style={{ fontFamily: "Courier New, monospace" }}
       >
-        {blink ? "[ PROCEED ]" : "  PROCEED  "}
+        <span aria-hidden="true">{blink ? "[ PROCEED ]" : "  PROCEED  "}</span>
       </button>
 
       {/* Warning */}

@@ -7,3 +7,8 @@
 
 **Learning:** Decorative SVG elements, such as background graphics (like EKG lines) or pure visualizers (like dragging lines or game objects), were being exposed to screen readers, creating noisy and confusing audio output.
 **Action:** Always add `aria-hidden="true"` to purely decorative `<svg>` elements that do not convey meaningful information or interactable state. This ensures a cleaner and more focused screen reader experience.
+
+## 2025-02-12 - Headings and Blinking Text for Screen Readers
+
+**Learning:** Stylized text split across multiple heading tags (e.g., three `<h1>` tags for a three-word title) and continuously blinking UI elements causes significant auditory clutter and confusion for screen reader users.
+**Action:** Consolidate multi-line stylized text into a single visually hidden `.sr-only` element for semantics, and wrap the visual pieces in an `aria-hidden="true"` container. For blinking text, provide a stable `aria-label` on the parent interactive element and apply `aria-hidden="true"` to the mutating text span to prevent constant re-announcements.
