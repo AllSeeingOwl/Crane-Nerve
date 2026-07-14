@@ -32,7 +32,12 @@ app.use(
     },
   }),
 );
-app.use(cors());
+const isProduction = process.env.NODE_ENV === "production";
+app.use(
+  cors({
+    origin: isProduction ? process.env.CORS_ORIGIN || false : "*",
+  }),
+);
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 

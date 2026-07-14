@@ -9,6 +9,7 @@
 **Vulnerability:** Unbounded request processing could lead to resource exhaustion and DoS attacks (Slowloris) due to hanging connections. Attempting to fix this by adding `req.setTimeout` that directly calls `res.json()` causes a secondary DoS vulnerability via `ERR_HTTP_HEADERS_SENT` crashes when long-running handlers eventually resolve.
 **Learning:** Adding timeout middleware requires coordinated support from the global error handler. Firing `res.json()` mid-flight without cancelling downstream promises leads to race conditions.
 **Prevention:** In Express, timeout middleware should throw a custom Error with a specific status code (`err.status = 408`) and pass it to `next(err)`. The global error handler must be updated to correctly extract and return this dynamic status code, instead of hardcoding 500s.
+
 ## 2026-07-14 - Secure CORS Configuration in Express API
 
 **Vulnerability:** The Express API in `app.ts` used an overly permissive CORS configuration (`app.use(cors())`), which defaults to allowing all origins (`*`). In a production environment, this could allow malicious websites to make cross-origin requests and potentially access sensitive user data if authentication is later added.
