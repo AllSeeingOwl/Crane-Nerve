@@ -103,7 +103,7 @@ export default function LevelComplete({
             onClick={onNext}
             className="px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-background transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            NEXT →
+            NEXT <span aria-hidden="true">→</span>
           </button>
           <button
             onClick={onLevelSelect}

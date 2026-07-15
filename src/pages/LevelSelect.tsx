@@ -21,11 +21,11 @@ export default function LevelSelect({
           onClick={onBack}
           className="text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          ← BACK
+          <span aria-hidden="true">← </span>BACK
         </button>
-        <h2 className="text-primary text-lg tracking-widest uppercase">
+        <h1 className="text-primary text-lg tracking-widest uppercase">
           SELECT EXAMINATION
-        </h2>
+        </h1>
         <div className="text-muted-foreground text-sm">
           SCORE: <span className="text-primary">{score.toLocaleString()}</span>
         </div>
@@ -83,7 +83,9 @@ export default function LevelSelect({
                     {level.nerve}
                   </span>
                   {isComplete && (
-                    <span className="text-xs text-primary">✓ DONE</span>
+                    <span className="text-xs text-primary">
+                      <span aria-hidden="true">✓ </span>DONE
+                    </span>
                   )}
                   {!isAvailable && (
                     <span className="text-xs text-muted-foreground/50">
