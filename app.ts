@@ -47,7 +47,13 @@ interface HttpError extends Error {
 
 // Security Enhancement: Request Timeout
 app.use((req: Request, res: Response, next: NextFunction) => {
-  req.setTimeout(30000, () => req.socket.destroy());
+  req.setTimeout(30000, () => {
+    if (!res.headersSent) {
+      const err = new Error("Request Timeout") as HttpError;
+      err.status = 408;
+      next(err);
+    }
+  });
   next();
 });
 
