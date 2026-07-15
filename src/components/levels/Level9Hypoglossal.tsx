@@ -54,8 +54,11 @@ export function Level9Hypoglossal({
     }
   }
 
-  const [tonguePath, setTonguePath] = useState("");
-  const [tipPos, setTipPos] = useState({ x: 0, y: 0 });
+  const pathRef1 = useRef<globalThis.SVGPathElement>(null);
+  const pathRef2 = useRef<globalThis.SVGPathElement>(null);
+  const tipRef = useRef<HTMLDivElement>(null);
+
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -66,10 +69,12 @@ export function Level9Hypoglossal({
       const distSq = (e.clientX - tip.x) ** 2 + (e.clientY - tip.y) ** 2;
       if (distSq < 2500) {
         isDraggingRef.current = true;
+        setIsDragging(true);
       }
     };
     const handleMouseUp = () => {
       isDraggingRef.current = false;
+      setIsDragging(false);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -142,7 +147,10 @@ export function Level9Hypoglossal({
 
       // Check target hit
       const tip = segments[NUM_SEGMENTS - 1];
-      setTipPos({ x: tip.x, y: tip.y });
+      if (tipRef.current) {
+        tipRef.current.style.left = `${tip.x}px`;
+        tipRef.current.style.top = `${tip.y}px`;
+      }
 
       let snapStress = 0;
       if (tip.vx * tip.vx + tip.vy * tip.vy > 1000000) {
@@ -183,7 +191,8 @@ export function Level9Hypoglossal({
         // Simple lines for now, could use bezier curves for smoother look
         path += ` L ${segments[i].x} ${segments[i].y}`;
       }
-      setTonguePath(path);
+      if (pathRef1.current) pathRef1.current.setAttribute("d", path);
+      if (pathRef2.current) pathRef2.current.setAttribute("d", path);
 
       frameRef.current = requestAnimationFrame(loop);
     };
@@ -230,7 +239,7 @@ export function Level9Hypoglossal({
         aria-hidden="true"
       >
         <path
-          d={tonguePath}
+          ref={pathRef1}
           fill="none"
           stroke="#f472b6" // pink-400
           strokeWidth="40"
@@ -239,7 +248,7 @@ export function Level9Hypoglossal({
           style={{ opacity: 0.9 }}
         />
         <path
-          d={tonguePath}
+          ref={pathRef2}
           fill="none"
           stroke="#be185d" // pink-700
           strokeWidth="20"
@@ -276,19 +285,17 @@ export function Level9Hypoglossal({
 
       {/* Tip Grabber / Indicator */}
       <div
+        ref={tipRef}
         className={`absolute w-16 h-16 -ml-8 -mt-8 rounded-full flex items-center justify-center z-30 ${
-          isDraggingRef.current ? "cursor-grabbing" : "cursor-grab"
+          isDragging ? "cursor-grabbing" : "cursor-grab"
         }`}
-        style={{
-          left: tipPos.x,
-          top: tipPos.y,
-        }}
         onMouseDown={() => {
           isDraggingRef.current = true;
+          setIsDragging(true);
         }}
       >
         <div
-          className={`w-8 h-8 rounded-full border-2 border-white/50 bg-white/10 ${isDraggingRef.current ? "scale-90 bg-white/30" : "scale-100"} transition-transform`}
+          className={`w-8 h-8 rounded-full border-2 border-white/50 bg-white/10 ${isDragging ? "scale-90 bg-white/30" : "scale-100"} transition-transform`}
         />
       </div>
     </div>
