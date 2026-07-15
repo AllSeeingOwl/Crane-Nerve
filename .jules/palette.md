@@ -12,3 +12,8 @@
 
 **Learning:** Stylized text split across multiple heading tags (e.g., three `<h1>` tags for a three-word title) and continuously blinking UI elements causes significant auditory clutter and confusion for screen reader users.
 **Action:** Consolidate multi-line stylized text into a single visually hidden `.sr-only` element for semantics, and wrap the visual pieces in an `aria-hidden="true"` container. For blinking text, provide a stable `aria-label` on the parent interactive element and apply `aria-hidden="true"` to the mutating text span to prevent constant re-announcements.
+
+## 2025-02-12 - Inline decorative text for screen readers
+
+**Learning:** Inline text characters like arrows (`←`, `→`) or checkmarks (`✓`) are often read aloud by screen readers (e.g., "leftward arrow", "check mark"), causing unnecessary clutter, especially when they just serve to style a clear label like "BACK" or "DONE".
+**Action:** Always hide inline visual text symbols from screen readers by wrapping them in `<span aria-hidden="true">` elements to keep text clean, e.g. `<span aria-hidden="true">← </span>BACK`.
