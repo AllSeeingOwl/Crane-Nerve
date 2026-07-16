@@ -47,10 +47,14 @@ export default function LevelSelect({
           >
             <div
               className="h-full bg-primary transition-all"
-              style={{ width: `${(completedLevels.size / LEVELS.length) * 100}%` }}
+              style={{
+                width: `${(completedLevels.size / LEVELS.length) * 100}%`,
+              }}
             />
           </div>
-          <span className="text-xs text-primary">{completedLevels.size}/{LEVELS.length}</span>
+          <span className="text-xs text-primary">
+            {completedLevels.size}/{LEVELS.length}
+          </span>
         </div>
       </div>
 

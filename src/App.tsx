@@ -42,7 +42,9 @@ export default function App() {
         break;
       case "playing": {
         const levelInfo = LEVELS.find((l) => l.id === currentLevel);
-        document.title = levelInfo ? `Playing: ${levelInfo.title} | Cranial Nerve Crisis` : "Playing | Cranial Nerve Crisis";
+        document.title = levelInfo
+          ? `Playing: ${levelInfo.title} | Cranial Nerve Crisis`
+          : "Playing | Cranial Nerve Crisis";
         break;
       }
       case "level-complete":
