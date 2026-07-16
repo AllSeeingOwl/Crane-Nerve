@@ -6,6 +6,9 @@ import LevelComplete from "./pages/LevelComplete";
 import GameOver from "./pages/GameOver";
 import { GameScreen, LevelId } from "./types/types";
 
+import { useEffect } from "react";
+import { LEVELS } from "./types/types";
+
 export default function App() {
   const [screen, setScreen] = useState<GameScreen>("menu");
   const [currentLevel, setCurrentLevel] = useState<LevelId>(1);
@@ -28,6 +31,32 @@ export default function App() {
   };
   const handleLevelLose = (reason: string) => setScreen("game-over");
   const handleQuit = () => setScreen("level-select");
+
+  useEffect(() => {
+    switch (screen) {
+      case "menu":
+        document.title = "Cranial Nerve Crisis";
+        break;
+      case "level-select":
+        document.title = "Select Examination | Cranial Nerve Crisis";
+        break;
+      case "playing": {
+        const levelInfo = LEVELS.find((l) => l.id === currentLevel);
+        document.title = levelInfo
+          ? `Playing: ${levelInfo.title} | Cranial Nerve Crisis`
+          : "Playing | Cranial Nerve Crisis";
+        break;
+      }
+      case "level-complete":
+        document.title = "Examination Complete | Cranial Nerve Crisis";
+        break;
+      case "game-over":
+        document.title = "Critical Failure | Cranial Nerve Crisis";
+        break;
+      default:
+        document.title = "Cranial Nerve Crisis";
+    }
+  }, [screen, currentLevel]);
 
   return (
     <>

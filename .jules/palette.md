@@ -17,3 +17,13 @@
 
 **Learning:** Inline text characters like arrows (`←`, `→`) or checkmarks (`✓`) are often read aloud by screen readers (e.g., "leftward arrow", "check mark"), causing unnecessary clutter, especially when they just serve to style a clear label like "BACK" or "DONE".
 **Action:** Always hide inline visual text symbols from screen readers by wrapping them in `<span aria-hidden="true">` elements to keep text clean, e.g. `<span aria-hidden="true">← </span>BACK`.
+
+## 2025-02-13 - SPA Title Updates for Screen Readers
+
+**Learning:** In state-based Single Page Applications (like this game routing on a \`screen\` state in \`App.tsx\`), the \`document.title\` does not update automatically on navigation. Screen reader users miss context about their location, and multi-tab usage is difficult.
+**Action:** Always implement a mechanism (like a \`useEffect\`) to dynamically update the \`document.title\` based on the active screen state in SPAs to ensure screen readers announce page changes properly.
+
+## 2025-02-13 - Dynamic ARIA Value Scaling
+
+**Learning:** Hardcoded ARIA attributes like \`aria-valuemax=9\` on progress bars can quickly break or overflow when new content (like bonus levels) is added, confusing screen reader users with invalid fractions (e.g. 10/9).
+**Action:** Ensure that visual progress scaling and their corresponding ARIA attributes (\`aria-valuemax\`) dynamically bind to the length of the data source array or collection instead of hardcoded maximums.
