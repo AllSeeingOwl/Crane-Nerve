@@ -23,10 +23,8 @@ export function Level4Trigeminal({
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   });
-  const [toolPos, setToolPos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
+
+  const toolVisualRef = useRef<HTMLDivElement>(null);
 
   // Facial regions to test
   const regions = [
@@ -62,7 +60,10 @@ export function Level4Trigeminal({
       toolRef.current.x += dx * 0.02;
       toolRef.current.y += dy * 0.02;
 
-      setToolPos({ x: toolRef.current.x, y: toolRef.current.y });
+      if (toolVisualRef.current) {
+        toolVisualRef.current.style.left = `${toolRef.current.x}px`;
+        toolVisualRef.current.style.top = `${toolRef.current.y}px`;
+      }
 
       frameRef.current = requestAnimationFrame(loop);
     };
@@ -180,10 +181,11 @@ export function Level4Trigeminal({
 
       {/* Heavy Tool cursor representation */}
       <div
+        ref={toolVisualRef}
         className="absolute w-8 h-8 -ml-4 -mt-4 rounded-full border-2 border-white bg-white/20 backdrop-blur-sm pointer-events-none flex items-center justify-center"
         style={{
-          left: toolPos.x,
-          top: toolPos.y,
+          left: `${window.innerWidth / 2}px`,
+          top: `${window.innerHeight / 2}px`,
           transition: "transform 0.1s",
         }}
       >
