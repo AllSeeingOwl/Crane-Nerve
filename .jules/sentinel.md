@@ -15,3 +15,9 @@
 **Vulnerability:** The Express API in `app.ts` used an overly permissive CORS configuration (`app.use(cors())`), which defaults to allowing all origins (`*`). In a production environment, this could allow malicious websites to make cross-origin requests and potentially access sensitive user data if authentication is later added.
 **Learning:** The default configuration for `cors()` is unsafe for production. It's crucial to explicitly configure the `origin` option based on the environment to restrict access only to trusted domains.
 **Prevention:** Always configure the `cors` middleware to use a restrictive origin in production. This can be achieved by checking `process.env.NODE_ENV` and reading allowed origins from an environment variable (like `CORS_ORIGIN`), defaulting to a secure value or `false` if not set.
+
+## 2026-07-16 - Hardening Content Security Policy (CSP) with Helmet
+
+**Vulnerability:** The Express API in `app.ts` utilized `helmet()` with its default configurations. While better than nothing, it did not specify a Content Security Policy (CSP) suited for the application's needs, potentially leaving it open to basic XSS attacks if it were to serve HTML directly.
+**Learning:** Default configurations in security libraries like `helmet` are just baselines. A robust CSP is one of the most effective ways to mitigate XSS by explicitly whitelisting allowed sources for scripts, styles, and other resources.
+**Prevention:** Explicitly configure `helmet({ contentSecurityPolicy: { directives: ... } })` in Express applications, strictly defining `defaultSrc`, `scriptSrc`, `styleSrc`, etc.

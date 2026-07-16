@@ -11,7 +11,19 @@ import router from "./routes";
 import { logger } from "./src/lib/logger.js";
 
 const app: Express = express();
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:", "blob:"],
+        connectSrc: ["'self'"],
+      },
+    },
+  }),
+);
 
 app.use(
   pinoHttp({
