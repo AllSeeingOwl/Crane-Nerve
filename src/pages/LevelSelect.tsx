@@ -42,15 +42,15 @@ export default function LevelSelect({
             role="progressbar"
             aria-valuenow={completedLevels.size}
             aria-valuemin={0}
-            aria-valuemax={9}
+            aria-valuemax={LEVELS.length}
             aria-label="Level progress"
           >
             <div
               className="h-full bg-primary transition-all"
-              style={{ width: `${(completedLevels.size / 9) * 100}%` }}
+              style={{ width: `${(completedLevels.size / LEVELS.length) * 100}%` }}
             />
           </div>
-          <span className="text-xs text-primary">{completedLevels.size}/9</span>
+          <span className="text-xs text-primary">{completedLevels.size}/{LEVELS.length}</span>
         </div>
       </div>
 
