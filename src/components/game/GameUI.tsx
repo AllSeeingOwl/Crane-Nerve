@@ -93,8 +93,15 @@ export default function GameUI({ level, stress, onQuit }: Props) {
           onClick={onQuit}
           className="group flex items-center gap-2 text-xs text-muted-foreground hover:text-destructive tracking-widest uppercase transition-colors pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <span className="text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity" aria-hidden="true">ESC</span>
-          <span>QUIT <span aria-hidden="true">→</span></span>
+          <span
+            className="text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity"
+            aria-hidden="true"
+          >
+            ESC
+          </span>
+          <span>
+            QUIT <span aria-hidden="true">→</span>
+          </span>
         </button>
       </div>
 

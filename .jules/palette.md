@@ -29,5 +29,6 @@
 **Action:** Ensure that visual progress scaling and their corresponding ARIA attributes (\`aria-valuemax\`) dynamically bind to the length of the data source array or collection instead of hardcoded maximums.
 
 ## 2025-02-14 - Keyboard Shortcuts for Common Actions
+
 **Learning:** While clear "Back", "Quit", or "Menu" buttons are good for pointer devices, keyboard users and power users often expect `Escape` to perform these backing-out or cancelling actions. Missing these shortcuts can make the app feel slightly more tedious to navigate.
 **Action:** When adding standard "Back" or "Quit" buttons, always consider adding a global or scoped keyboard listener for `Escape` to trigger the same action, and provide a subtle visual hint (like `[ESC]`) to make the shortcut discoverable.

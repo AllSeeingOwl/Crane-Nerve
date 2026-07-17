@@ -32,8 +32,15 @@ export default function LevelSelect({
           onClick={onBack}
           className="group flex items-center gap-2 text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <span><span aria-hidden="true">← </span>BACK</span>
-          <span className="text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity" aria-hidden="true">ESC</span>
+          <span>
+            <span aria-hidden="true">← </span>BACK
+          </span>
+          <span
+            className="text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity"
+            aria-hidden="true"
+          >
+            ESC
+          </span>
         </button>
         <h1 className="text-primary text-lg tracking-widest uppercase">
           SELECT EXAMINATION
