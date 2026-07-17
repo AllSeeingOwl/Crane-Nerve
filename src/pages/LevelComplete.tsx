@@ -28,6 +28,16 @@ export default function LevelComplete({
     setQuote(pool[Math.floor(Math.random() * pool.length)]);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onLevelSelect();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onLevelSelect]);
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-background relative">
       {/* Subtle EKG */}
@@ -107,9 +117,15 @@ export default function LevelComplete({
           </button>
           <button
             onClick={onLevelSelect}
-            className="px-8 py-3 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="group relative px-8 py-3 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             MENU
+            <span
+              className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+              aria-hidden="true"
+            >
+              ESC
+            </span>
           </button>
         </div>
       </div>
