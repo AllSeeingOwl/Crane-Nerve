@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { LevelId, LEVELS } from "@/types/types";
 
 interface Props {
@@ -13,15 +14,26 @@ export default function LevelSelect({
   onSelectLevel,
   onBack,
 }: Props) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onBack();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onBack]);
+
   return (
     <div className="w-screen h-screen flex flex-col bg-background overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-8 py-4 border-b border-border">
         <button
           onClick={onBack}
-          className="text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="group flex items-center gap-2 text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <span aria-hidden="true">← </span>BACK
+          <span><span aria-hidden="true">← </span>BACK</span>
+          <span className="text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity" aria-hidden="true">ESC</span>
         </button>
         <h1 className="text-primary text-lg tracking-widest uppercase">
           SELECT EXAMINATION
