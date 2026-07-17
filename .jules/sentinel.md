@@ -21,3 +21,9 @@
 **Vulnerability:** The Express API in `app.ts` utilized `helmet()` with its default configurations. While better than nothing, it did not specify a Content Security Policy (CSP) suited for the application's needs, potentially leaving it open to basic XSS attacks if it were to serve HTML directly.
 **Learning:** Default configurations in security libraries like `helmet` are just baselines. A robust CSP is one of the most effective ways to mitigate XSS by explicitly whitelisting allowed sources for scripts, styles, and other resources.
 **Prevention:** Explicitly configure `helmet({ contentSecurityPolicy: { directives: ... } })` in Express applications, strictly defining `defaultSrc`, `scriptSrc`, `styleSrc`, etc.
+
+## 2026-07-17 - API Rate Limiting for Express
+
+**Vulnerability:** The Express API was missing rate limiting, making it susceptible to brute-force and Denial of Service (DoS) attacks.
+**Learning:** Adding rate limiting protects against abusive behavior by throttling requests per IP address.
+**Prevention:** Apply `express-rate-limit` middleware on critical endpoints (like `/api`) configured with a `windowMs` and a `max` threshold.

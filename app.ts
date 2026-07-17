@@ -6,11 +6,16 @@ import express, {
 } from "express";
 import cors from "cors";
 import helmet from "helmet";
+import { rateLimit } from "express-rate-limit";
 import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./src/lib/logger.js";
 
 const app: Express = express();
+
+// Trust the first proxy to enable accurate IP detection for rate limiting if deployed behind a reverse proxy/load balancer
+app.set("trust proxy", 1);
+
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -52,6 +57,16 @@ app.use(
 );
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: true, limit: "100kb" }));
+
+// Security Enhancement: Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: { error: "Too many requests, please try again later." },
+});
+app.use("/api", limiter);
 
 interface HttpError extends Error {
   status?: number;
