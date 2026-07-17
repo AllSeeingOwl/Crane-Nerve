@@ -18,8 +18,10 @@ export function Level10Crisis({
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   });
-  const [mouseTaskHealth, setMouseTaskHealth] = useState(100);
-  const [targetPos, setTargetPos] = useState({ x: 0, y: 0 });
+  const mouseHealthRef = useRef(100);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const mouseHealthBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -31,8 +33,9 @@ export function Level10Crisis({
 
   // --- Task 2: Arrow Keys (Keep gaze centered) ---
   const gazeRef = useRef({ x: 0, y: 0 }); // -1 to 1
-  const [gazeTaskHealth, setGazeTaskHealth] = useState(100);
-  const [gazePos, setGazePos] = useState({ x: 0, y: 0 });
+  const gazeHealthRef = useRef(100);
+  const gazeDotRef = useRef<HTMLDivElement>(null);
+  const gazeHealthBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -51,14 +54,15 @@ export function Level10Crisis({
 
   // --- Task 3: Number Keys (Facial expressions) ---
   const [facePrompt, setFacePrompt] = useState(1);
-  const [faceTaskHealth, setFaceTaskHealth] = useState(100);
+  const faceHealthRef = useRef(100);
   const currentFaceKeyRef = useRef(1);
+  const faceHealthBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (["1", "2", "3", "4"].includes(e.key)) {
         if (parseInt(e.key) === currentFaceKeyRef.current) {
-          setFaceTaskHealth(100);
+          faceHealthRef.current = 100;
         } else {
           onStressChange(5); // Penalty for wrong key
         }
@@ -74,9 +78,6 @@ export function Level10Crisis({
   const elapsedRef = useRef(0);
 
   useEffect(() => {
-    let mouseHealth = 100;
-    let gazeHealth = 100;
-    let faceHealth = 100;
     let faceTimer = 0;
 
     const loop = (time: number) => {
@@ -95,16 +96,32 @@ export function Level10Crisis({
       // Move target in a circle
       const tX = window.innerWidth * 0.2 + Math.cos(time / 1000) * 100;
       const tY = window.innerHeight * 0.5 + Math.sin(time / 1000) * 100;
-      setTargetPos({ x: tX, y: tY });
+
+      if (targetRef.current) {
+        targetRef.current.style.left = `${tX - window.innerWidth * 0.2 + 128 - 24}px`;
+        targetRef.current.style.top = `${tY - window.innerHeight * 0.5 + 128 - 24}px`;
+      }
+
+      if (cursorRef.current) {
+        cursorRef.current.style.left = `${mouseRef.current.x - window.innerWidth * 0.2 + 128 - 8}px`;
+        cursorRef.current.style.top = `${mouseRef.current.y - window.innerHeight * 0.5 + 128 - 8}px`;
+      }
 
       const distSq =
         (mouseRef.current.x - tX) ** 2 + (mouseRef.current.y - tY) ** 2;
       if (distSq < 6400) {
-        mouseHealth = Math.min(100, mouseHealth + 20 * dt);
+        mouseHealthRef.current = Math.min(
+          100,
+          mouseHealthRef.current + 20 * dt,
+        );
       } else {
-        mouseHealth -= 15 * dt;
+        mouseHealthRef.current -= 15 * dt;
       }
-      setMouseTaskHealth(mouseHealth);
+
+      if (mouseHealthBarRef.current) {
+        mouseHealthBarRef.current.style.width = `${mouseHealthRef.current}%`;
+        mouseHealthBarRef.current.className = `h-full ${mouseHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
+      }
 
       // --- Task 2 Logic ---
       // Gaze drifts away randomly
@@ -112,17 +129,24 @@ export function Level10Crisis({
       gazeRef.current.y += (Math.random() - 0.5) * 0.5 * dt;
       gazeRef.current.x = Math.max(-1, Math.min(1, gazeRef.current.x));
       gazeRef.current.y = Math.max(-1, Math.min(1, gazeRef.current.y));
-      setGazePos({ x: gazeRef.current.x, y: gazeRef.current.y });
+
+      if (gazeDotRef.current) {
+        gazeDotRef.current.style.transform = `translate(${gazeRef.current.x * 64}px, ${gazeRef.current.y * 64}px)`;
+      }
 
       const gazeDistSq =
         gazeRef.current.x * gazeRef.current.x +
         gazeRef.current.y * gazeRef.current.y;
       if (gazeDistSq > 0.25) {
-        gazeHealth -= 20 * dt;
+        gazeHealthRef.current -= 20 * dt;
       } else {
-        gazeHealth = Math.min(100, gazeHealth + 10 * dt);
+        gazeHealthRef.current = Math.min(100, gazeHealthRef.current + 10 * dt);
       }
-      setGazeTaskHealth(gazeHealth);
+
+      if (gazeHealthBarRef.current) {
+        gazeHealthBarRef.current.style.width = `${gazeHealthRef.current}%`;
+        gazeHealthBarRef.current.className = `h-full ${gazeHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
+      }
 
       // --- Task 3 Logic ---
       faceTimer += dt;
@@ -133,14 +157,26 @@ export function Level10Crisis({
         currentFaceKeyRef.current = newKey;
         setFacePrompt(newKey);
       }
-      faceHealth -= 10 * dt;
-      setFaceTaskHealth(faceHealth);
+      faceHealthRef.current -= 10 * dt;
+
+      if (faceHealthBarRef.current) {
+        faceHealthBarRef.current.style.width = `${faceHealthRef.current}%`;
+        faceHealthBarRef.current.className = `h-full ${faceHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
+      }
 
       // Stress calculation based on healths
-      if (mouseHealth < 30 || gazeHealth < 30 || faceHealth < 30) {
+      if (
+        mouseHealthRef.current < 30 ||
+        gazeHealthRef.current < 30 ||
+        faceHealthRef.current < 30
+      ) {
         onStressChange(20 * dt);
       }
-      if (mouseHealth <= 0 || gazeHealth <= 0 || faceHealth <= 0) {
+      if (
+        mouseHealthRef.current <= 0 ||
+        gazeHealthRef.current <= 0 ||
+        faceHealthRef.current <= 0
+      ) {
         onStressChange(50 * dt);
       }
 
@@ -175,27 +211,22 @@ export function Level10Crisis({
 
         {/* Target */}
         <div
+          ref={targetRef}
           className="absolute w-12 h-12 border-2 border-yellow-400 rounded-full bg-yellow-400/20"
-          style={{
-            left: targetPos.x - window.innerWidth * 0.2 + 128 - 24,
-            top: targetPos.y - window.innerHeight * 0.5 + 128 - 24,
-          }}
         />
 
         {/* Cursor representation for local widget */}
         <div
+          ref={cursorRef}
           className="absolute w-4 h-4 bg-white rounded-full"
-          style={{
-            left: mouseRef.current.x - window.innerWidth * 0.2 + 128 - 8,
-            top: mouseRef.current.y - window.innerHeight * 0.5 + 128 - 8,
-          }}
         />
 
         {/* Health Bar */}
         <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
           <div
-            className={`h-full ${mouseTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
-            style={{ width: `${mouseTaskHealth}%` }}
+            ref={mouseHealthBarRef}
+            className="h-full bg-green-500"
+            style={{ width: "100%" }}
           />
         </div>
       </div>
@@ -209,18 +240,17 @@ export function Level10Crisis({
         <div className="relative w-32 h-32 border-4 border-white/30 rounded-full flex items-center justify-center bg-white/5">
           <div className="w-8 h-8 border-2 border-green-500 rounded-full" />
           <div
+            ref={gazeDotRef}
             className="absolute w-6 h-6 bg-blue-500 rounded-full"
-            style={{
-              transform: `translate(${gazePos.x * 64}px, ${gazePos.y * 64}px)`,
-            }}
           />
         </div>
 
         {/* Health Bar */}
         <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
           <div
-            className={`h-full ${gazeTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
-            style={{ width: `${gazeTaskHealth}%` }}
+            ref={gazeHealthBarRef}
+            className="h-full bg-green-500"
+            style={{ width: "100%" }}
           />
         </div>
       </div>
@@ -238,8 +268,9 @@ export function Level10Crisis({
         {/* Health Bar */}
         <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
           <div
-            className={`h-full ${faceTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
-            style={{ width: `${faceTaskHealth}%` }}
+            ref={faceHealthBarRef}
+            className="h-full bg-green-500"
+            style={{ width: "100%" }}
           />
         </div>
       </div>

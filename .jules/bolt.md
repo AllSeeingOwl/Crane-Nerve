@@ -12,3 +12,8 @@
 
 **Learning:** Found components (e.g., Level9Hypoglossal) triggering `setState` inside 60fps `requestAnimationFrame` loops for continuously updating visual elements (like position or SVG paths). This causes rapid React diffing and teardowns.
 **Action:** Instead of `useState` variables in the loop, use `useRef` to target DOM elements and mutate properties directly (`style.left`, `setAttribute("d")`) to avoid React rendering overhead. Make sure to fix visual UI state (like `cursor-grab`) that were relying on the coincidental 60fps re-render to update classes.
+
+## 2024-03-24 - [useState Bugs inside requestAnimationFrame]
+
+**Learning:** Using `useState` alongside closures inside a `requestAnimationFrame` loop not only causes massive re-render overhead but can create subtle bugs where event listeners (like keyboard presses) modifying state aren't seen by the game loop (which captures the initial state in its closure), causing immediate overrides.
+**Action:** Use `useRef` for all game loop state (positions, health). This provides a mutable, shared reference that both the game loop and asynchronous event listeners can read/write to instantly without closure capture issues, while also bypassing React rendering overhead entirely when combined with direct DOM manipulation.
