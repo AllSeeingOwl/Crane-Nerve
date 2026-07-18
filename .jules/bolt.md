@@ -17,3 +17,6 @@
 
 **Learning:** Using `useState` alongside closures inside a `requestAnimationFrame` loop not only causes massive re-render overhead but can create subtle bugs where event listeners (like keyboard presses) modifying state aren't seen by the game loop (which captures the initial state in its closure), causing immediate overrides.
 **Action:** Use `useRef` for all game loop state (positions, health). This provides a mutable, shared reference that both the game loop and asynchronous event listeners can read/write to instantly without closure capture issues, while also bypassing React rendering overhead entirely when combined with direct DOM manipulation.
+## 2024-03-24 - [Avoid `useState` inside `requestAnimationFrame`]
+**Learning:** High-frequency `useState` updates inside a `requestAnimationFrame` loop cause unnecessary React re-renders and diffing, significantly impacting performance.
+**Action:** Instead of `useState`, use `useRef` to track changing values, along with a ref to the DOM element (`useRef<HTMLDivElement>(null)`). Mutate the element's styles directly (`elementRef.current.style.transform = ...`) inside the loop, entirely bypassing React rendering overhead.
