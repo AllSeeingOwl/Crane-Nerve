@@ -111,7 +111,7 @@ export default function MainMenu({ onPlay }: Props) {
       </button>
 
       {/* Warning */}
-      <div className="relative z-10 text-center">
+      <div className="relative z-10 text-center" aria-hidden="true">
         <div className="text-xs text-destructive/70 tracking-[0.3em] uppercase transition-all duration-500">
           ⚠ WARNING: {WARNINGS[warningIdx]}
         </div>

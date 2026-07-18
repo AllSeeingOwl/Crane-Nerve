@@ -140,7 +140,14 @@ export function Level5FacialNerve({
         </p>
 
         {/* Custom Progress Bar */}
-        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden mb-2">
+        <div
+          className="w-full h-2 bg-gray-700 rounded-full overflow-hidden mb-2"
+          role="progressbar"
+          aria-valuenow={Math.round(progress)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Level progress"
+        >
           <div
             className="h-full bg-blue-500 transition-all duration-300 ease-out"
             style={{ width: `${progress}%` }}

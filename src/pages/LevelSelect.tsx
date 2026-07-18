@@ -69,12 +69,12 @@ export default function LevelSelect({
           <span>
             <span aria-hidden="true">← </span>BACK
           </span>
-          <span
-            className="text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity"
+          <kbd
+            className="text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity font-sans"
             aria-hidden="true"
           >
             ESC
-          </span>
+          </kbd>
         </button>
         <h1 className="text-primary text-lg tracking-widest uppercase">
           SELECT EXAMINATION

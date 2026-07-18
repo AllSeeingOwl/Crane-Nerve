@@ -139,12 +139,12 @@ export default function LevelComplete({
             className="group relative px-8 py-3 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             MENU
-            <span
-              className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+            <kbd
+              className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] bg-muted-foreground/10 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity whitespace-nowrap font-sans"
               aria-hidden="true"
             >
               ESC
-            </span>
+            </kbd>
           </button>
         </div>
       </div>

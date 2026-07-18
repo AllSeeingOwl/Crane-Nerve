@@ -195,7 +195,14 @@ export function Level6Tuning({
         </p>
 
         {/* Sequence Progress Bar */}
-        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden mb-2">
+        <div
+          className="w-full h-2 bg-gray-700 rounded-full overflow-hidden mb-2"
+          role="progressbar"
+          aria-valuenow={Math.round(progress)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Level progress"
+        >
           <div
             className="h-full bg-blue-500 transition-all duration-300 ease-out"
             style={{ width: `${progress}%` }}
@@ -213,7 +220,14 @@ export function Level6Tuning({
             </p>
             {/* Hold Progress Bar */}
             {isStriking && (
-              <div className="w-full h-4 bg-gray-700 rounded mt-2 overflow-hidden relative">
+              <div
+                className="w-full h-4 bg-gray-700 rounded mt-2 overflow-hidden relative"
+                role="progressbar"
+                aria-valuenow={Math.round(holdProgress)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Hold progress"
+              >
                 <div
                   className="h-full bg-yellow-400 transition-all duration-75 ease-linear"
                   style={{ width: `${holdProgress}%` }}
