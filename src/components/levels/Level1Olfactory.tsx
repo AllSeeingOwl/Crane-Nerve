@@ -205,7 +205,14 @@ export function Level1Olfactory({
 
         {/* Smell Progress Ring/Bar */}
         {smellProgress > 0 && (
-          <div className="absolute -bottom-6 w-16 h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className="absolute -bottom-6 w-16 h-2 bg-gray-700 rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuenow={Math.round(smellProgress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Smell identification progress"
+          >
             <div
               className="h-full bg-blue-500"
               style={{ width: `${smellProgress}%` }}
@@ -227,7 +234,12 @@ export function Level1Olfactory({
                 !isIdentified && setSelectedVial(isSelected ? null : vial.id)
               }
               disabled={isIdentified}
-              className={`w-20 h-24 flex flex-col items-center justify-end p-2 rounded border-2 transition-all ${
+              aria-label={
+                isIdentified
+                  ? `${vial.name} identified`
+                  : `Select ${vial.name} vial`
+              }
+              className={`focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none focus-visible:ring-offset-2 w-20 h-24 flex flex-col items-center justify-end p-2 rounded border-2 transition-all ${
                 isIdentified
                   ? "opacity-50 border-gray-600 grayscale"
                   : isSelected

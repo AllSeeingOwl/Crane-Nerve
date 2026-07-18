@@ -211,7 +211,8 @@ export function Level8Accessory({
           {!testActive && timeHeld === 0 ? (
             <button
               onClick={startTest}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded cursor-pointer pointer-events-auto"
+              aria-label="Start patient movement"
+              className="focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none focus-visible:ring-offset-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded cursor-pointer pointer-events-auto"
             >
               Start Movement
             </button>
@@ -252,8 +253,20 @@ export function Level8Accessory({
           className="relative w-16 bg-slate-800 rounded-full border border-slate-600 flex flex-col items-center py-4"
           style={{ height: meterHeight + 32 }}
         >
-          <div className="text-xs text-slate-400 mb-2 font-bold">FORCE</div>
-          <div className="relative w-8 bg-slate-900 rounded-full flex-grow overflow-hidden border border-slate-700">
+          <div
+            className="text-xs text-slate-400 mb-2 font-bold"
+            id="force-label"
+          >
+            FORCE
+          </div>
+          <div
+            className="relative w-8 bg-slate-900 rounded-full flex-grow overflow-hidden border border-slate-700"
+            role="progressbar"
+            aria-labelledby="force-label"
+            aria-valuenow={Math.round(resistanceScore)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          >
             {/* Zones */}
             <div className="absolute bottom-[0%] w-full h-[40%] bg-red-900/50" />{" "}
             {/* Too weak */}
@@ -272,7 +285,14 @@ export function Level8Accessory({
 
       {/* Progress Bar for holding in the green zone */}
       {testActive && (
-        <div className="mt-8 w-64 h-4 bg-slate-800 rounded-full overflow-hidden border border-slate-600">
+        <div
+          className="mt-8 w-64 h-4 bg-slate-800 rounded-full overflow-hidden border border-slate-600"
+          role="progressbar"
+          aria-valuenow={Math.round(timeHeld)}
+          aria-valuemin={0}
+          aria-valuemax={2000}
+          aria-label="Resistance hold time"
+        >
           <div
             className="h-full bg-blue-500 transition-all"
             style={{ width: `${(timeHeld / 2000) * 100}%` }}

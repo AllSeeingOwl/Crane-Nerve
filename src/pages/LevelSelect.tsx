@@ -125,6 +125,13 @@ export default function LevelSelect({
                 onFocus={() => setFocusedIndex(index)}
                 disabled={!isAvailable}
                 onClick={() => isAvailable && onSelectLevel(level.id)}
+                aria-label={
+                  isAvailable
+                    ? isComplete
+                      ? `Replay Level ${level.nerve}: ${level.title}`
+                      : `Play Level ${level.nerve}: ${level.title}`
+                    : `Level ${level.nerve}: ${level.title} - Locked`
+                }
                 className={`
                   relative p-4 border text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background
                   ${
