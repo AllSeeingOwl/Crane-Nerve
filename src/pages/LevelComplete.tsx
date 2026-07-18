@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { LevelId, LEVELS, DEADPAN_DIALOGUE } from "@/types/types";
 
@@ -28,15 +28,30 @@ export default function LevelComplete({
     setQuote(pool[Math.floor(Math.random() * pool.length)]);
   }, []);
 
+  const [focusedButton, setFocusedButton] = useState<"next" | "menu">("next");
+  const nextBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
+  const menuBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onLevelSelect();
+        return;
+      }
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault();
+        const nextFocus = focusedButton === "next" ? "menu" : "next";
+        setFocusedButton(nextFocus);
+        if (nextFocus === "next") {
+          nextBtnRef.current?.focus();
+        } else {
+          menuBtnRef.current?.focus();
+        }
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onLevelSelect]);
+  }, [onLevelSelect, focusedButton]);
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-background relative">
@@ -110,12 +125,16 @@ export default function LevelComplete({
 
         <div className="flex gap-4">
           <button
+            ref={nextBtnRef}
+            onFocus={() => setFocusedButton("next")}
             onClick={onNext}
             className="px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-background transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             NEXT <span aria-hidden="true">→</span>
           </button>
           <button
+            ref={menuBtnRef}
+            onFocus={() => setFocusedButton("menu")}
             onClick={onLevelSelect}
             className="group relative px-8 py-3 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >

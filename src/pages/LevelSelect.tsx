@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LevelId, LEVELS } from "@/types/types";
 
 interface Props {
@@ -14,15 +14,49 @@ export default function LevelSelect({
   onSelectLevel,
   onBack,
 }: Props) {
+  const [focusedIndex, setFocusedIndex] = useState<number>(-1);
+  const buttonRefs = useRef<(globalThis.HTMLButtonElement | null)[]>([]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onBack();
+        return;
+      }
+
+      if (
+        e.key === "ArrowUp" ||
+        e.key === "ArrowDown" ||
+        e.key === "ArrowLeft" ||
+        e.key === "ArrowRight"
+      ) {
+        e.preventDefault();
+
+        let newIndex = focusedIndex;
+
+        if (focusedIndex === -1) {
+          // If focus is nowhere or on 'Back' button, start at first level
+          newIndex = 0;
+        } else {
+          // Navigation in a 3-column grid
+          if (e.key === "ArrowRight") {
+            newIndex = Math.min(focusedIndex + 1, LEVELS.length - 1);
+          } else if (e.key === "ArrowLeft") {
+            newIndex = Math.max(focusedIndex - 1, 0);
+          } else if (e.key === "ArrowDown") {
+            newIndex = Math.min(focusedIndex + 3, LEVELS.length - 1);
+          } else if (e.key === "ArrowUp") {
+            newIndex = Math.max(focusedIndex - 3, 0);
+          }
+        }
+
+        setFocusedIndex(newIndex);
+        buttonRefs.current[newIndex]?.focus();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onBack]);
+  }, [onBack, focusedIndex]);
 
   return (
     <div className="w-screen h-screen flex flex-col bg-background overflow-hidden">
@@ -80,13 +114,15 @@ export default function LevelSelect({
       {/* Level grid */}
       <div className="flex-1 overflow-y-auto px-8 py-6">
         <div className="grid grid-cols-3 gap-4 max-w-5xl mx-auto">
-          {LEVELS.map((level) => {
+          {LEVELS.map((level, index) => {
             const isComplete = completedLevels.has(level.id);
             const isAvailable = level.implemented;
 
             return (
               <button
                 key={level.id}
+                ref={(el) => (buttonRefs.current[index] = el)}
+                onFocus={() => setFocusedIndex(index)}
                 disabled={!isAvailable}
                 onClick={() => isAvailable && onSelectLevel(level.id)}
                 className={`

@@ -17,6 +17,17 @@ export default function MainMenu({ onPlay }: Props) {
   const [blink, setBlink] = useState(true);
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onPlay();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onPlay]);
+
+  useEffect(() => {
     const t = setInterval(() => {
       setWarningIdx((i) => (i + 1) % WARNINGS.length);
     }, 3000);
