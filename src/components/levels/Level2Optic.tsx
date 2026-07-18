@@ -151,7 +151,14 @@ export function Level2Optic({
         <span className="text-white text-xs font-bold uppercase tracking-widest -rotate-90 mb-8 w-24 text-center">
           Focus
         </span>
-        <div className="w-4 h-64 bg-gray-800 rounded-full relative overflow-hidden border border-gray-600">
+        <div
+          className="w-4 h-64 bg-gray-800 rounded-full relative overflow-hidden border border-gray-600"
+          role="progressbar"
+          aria-valuenow={Math.round(10 - focusLevel)}
+          aria-valuemin={0}
+          aria-valuemax={10}
+          aria-label="Focus level indicator"
+        >
           <div
             className="absolute bottom-0 w-full bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 transition-all duration-75"
             style={{ height: `${(1 - focusLevel / 10) * 100}%` }}

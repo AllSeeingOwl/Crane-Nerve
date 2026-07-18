@@ -298,7 +298,14 @@ export function Level11NightShift({
           />
 
           {/* Health Bar */}
-          <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuenow={Math.round(mouseTaskHealth)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Mouse task health"
+          >
             <div
               className={`h-full ${mouseTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
               style={{ width: `${mouseTaskHealth}%` }}
@@ -323,7 +330,14 @@ export function Level11NightShift({
           </div>
 
           {/* Health Bar */}
-          <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuenow={Math.round(gazeTaskHealth)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Gaze task health"
+          >
             <div
               className={`h-full ${gazeTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
               style={{ width: `${gazeTaskHealth}%` }}
@@ -342,7 +356,14 @@ export function Level11NightShift({
           </div>
 
           {/* Health Bar */}
-          <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuenow={Math.round(faceTaskHealth)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Face task health"
+          >
             <div
               className={`h-full ${faceTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
               style={{ width: `${faceTaskHealth}%` }}

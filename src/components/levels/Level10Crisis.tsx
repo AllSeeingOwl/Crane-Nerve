@@ -222,7 +222,14 @@ export function Level10Crisis({
         />
 
         {/* Health Bar */}
-        <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+        <div
+          className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
+          role="progressbar"
+          aria-valuenow={Math.round(mouseHealthRef.current)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Mouse task health"
+        >
           <div
             ref={mouseHealthBarRef}
             className="h-full bg-green-500"
@@ -246,7 +253,14 @@ export function Level10Crisis({
         </div>
 
         {/* Health Bar */}
-        <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+        <div
+          className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
+          role="progressbar"
+          aria-valuenow={Math.round(gazeHealthRef.current)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Gaze task health"
+        >
           <div
             ref={gazeHealthBarRef}
             className="h-full bg-green-500"
@@ -266,7 +280,14 @@ export function Level10Crisis({
         </div>
 
         {/* Health Bar */}
-        <div className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden">
+        <div
+          className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
+          role="progressbar"
+          aria-valuenow={Math.round(faceHealthRef.current)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Face task health"
+        >
           <div
             ref={faceHealthBarRef}
             className="h-full bg-green-500"
