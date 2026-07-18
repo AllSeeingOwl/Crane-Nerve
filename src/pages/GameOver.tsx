@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { LevelId, LEVELS, DEADPAN_DIALOGUE } from "@/types/types";
 
@@ -12,6 +12,10 @@ export default function GameOver({ levelId, onRetry, onLevelSelect }: Props) {
   const [quote, setQuote] = useState("");
   const level = LEVELS.find((l) => l.id === levelId)!;
 
+  const [focusedButton, setFocusedButton] = useState<"retry" | "quit">("retry");
+  const retryBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
+  const quitBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
+
   useEffect(() => {
     const pool = DEADPAN_DIALOGUE.stress;
     setQuote(pool[Math.floor(Math.random() * pool.length)]);
@@ -21,11 +25,22 @@ export default function GameOver({ levelId, onRetry, onLevelSelect }: Props) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onLevelSelect();
+        return;
+      }
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault();
+        const nextFocus = focusedButton === "retry" ? "quit" : "retry";
+        setFocusedButton(nextFocus);
+        if (nextFocus === "retry") {
+          retryBtnRef.current?.focus();
+        } else {
+          quitBtnRef.current?.focus();
+        }
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onLevelSelect]);
+  }, [onLevelSelect, focusedButton]);
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-background relative">
@@ -96,12 +111,16 @@ export default function GameOver({ levelId, onRetry, onLevelSelect }: Props) {
 
         <div className="flex gap-4 mt-4">
           <button
+            ref={retryBtnRef}
+            onFocus={() => setFocusedButton("retry")}
             onClick={onRetry}
             className="px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-background transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             RETRY
           </button>
           <button
+            ref={quitBtnRef}
+            onFocus={() => setFocusedButton("quit")}
             onClick={onLevelSelect}
             className="group relative px-8 py-3 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
