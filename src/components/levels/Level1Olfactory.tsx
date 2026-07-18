@@ -234,7 +234,11 @@ export function Level1Olfactory({
                 !isIdentified && setSelectedVial(isSelected ? null : vial.id)
               }
               disabled={isIdentified}
-              aria-label={isIdentified ? `${vial.name} identified` : `Select ${vial.name} vial`}
+              aria-label={
+                isIdentified
+                  ? `${vial.name} identified`
+                  : `Select ${vial.name} vial`
+              }
               className={`focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none focus-visible:ring-offset-2 w-20 h-24 flex flex-col items-center justify-end p-2 rounded border-2 transition-all ${
                 isIdentified
                   ? "opacity-50 border-gray-600 grayscale"

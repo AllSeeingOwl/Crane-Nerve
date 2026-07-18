@@ -253,7 +253,12 @@ export function Level8Accessory({
           className="relative w-16 bg-slate-800 rounded-full border border-slate-600 flex flex-col items-center py-4"
           style={{ height: meterHeight + 32 }}
         >
-          <div className="text-xs text-slate-400 mb-2 font-bold" id="force-label">FORCE</div>
+          <div
+            className="text-xs text-slate-400 mb-2 font-bold"
+            id="force-label"
+          >
+            FORCE
+          </div>
           <div
             className="relative w-8 bg-slate-900 rounded-full flex-grow overflow-hidden border border-slate-700"
             role="progressbar"
