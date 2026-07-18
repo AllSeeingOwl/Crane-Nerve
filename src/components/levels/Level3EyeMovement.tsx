@@ -120,7 +120,14 @@ export function Level3EyeMovement({
         <h2 className="text-xl font-bold mb-2">Level 3: Eye Movement</h2>
         <p className="text-sm mb-2">Trace the H-pattern with the penlight.</p>
         {/* Custom Progress Bar */}
-        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+        <div
+          className="w-full h-2 bg-gray-700 rounded-full overflow-hidden"
+          role="progressbar"
+          aria-valuenow={Math.round(progress)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Level progress"
+        >
           <div
             className="h-full bg-blue-500 transition-all duration-300 ease-out"
             style={{ width: `${progress}%` }}
