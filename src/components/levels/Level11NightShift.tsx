@@ -26,7 +26,8 @@ export function Level11NightShift({
     y: window.innerHeight / 2,
   });
   const [mouseTaskHealth, setMouseTaskHealth] = useState(100);
-  const [targetPos, setTargetPos] = useState({ x: 0, y: 0 });
+  const targetPosRef = useRef({ x: 0, y: 0 });
+  const targetElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -39,7 +40,7 @@ export function Level11NightShift({
   // --- Task 2: Arrow Keys (Keep gaze centered) ---
   const gazeRef = useRef({ x: 0, y: 0 }); // -1 to 1
   const [gazeTaskHealth, setGazeTaskHealth] = useState(100);
-  const [gazePos, setGazePos] = useState({ x: 0, y: 0 });
+  const gazeElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -172,7 +173,14 @@ export function Level11NightShift({
         window.innerHeight * 0.5 +
         Math.sin(time / 600) * 120 +
         Math.cos(time / 300) * 40;
-      setTargetPos({ x: tX, y: tY });
+
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      targetPosRef.current.x = tX;
+      targetPosRef.current.y = tY;
+      if (targetElementRef.current) {
+        targetElementRef.current.style.left = `${tX - window.innerWidth * 0.2 + 128 - 24}px`;
+        targetElementRef.current.style.top = `${tY - window.innerHeight * 0.5 + 128 - 24}px`;
+      }
 
       const distSq =
         (mouseRef.current.x - tX) ** 2 + (mouseRef.current.y - tY) ** 2;
@@ -189,7 +197,11 @@ export function Level11NightShift({
       gazeRef.current.y += (Math.random() - 0.5) * 1.5 * dt;
       gazeRef.current.x = Math.max(-1, Math.min(1, gazeRef.current.x));
       gazeRef.current.y = Math.max(-1, Math.min(1, gazeRef.current.y));
-      setGazePos({ x: gazeRef.current.x, y: gazeRef.current.y });
+
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      if (gazeElementRef.current) {
+        gazeElementRef.current.style.transform = `translate(${gazeRef.current.x * 64}px, ${gazeRef.current.y * 64}px)`;
+      }
 
       const gazeDistSq =
         gazeRef.current.x * gazeRef.current.x +
@@ -281,10 +293,11 @@ export function Level11NightShift({
 
           {/* Target */}
           <div
+            ref={targetElementRef}
             className="absolute w-12 h-12 border-2 border-yellow-400 rounded-full bg-yellow-400/20"
             style={{
-              left: targetPos.x - window.innerWidth * 0.2 + 128 - 24,
-              top: targetPos.y - window.innerHeight * 0.5 + 128 - 24,
+              left: targetPosRef.current.x - window.innerWidth * 0.2 + 128 - 24,
+              top: targetPosRef.current.y - window.innerHeight * 0.5 + 128 - 24,
             }}
           />
 
@@ -322,9 +335,10 @@ export function Level11NightShift({
           <div className="relative w-32 h-32 border-4 border-white/30 rounded-full flex items-center justify-center bg-white/5">
             <div className="w-8 h-8 border-2 border-green-500 rounded-full" />
             <div
+              ref={gazeElementRef}
               className="absolute w-6 h-6 bg-blue-500 rounded-full"
               style={{
-                transform: `translate(${gazePos.x * 64}px, ${gazePos.y * 64}px)`,
+                transform: `translate(${gazeRef.current.x * 64}px, ${gazeRef.current.y * 64}px)`,
               }}
             />
           </div>
