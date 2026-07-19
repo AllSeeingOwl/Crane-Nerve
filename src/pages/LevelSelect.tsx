@@ -87,7 +87,10 @@ export default function LevelSelect({
       {/* Progress */}
       <div className="px-8 py-3 border-b border-border/50">
         <div className="flex items-center gap-3">
-          <span className="text-xs text-muted-foreground uppercase tracking-widest" aria-hidden="true">
+          <span
+            className="text-xs text-muted-foreground uppercase tracking-widest"
+            aria-hidden="true"
+          >
             Progress
           </span>
           <div
