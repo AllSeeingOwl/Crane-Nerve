@@ -24,5 +24,6 @@
 **Action:** Instead of `useState`, use `useRef` to track changing values, along with a ref to the DOM element (`useRef<HTMLDivElement>(null)`). Mutate the element's styles directly (`elementRef.current.style.transform = ...`) inside the loop, entirely bypassing React rendering overhead.
 
 ## 2026-07-19 - [Direct DOM Mutation for Position Updates in Level7GagReflex]
+
 **Learning:** The `Level7GagReflex` component was using `useState` to update the `throatPos` and `depressorPos` inside a 60fps `requestAnimationFrame` loop. This caused excessive React re-renders and diffing, degrading performance.
 **Action:** Replaced the `useState` hooks with `useRef` for the target DOM elements and updated their `style.left` and `style.top` directly within the loop. This completely bypasses the React rendering cycle for high-frequency position updates.
