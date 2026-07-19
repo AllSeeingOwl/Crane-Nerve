@@ -42,14 +42,8 @@ export function Level7GagReflex({
     radius: 60,
   });
 
-  const [throatPos, setThroatPos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2 - 50,
-  });
-  const [depressorPos, setDepressorPos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
+  const throatElementRef = useRef<HTMLDivElement>(null);
+  const depressorElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (successfulGags >= 3) {
@@ -118,8 +112,14 @@ export function Level7GagReflex({
         throat.vy *= -1;
       }
 
-      setThroatPos({ x: throat.x, y: throat.y });
-      setDepressorPos({ x: mouse.x, y: mouse.y });
+      if (throatElementRef.current) {
+        throatElementRef.current.style.left = `${throat.x - 60}px`;
+        throatElementRef.current.style.top = `${throat.y - 60}px`;
+      }
+      if (depressorElementRef.current) {
+        depressorElementRef.current.style.left = `${mouse.x}px`;
+        depressorElementRef.current.style.top = `${mouse.y}px`;
+      }
 
       if (state.cooldown > 0) {
         state.cooldown -= dt;
@@ -212,12 +212,13 @@ export function Level7GagReflex({
 
       {/* Throat Target */}
       <div
+        ref={throatElementRef}
         className="absolute rounded-full bg-black/40 flex items-center justify-center pointer-events-none transition-transform"
         style={{
           width: 120,
           height: 120,
-          left: throatPos.x - 60,
-          top: throatPos.y - 60,
+          left: window.innerWidth / 2 - 60, // initial position
+          top: window.innerHeight / 2 - 110, // initial position (y - 50 - 60)
           boxShadow: "inset 0 0 20px rgba(0,0,0,0.8)",
         }}
       >
@@ -228,10 +229,11 @@ export function Level7GagReflex({
 
       {/* Tongue Depressor */}
       <div
+        ref={depressorElementRef}
         className="absolute pointer-events-none z-50 w-6 h-40 -ml-3"
         style={{
-          left: depressorPos.x,
-          top: depressorPos.y,
+          left: window.innerWidth / 2, // initial position
+          top: window.innerHeight / 2, // initial position
           transition: "none",
           transformOrigin: "top center",
           transform: "rotate(-10deg)",
