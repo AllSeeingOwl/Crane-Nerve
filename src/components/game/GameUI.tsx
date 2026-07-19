@@ -52,6 +52,7 @@ export default function GameUI({ level, stress, onQuit }: Props) {
           <div
             className="text-xs tracking-widest uppercase"
             style={{ color: stressColor }}
+            aria-hidden="true"
           >
             PATIENT STRESS
           </div>
@@ -82,6 +83,7 @@ export default function GameUI({ level, stress, onQuit }: Props) {
             <span
               className="text-xs w-8 text-right"
               style={{ color: stressColor }}
+              aria-hidden="true"
             >
               {Math.round(stress)}%
             </span>
