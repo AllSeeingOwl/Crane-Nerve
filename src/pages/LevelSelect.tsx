@@ -87,7 +87,10 @@ export default function LevelSelect({
       {/* Progress */}
       <div className="px-8 py-3 border-b border-border/50">
         <div className="flex items-center gap-3">
-          <span className="text-xs text-muted-foreground uppercase tracking-widest">
+          <span
+            className="text-xs text-muted-foreground uppercase tracking-widest"
+            aria-hidden="true"
+          >
             Progress
           </span>
           <div
@@ -105,7 +108,7 @@ export default function LevelSelect({
               }}
             />
           </div>
-          <span className="text-xs text-primary">
+          <span className="text-xs text-primary" aria-hidden="true">
             {completedLevels.size}/{LEVELS.length}
           </span>
         </div>
