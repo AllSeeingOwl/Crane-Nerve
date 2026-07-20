@@ -25,10 +25,7 @@ export function Level6Tuning({
     y: window.innerHeight / 2,
   });
 
-  const [forkPos, setForkPos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
+  const forkElementRef = useRef<HTMLDivElement>(null);
 
   // Tuning fork sequence
   const sequence = [
@@ -94,7 +91,11 @@ export function Level6Tuning({
       forkRef.current.x += dx * 0.08;
       forkRef.current.y += dy * 0.08;
 
-      setForkPos({ x: forkRef.current.x, y: forkRef.current.y });
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      if (forkElementRef.current) {
+        forkElementRef.current.style.left = `${forkRef.current.x}px`;
+        forkElementRef.current.style.top = `${forkRef.current.y}px`;
+      }
 
       // Steady hand logic: Check if we are currently holding the fork in the target area
       if (isStriking && currentStepIndex < sequence.length) {
@@ -271,11 +272,8 @@ export function Level6Tuning({
 
       {/* Tuning Fork Cursor */}
       <div
+        ref={forkElementRef}
         className="absolute -ml-3 -mt-12 pointer-events-none flex flex-col items-center"
-        style={{
-          left: forkPos.x,
-          top: forkPos.y,
-        }}
       >
         {/* Prongs */}
         <div

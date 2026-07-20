@@ -25,10 +25,7 @@ export function Level5FacialNerve({
     y: window.innerHeight / 2,
   });
 
-  const [cursorPos, setCursorPos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
+  const cursorElementRef = useRef<HTMLDivElement>(null);
 
   // Facial prompts and targets
   const prompts = [
@@ -73,7 +70,11 @@ export function Level5FacialNerve({
       cursorRef.current.x = nextX;
       cursorRef.current.y = nextY;
 
-      setCursorPos({ x: cursorRef.current.x, y: cursorRef.current.y });
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      if (cursorElementRef.current) {
+        cursorElementRef.current.style.left = `${cursorRef.current.x}px`;
+        cursorElementRef.current.style.top = `${cursorRef.current.y}px`;
+      }
 
       // Ambient stress increase (taking too long)
       if (Math.random() < 0.01) {
@@ -190,11 +191,8 @@ export function Level5FacialNerve({
 
       {/* Shaky Cursor */}
       <div
+        ref={cursorElementRef}
         className="absolute w-6 h-6 -ml-3 -mt-3 rounded-full border-2 border-yellow-300 bg-yellow-300/30 backdrop-blur-sm pointer-events-none flex items-center justify-center shadow-[0_0_15px_rgba(253,224,71,0.5)]"
-        style={{
-          left: cursorPos.x,
-          top: cursorPos.y,
-        }}
       >
         <div className="w-1.5 h-1.5 bg-yellow-300 rounded-full" />
       </div>

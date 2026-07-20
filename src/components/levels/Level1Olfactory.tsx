@@ -40,10 +40,7 @@ export function Level1Olfactory({
     vy: Math.random() * 2 - 1,
   });
 
-  const [nosePos, setNosePos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2 - 100,
-  });
+  const noseElementRef = useRef<HTMLDivElement>(null);
 
   const selectedVialRef = useRef<string | null>(null);
   const progressRef = useRef(0);
@@ -166,7 +163,11 @@ export function Level1Olfactory({
         }
       }
 
-      setNosePos({ x: nose.x, y: nose.y });
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      if (noseElementRef.current) {
+        noseElementRef.current.style.left = `${nose.x}px`;
+        noseElementRef.current.style.top = `${nose.y}px`;
+      }
 
       frameRef.current = requestAnimationFrame(loop);
     };
@@ -198,8 +199,8 @@ export function Level1Olfactory({
 
       {/* Target Nose */}
       <div
+        ref={noseElementRef}
         className="absolute w-24 h-24 -ml-12 -mt-12 rounded-full border-2 border-dashed border-white/50 bg-white/10 flex items-center justify-center pointer-events-none transition-transform"
-        style={{ left: nosePos.x, top: nosePos.y }}
       >
         <span className="text-xs text-white/70">Nose Area</span>
 

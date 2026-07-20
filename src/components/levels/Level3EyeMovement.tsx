@@ -24,10 +24,9 @@ export function Level3EyeMovement({
     y: window.innerHeight / 2,
   });
 
-  const [penlightPos, setPenlightPos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
+  const penlightElementRef1 = useRef<HTMLDivElement>(null);
+  const penlightElementRef2 = useRef<HTMLDivElement>(null);
+
   const [progress, setProgress] = useState(0);
 
   // H-pattern nodes to trace
@@ -70,7 +69,13 @@ export function Level3EyeMovement({
       penlightRef.current.x += dx * 0.05; // Lag factor
       penlightRef.current.y += dy * 0.05;
 
-      setPenlightPos({ x: penlightRef.current.x, y: penlightRef.current.y });
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      if (penlightElementRef1.current && penlightElementRef2.current) {
+        penlightElementRef1.current.style.left = `${penlightRef.current.x}px`;
+        penlightElementRef1.current.style.top = `${penlightRef.current.y}px`;
+        penlightElementRef2.current.style.left = `${penlightRef.current.x}px`;
+        penlightElementRef2.current.style.top = `${penlightRef.current.y}px`;
+      }
 
       // Check distance to current node
       if (currentNodeIndexRef.current < nodes.length) {
@@ -156,18 +161,16 @@ export function Level3EyeMovement({
 
       {/* Penlight */}
       <div
+        ref={penlightElementRef1}
         className="absolute w-12 h-12 -ml-6 -mt-6 rounded-full bg-yellow-200/50 mix-blend-screen blur-md pointer-events-none"
         style={{
-          left: penlightPos.x,
-          top: penlightPos.y,
           boxShadow: "0 0 40px 20px rgba(254, 240, 138, 0.5)",
         }}
       />
       <div
+        ref={penlightElementRef2}
         className="absolute w-4 h-4 -ml-2 -mt-2 rounded-full bg-white pointer-events-none"
         style={{
-          left: penlightPos.x,
-          top: penlightPos.y,
           boxShadow: "0 0 10px 5px white",
         }}
       />

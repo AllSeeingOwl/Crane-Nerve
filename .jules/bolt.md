@@ -27,3 +27,7 @@
 
 **Learning:** The `Level7GagReflex` component was using `useState` to update the `throatPos` and `depressorPos` inside a 60fps `requestAnimationFrame` loop. This caused excessive React re-renders and diffing, degrading performance.
 **Action:** Replaced the `useState` hooks with `useRef` for the target DOM elements and updated their `style.left` and `style.top` directly within the loop. This completely bypasses the React rendering cycle for high-frequency position updates.
+## 2026-07-20 - [Direct DOM Mutation for Position Updates in Multiple Levels]
+
+**Learning:** Components `Level1Olfactory`, `Level3EyeMovement`, `Level5FacialNerve`, and `Level6Tuning` were triggering `useState` (`setNosePos`, `setPenlightPos`, `setCursorPos`, `setForkPos`) inside a 60fps `requestAnimationFrame` loop to continuously update visual elements positions. This caused excessive React diffing and teardowns.
+**Action:** Replaced the `useState` hooks with `useRef` for the target DOM elements and updated their `style.left` and `style.top` directly within the loop. This completely bypasses the React rendering cycle for high-frequency position updates, resulting in much smoother performance.
