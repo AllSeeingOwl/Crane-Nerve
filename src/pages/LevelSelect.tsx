@@ -126,7 +126,7 @@ export default function LevelSelect({
                 key={level.id}
                 ref={(el) => (buttonRefs.current[index] = el)}
                 onFocus={() => setFocusedIndex(index)}
-                disabled={!isAvailable}
+                aria-disabled={!isAvailable}
                 onClick={() => isAvailable && onSelectLevel(level.id)}
                 aria-label={
                   isAvailable
