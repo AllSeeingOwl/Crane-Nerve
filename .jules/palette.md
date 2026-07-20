@@ -7,6 +7,8 @@
 - Text that mutates automatically (like a rotating warning string) should be wrapped with `aria-hidden="true"` to prevent it from constantly interrupting the screen reader's output buffer.
 - Visual button hints for keyboard shortcuts (like `ESC`) should use the semantic `<kbd>` element rather than a generic `<span>`.
   **Action:** When building custom interactive or status-displaying UI elements, prioritize adding explicit ARIA roles and properties.
+
 ## 2025-02-18 - Focusable Locked States
+
 **Learning:** Using `disabled` on interactive elements (like level select buttons) prevents them from receiving keyboard focus, which breaks custom arrow-key navigation and causes screen readers to skip them entirely.
 **Action:** Instead of `disabled`, use `aria-disabled` combined with an `onClick` guard and conditional styling to preserve keyboard focusability and screen reader announcements for locked/unavailable items.
