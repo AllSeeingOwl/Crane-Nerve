@@ -1,6 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { LevelId, LEVELS } from "@/types/types";
 
+const LEVEL_COLORS = [
+  { name: "red", bg: "bg-red-500/10", border: "border-red-500/50", hoverBg: "hover:bg-red-500/20", hoverBorder: "hover:border-red-500/50", text: "text-red-600 dark:text-red-400", hoverText: "group-hover:text-red-600 dark:group-hover:text-red-400", decoration: "border-red-500/30", hoverDecoration: "group-hover:border-red-500/30" },
+  { name: "orange", bg: "bg-orange-500/10", border: "border-orange-500/50", hoverBg: "hover:bg-orange-500/20", hoverBorder: "hover:border-orange-500/50", text: "text-orange-600 dark:text-orange-400", hoverText: "group-hover:text-orange-600 dark:group-hover:text-orange-400", decoration: "border-orange-500/30", hoverDecoration: "group-hover:border-orange-500/30" },
+  { name: "amber", bg: "bg-amber-500/10", border: "border-amber-500/50", hoverBg: "hover:bg-amber-500/20", hoverBorder: "hover:border-amber-500/50", text: "text-amber-600 dark:text-amber-400", hoverText: "group-hover:text-amber-600 dark:group-hover:text-amber-400", decoration: "border-amber-500/30", hoverDecoration: "group-hover:border-amber-500/30" },
+  { name: "green", bg: "bg-green-500/10", border: "border-green-500/50", hoverBg: "hover:bg-green-500/20", hoverBorder: "hover:border-green-500/50", text: "text-green-600 dark:text-green-400", hoverText: "group-hover:text-green-600 dark:group-hover:text-green-400", decoration: "border-green-500/30", hoverDecoration: "group-hover:border-green-500/30" },
+  { name: "emerald", bg: "bg-emerald-500/10", border: "border-emerald-500/50", hoverBg: "hover:bg-emerald-500/20", hoverBorder: "hover:border-emerald-500/50", text: "text-emerald-600 dark:text-emerald-400", hoverText: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400", decoration: "border-emerald-500/30", hoverDecoration: "group-hover:border-emerald-500/30" },
+  { name: "teal", bg: "bg-teal-500/10", border: "border-teal-500/50", hoverBg: "hover:bg-teal-500/20", hoverBorder: "hover:border-teal-500/50", text: "text-teal-600 dark:text-teal-400", hoverText: "group-hover:text-teal-600 dark:group-hover:text-teal-400", decoration: "border-teal-500/30", hoverDecoration: "group-hover:border-teal-500/30" },
+  { name: "cyan", bg: "bg-cyan-500/10", border: "border-cyan-500/50", hoverBg: "hover:bg-cyan-500/20", hoverBorder: "hover:border-cyan-500/50", text: "text-cyan-600 dark:text-cyan-400", hoverText: "group-hover:text-cyan-600 dark:group-hover:text-cyan-400", decoration: "border-cyan-500/30", hoverDecoration: "group-hover:border-cyan-500/30" },
+  { name: "blue", bg: "bg-blue-500/10", border: "border-blue-500/50", hoverBg: "hover:bg-blue-500/20", hoverBorder: "hover:border-blue-500/50", text: "text-blue-600 dark:text-blue-400", hoverText: "group-hover:text-blue-600 dark:group-hover:text-blue-400", decoration: "border-blue-500/30", hoverDecoration: "group-hover:border-blue-500/30" },
+  { name: "indigo", bg: "bg-indigo-500/10", border: "border-indigo-500/50", hoverBg: "hover:bg-indigo-500/20", hoverBorder: "hover:border-indigo-500/50", text: "text-indigo-600 dark:text-indigo-400", hoverText: "group-hover:text-indigo-600 dark:group-hover:text-indigo-400", decoration: "border-indigo-500/30", hoverDecoration: "group-hover:border-indigo-500/30" },
+  { name: "violet", bg: "bg-violet-500/10", border: "border-violet-500/50", hoverBg: "hover:bg-violet-500/20", hoverBorder: "hover:border-violet-500/50", text: "text-violet-600 dark:text-violet-400", hoverText: "group-hover:text-violet-600 dark:group-hover:text-violet-400", decoration: "border-violet-500/30", hoverDecoration: "group-hover:border-violet-500/30" },
+  { name: "fuchsia", bg: "bg-fuchsia-500/10", border: "border-fuchsia-500/50", hoverBg: "hover:bg-fuchsia-500/20", hoverBorder: "hover:border-fuchsia-500/50", text: "text-fuchsia-600 dark:text-fuchsia-400", hoverText: "group-hover:text-fuchsia-600 dark:group-hover:text-fuchsia-400", decoration: "border-fuchsia-500/30", hoverDecoration: "group-hover:border-fuchsia-500/30" },
+  { name: "pink", bg: "bg-pink-500/10", border: "border-pink-500/50", hoverBg: "hover:bg-pink-500/20", hoverBorder: "hover:border-pink-500/50", text: "text-pink-600 dark:text-pink-400", hoverText: "group-hover:text-pink-600 dark:group-hover:text-pink-400", decoration: "border-pink-500/30", hoverDecoration: "group-hover:border-pink-500/30" },
+];
+
 interface Props {
   completedLevels: Set<LevelId>;
   score: number;
@@ -120,6 +135,7 @@ export default function LevelSelect({
           {LEVELS.map((level, index) => {
             const isComplete = completedLevels.has(level.id);
             const isAvailable = level.implemented;
+            const colors = LEVEL_COLORS[index % LEVEL_COLORS.length];
 
             return (
               <button
@@ -136,28 +152,28 @@ export default function LevelSelect({
                     : `Level ${level.nerve}: ${level.title} - Locked`
                 }
                 className={`
-                  relative p-4 border text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background
+                  relative p-4 border text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background group
                   ${
                     isAvailable
                       ? isComplete
-                        ? "border-primary/60 bg-primary/10 hover:bg-primary/20 cursor-pointer"
-                        : "border-border hover:border-primary/50 hover:bg-secondary/50 cursor-pointer"
-                      : "border-border/30 bg-secondary/20 cursor-not-allowed opacity-40"
+                        ? `${colors.border} ${colors.bg} ${colors.hoverBg} cursor-pointer`
+                        : `border-border ${colors.hoverBorder} ${colors.hoverBg} bg-card cursor-pointer`
+                      : "border-border/40 bg-muted/30 cursor-not-allowed"
                   }
                 `}
               >
                 {/* Level number */}
                 <div className="flex items-start justify-between mb-2">
-                  <span className="text-xs text-muted-foreground tracking-widest uppercase">
+                  <span className={`text-xs tracking-widest uppercase font-semibold ${isAvailable ? (isComplete ? colors.text : "text-muted-foreground transition-colors " + colors.hoverText) : "text-muted-foreground/60"}`}>
                     {level.nerve}
                   </span>
                   {isComplete && (
-                    <span className="text-xs text-primary">
+                    <span className={`text-xs font-semibold ${colors.text}`}>
                       <span aria-hidden="true">✓ </span>DONE
                     </span>
                   )}
                   {!isAvailable && (
-                    <span className="text-xs text-muted-foreground/50">
+                    <span className="text-[10px] font-bold bg-muted text-muted-foreground px-2 py-0.5 rounded-sm">
                       LOCKED
                     </span>
                   )}
@@ -165,26 +181,26 @@ export default function LevelSelect({
 
                 {/* Title */}
                 <h3
-                  className={`text-base font-bold mb-1 ${isAvailable ? "text-foreground" : "text-muted-foreground"}`}
+                  className={`text-base font-bold mb-1 ${isAvailable ? "text-foreground" : "text-muted-foreground/70"}`}
                 >
                   {level.title.toUpperCase()}
                 </h3>
 
                 {/* Description */}
-                <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                <p className={`text-xs mb-3 leading-relaxed ${isAvailable ? "text-muted-foreground" : "text-muted-foreground/50"}`}>
                   {level.description}
                 </p>
 
                 {/* Controls hint */}
                 {isAvailable && (
-                  <div className="text-xs text-primary/60 font-mono border-t border-border/50 pt-2 mt-auto">
+                  <div className={`text-xs font-mono border-t border-border/50 pt-2 mt-auto opacity-70 group-hover:opacity-100 transition-all ${isComplete ? colors.text : "text-muted-foreground " + colors.hoverText}`}>
                     {level.controls}
                   </div>
                 )}
 
                 {/* Decorative corner */}
-                <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary/30" />
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary/30" />
+                <div className={`absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 transition-colors ${isAvailable ? (isComplete ? colors.decoration : "border-transparent " + colors.hoverDecoration) : "border-transparent"}`} />
+                <div className={`absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 transition-colors ${isAvailable ? (isComplete ? colors.decoration : "border-transparent " + colors.hoverDecoration) : "border-transparent"}`} />
               </button>
             );
           })}
