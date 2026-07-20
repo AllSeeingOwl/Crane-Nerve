@@ -33,3 +33,9 @@
 **Vulnerability:** The Express API in `app.ts` utilized `helmet()` with a Content Security Policy (CSP) that included `'unsafe-eval'` in its `scriptSrc` directive. This configuration allows the execution of code from string representations (e.g., `eval()`, `setTimeout(string)`, `setInterval(string)`), which significantly increases the risk of Cross-Site Scripting (XSS) attacks if any user input is improperly sanitized and executed.
 **Learning:** Including `'unsafe-eval'` defeats a primary purpose of CSP by allowing strings to be evaluated as code. It should be avoided unless absolutely required by a specific, trusted library that cannot function without it.
 **Prevention:** Remove `'unsafe-eval'` from the `scriptSrc` directive in the CSP configuration. Ensure that the application code does not rely on `eval()` or similar functions.
+
+## 2026-07-19 - Restricting Content Security Policy by removing unsafe-inline
+
+**Vulnerability:** The Express API in `app.ts` utilized `helmet()` with a Content Security Policy (CSP) that included `'unsafe-inline'` in its `scriptSrc` directive. This configuration allows the execution of inline scripts, increasing the risk of Cross-Site Scripting (XSS) attacks.
+**Learning:** Including `'unsafe-inline'` defeats a primary purpose of CSP by allowing inline scripts to be evaluated as code. It should be avoided unless absolutely required by a specific, trusted library that cannot function without it and ideally replaced with hashes or nonces.
+**Prevention:** Remove `'unsafe-inline'` from the `scriptSrc` directive in the CSP configuration. Ensure that the application code does not rely on inline scripts.
