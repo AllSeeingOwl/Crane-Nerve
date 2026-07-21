@@ -104,10 +104,16 @@ export default function MainMenu({ onPlay }: Props) {
       <button
         onClick={onPlay}
         aria-label="Proceed"
-        className="relative z-10 px-16 py-4 border-2 border-primary text-primary text-xl tracking-widest uppercase hover:bg-primary hover:text-background transition-all duration-200 mb-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="group relative z-10 px-16 py-4 border-2 border-primary text-primary text-xl tracking-widest uppercase hover:bg-primary hover:text-background transition-all duration-200 mb-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         style={{ fontFamily: "Courier New, monospace" }}
       >
         <span aria-hidden="true">{blink ? "[ PROCEED ]" : "  PROCEED  "}</span>
+        <kbd
+          className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs bg-primary/20 px-2 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity whitespace-nowrap font-sans text-primary border border-primary/30"
+          aria-hidden="true"
+        >
+          ENTER
+        </kbd>
       </button>
 
       {/* Warning */}

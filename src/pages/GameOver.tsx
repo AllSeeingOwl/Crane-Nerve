@@ -16,6 +16,14 @@ export default function GameOver({ levelId, onRetry, onLevelSelect }: Props) {
   const retryBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
   const quitBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
 
+  // Auto-focus the retry button on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      retryBtnRef.current?.focus();
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     const pool = DEADPAN_DIALOGUE.stress;
     setQuote(pool[Math.floor(Math.random() * pool.length)]);
@@ -114,9 +122,15 @@ export default function GameOver({ levelId, onRetry, onLevelSelect }: Props) {
             ref={retryBtnRef}
             onFocus={() => setFocusedButton("retry")}
             onClick={onRetry}
-            className="px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-background transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="group relative px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-background transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             RETRY
+            <kbd
+              className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] bg-primary/20 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity whitespace-nowrap font-sans text-primary"
+              aria-hidden="true"
+            >
+              ENTER
+            </kbd>
           </button>
           <button
             ref={quitBtnRef}
