@@ -32,6 +32,14 @@ export default function LevelComplete({
   const nextBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
   const menuBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
 
+  // Auto-focus the next button on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      nextBtnRef.current?.focus();
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -128,9 +136,15 @@ export default function LevelComplete({
             ref={nextBtnRef}
             onFocus={() => setFocusedButton("next")}
             onClick={onNext}
-            className="px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-background transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="group relative px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-background transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             NEXT <span aria-hidden="true">→</span>
+            <kbd
+              className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] bg-primary/20 px-1.5 py-0.5 rounded opacity-50 group-hover:opacity-100 transition-opacity whitespace-nowrap font-sans text-primary"
+              aria-hidden="true"
+            >
+              ENTER
+            </kbd>
           </button>
           <button
             ref={menuBtnRef}
