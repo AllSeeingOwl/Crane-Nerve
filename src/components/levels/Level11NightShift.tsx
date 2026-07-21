@@ -182,8 +182,9 @@ export function Level11NightShift({
         targetElementRef.current.style.top = `${tY - window.innerHeight * 0.5 + 128 - 24}px`;
       }
 
-      const distSq =
-        (mouseRef.current.x - tX) ** 2 + (mouseRef.current.y - tY) ** 2;
+      const dx = mouseRef.current.x - tX;
+      const dy = mouseRef.current.y - tY;
+      const distSq = dx * dx + dy * dy;
       if (distSq < 10000) {
         mouseHealth = Math.min(100, mouseHealth + 20 * dt);
       } else {

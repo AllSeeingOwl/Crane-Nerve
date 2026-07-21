@@ -81,8 +81,9 @@ export function Level4Trigeminal({
     const targetX = targetRegion.x * window.innerWidth;
     const targetY = targetRegion.y * window.innerHeight;
 
-    const distSq =
-      (toolRef.current.x - targetX) ** 2 + (toolRef.current.y - targetY) ** 2;
+    const dx = toolRef.current.x - targetX;
+    const dy = toolRef.current.y - targetY;
+    const distSq = dx * dx + dy * dy;
 
     if (distSq < 3600) {
       // Hit the region! Check if correct tool type was used

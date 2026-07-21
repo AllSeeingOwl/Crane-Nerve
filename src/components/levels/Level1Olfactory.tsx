@@ -116,14 +116,14 @@ export function Level1Olfactory({
       const activeVialId = selectedVialRef.current;
       const vialDef = VIALS.find((v) => v.id === activeVialId);
 
-      const distSq = (nose.x - mouse.x) ** 2 + (nose.y - mouse.y) ** 2;
+      const dx = nose.x - mouse.x;
+      const dy = nose.y - mouse.y;
+      const distSq = dx * dx + dy * dy;
 
       if (activeVialId && !identifiedRef.current.includes(activeVialId)) {
         if (vialDef?.type === "bad") {
           // If it's a bad smell, patient evades
           if (distSq < 90000) {
-            const dx = nose.x - mouse.x;
-            const dy = nose.y - mouse.y;
             const angle = Math.atan2(dy, dx);
             nose.vx += Math.cos(angle) * 0.5;
             nose.vy += Math.sin(angle) * 0.5;

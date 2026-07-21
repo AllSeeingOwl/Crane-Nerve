@@ -83,9 +83,9 @@ export function Level3EyeMovement({
         const targetNodeX = targetNode.x * window.innerWidth;
         const targetNodeY = targetNode.y * window.innerHeight;
 
-        const distSq =
-          (penlightRef.current.x - targetNodeX) ** 2 +
-          (penlightRef.current.y - targetNodeY) ** 2;
+        const dx = penlightRef.current.x - targetNodeX;
+        const dy = penlightRef.current.y - targetNodeY;
+        const distSq = dx * dx + dy * dy;
 
         if (distSq < 2500) {
           currentNodeIndexRef.current += 1;

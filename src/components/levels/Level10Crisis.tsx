@@ -107,8 +107,9 @@ export function Level10Crisis({
         cursorRef.current.style.top = `${mouseRef.current.y - window.innerHeight * 0.5 + 128 - 8}px`;
       }
 
-      const distSq =
-        (mouseRef.current.x - tX) ** 2 + (mouseRef.current.y - tY) ** 2;
+      const dx = mouseRef.current.x - tX;
+      const dy = mouseRef.current.y - tY;
+      const distSq = dx * dx + dy * dy;
       if (distSq < 6400) {
         mouseHealthRef.current = Math.min(
           100,
