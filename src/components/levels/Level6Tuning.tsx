@@ -103,9 +103,9 @@ export function Level6Tuning({
         const targetX = targetStep.x * window.innerWidth;
         const targetY = targetStep.y * window.innerHeight;
 
-        const distSq =
-          (forkRef.current.x - targetX) ** 2 +
-          (forkRef.current.y - targetY) ** 2;
+        const dx = forkRef.current.x - targetX;
+        const dy = forkRef.current.y - targetY;
+        const distSq = dx * dx + dy * dy;
 
         if (distSq < 6400) {
           // In zone
@@ -158,8 +158,9 @@ export function Level6Tuning({
     const targetX = targetStep.x * window.innerWidth;
     const targetY = targetStep.y * window.innerHeight;
 
-    const distSq =
-      (forkRef.current.x - targetX) ** 2 + (forkRef.current.y - targetY) ** 2;
+    const dx = forkRef.current.x - targetX;
+    const dy = forkRef.current.y - targetY;
+    const distSq = dx * dx + dy * dy;
 
     if (distSq < 6400) {
       // Hit target to strike

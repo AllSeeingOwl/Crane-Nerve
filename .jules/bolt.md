@@ -32,3 +32,8 @@
 
 **Learning:** Components `Level1Olfactory`, `Level3EyeMovement`, `Level5FacialNerve`, and `Level6Tuning` were triggering `useState` (`setNosePos`, `setPenlightPos`, `setCursorPos`, `setForkPos`) inside a 60fps `requestAnimationFrame` loop to continuously update visual elements positions. This caused excessive React diffing and teardowns.
 **Action:** Replaced the `useState` hooks with `useRef` for the target DOM elements and updated their `style.left` and `style.top` directly within the loop. This completely bypasses the React rendering cycle for high-frequency position updates, resulting in much smoother performance.
+
+## 2024-11-20 - [Distance calculations micro-optimizations in hot loops]
+
+**Learning:** High-frequency `requestAnimationFrame` loops used `** 2` which gets transpiled or interpreted with exponentiation logic, and recalculated differences like `(mouseRef.current.x - tX)` twice. Extracting differences to variables and using direct multiplication (`dx * dx`) avoids redundant property lookups and exponentiation overhead, yielding tighter and faster code execution.
+**Action:** Extract distance differences into `dx` and `dy` variables and replace `(a - b) ** 2` with `dx * dx + dy * dy` in `distSq` calculations running at 60fps in the level components.
