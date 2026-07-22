@@ -125,14 +125,15 @@ export function Level7GagReflex({
         state.cooldown -= dt;
       }
 
-      const distToThroatSq =
-        (throat.x - mouse.x) ** 2 + (throat.y - mouse.y) ** 2;
-      const isInsideThroat = distToThroatSq < throat.radius ** 2;
+      const dx = throat.x - mouse.x;
+      const dy = throat.y - mouse.y;
+      const distToThroatSq = dx * dx + dy * dy;
+      const isInsideThroat = distToThroatSq < throat.radius * throat.radius;
 
       // Determine if hitting wrong areas (teeth/tongue)
       // Simplification: if outside throat but within "mouth" radius
       const mouthRadius = 150;
-      const isInsideMouth = distToThroatSq < mouthRadius ** 2;
+      const isInsideMouth = distToThroatSq < mouthRadius * mouthRadius;
 
       if (isInsideMouth && !isInsideThroat) {
         // Hitting wrong areas
