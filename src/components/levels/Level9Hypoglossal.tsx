@@ -66,7 +66,9 @@ export function Level9Hypoglossal({
     };
     const handleMouseDown = (e: MouseEvent) => {
       const tip = segmentsRef.current[NUM_SEGMENTS - 1];
-      const distSq = (e.clientX - tip.x) ** 2 + (e.clientY - tip.y) ** 2;
+      const dx = e.clientX - tip.x;
+      const dy = e.clientY - tip.y;
+      const distSq = dx * dx + dy * dy;
       if (distSq < 2500) {
         isDraggingRef.current = true;
         setIsDragging(true);
@@ -165,7 +167,9 @@ export function Level9Hypoglossal({
         const targetX = target.x * window.innerWidth;
         const targetY = target.y * window.innerHeight;
 
-        const distToTargetSq = (tip.x - targetX) ** 2 + (tip.y - targetY) ** 2;
+        const dxTarget = tip.x - targetX;
+        const dyTarget = tip.y - targetY;
+        const distToTargetSq = dxTarget * dxTarget + dyTarget * dyTarget;
 
         if (distToTargetSq < 3600) {
           holdTimeRef.current += dt;
