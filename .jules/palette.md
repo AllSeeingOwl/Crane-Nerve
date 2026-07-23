@@ -14,5 +14,6 @@
 **Action:** Instead of `disabled`, use `aria-disabled` combined with an `onClick` guard and conditional styling to preserve keyboard focusability and screen reader announcements for locked/unavailable items.
 
 ## 2025-02-19 - Explicit ARIA Labels on Buttons with Visual Hints
+
 **Learning:** Buttons on transition screens that include decorative visual hints (like arrows '→' or keyboard shortcuts '<kbd>ESC</kbd>') often cause noisy and confusing screen reader announcements if their text content isn't carefully controlled. While using 'aria-hidden' on the hints helps, explicitly defining the intended action via 'aria-label' ensures the most concise and accurate auditory experience.
 **Action:** Always provide explicit 'aria-label' attributes (e.g., 'aria-label="Return to menu"') on interactive buttons that have complex or multi-part visual labels to override the default text node extraction for screen readers.
