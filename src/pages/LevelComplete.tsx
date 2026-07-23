@@ -136,6 +136,7 @@ export default function LevelComplete({
             ref={nextBtnRef}
             onFocus={() => setFocusedButton("next")}
             onClick={onNext}
+            aria-label="Next level"
             className="group relative px-8 py-3 border border-primary text-primary hover:bg-primary hover:text-background transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             NEXT <span aria-hidden="true">→</span>
@@ -150,6 +151,7 @@ export default function LevelComplete({
             ref={menuBtnRef}
             onFocus={() => setFocusedButton("menu")}
             onClick={onLevelSelect}
+            aria-label="Return to menu"
             className="group relative px-8 py-3 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-all text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             MENU
