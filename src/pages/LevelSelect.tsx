@@ -199,6 +199,7 @@ export default function LevelSelect({
       <div className="flex items-center justify-between px-8 py-4 border-b border-border">
         <button
           onClick={onBack}
+          aria-label="Return to main menu"
           className="group flex items-center gap-2 text-muted-foreground hover:text-primary text-sm tracking-widest uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <span>
