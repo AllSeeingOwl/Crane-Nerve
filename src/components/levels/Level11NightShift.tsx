@@ -25,7 +25,8 @@ export function Level11NightShift({
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   });
-  const [mouseTaskHealth, setMouseTaskHealth] = useState(100);
+  const mouseTaskHealthRef = useRef(100);
+  const mouseHealthBarRef = useRef<HTMLDivElement>(null);
   const targetPosRef = useRef({ x: 0, y: 0 });
   const targetElementRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +40,8 @@ export function Level11NightShift({
 
   // --- Task 2: Arrow Keys (Keep gaze centered) ---
   const gazeRef = useRef({ x: 0, y: 0 }); // -1 to 1
-  const [gazeTaskHealth, setGazeTaskHealth] = useState(100);
+  const gazeTaskHealthRef = useRef(100);
+  const gazeHealthBarRef = useRef<HTMLDivElement>(null);
   const gazeElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -59,7 +61,8 @@ export function Level11NightShift({
 
   // --- Task 3: Number Keys (Facial expressions) ---
   const [facePrompt, setFacePrompt] = useState(1);
-  const [faceTaskHealth, setFaceTaskHealth] = useState(100);
+  const faceTaskHealthRef = useRef(100);
+  const faceHealthBarRef = useRef<HTMLDivElement>(null);
   const currentFaceKeyRef = useRef(1);
 
   // Track mistakes without causing loops
@@ -95,7 +98,11 @@ export function Level11NightShift({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (["1", "2", "3", "4"].includes(e.key)) {
         if (parseInt(e.key) === currentFaceKeyRef.current) {
-          setFaceTaskHealth(100);
+          faceTaskHealthRef.current = 100;
+          if (faceHealthBarRef.current) {
+            faceHealthBarRef.current.style.width = `100%`;
+            faceHealthBarRef.current.className = `h-full bg-green-500`;
+          }
         } else {
           registerMistake();
         }
@@ -111,9 +118,6 @@ export function Level11NightShift({
   const elapsedRef = useRef(0);
 
   useEffect(() => {
-    let mouseHealth = 100;
-    let gazeHealth = 100;
-    let faceHealth = 100;
     let faceTimer = 0;
 
     let vfxTimer = 0;
@@ -186,11 +190,14 @@ export function Level11NightShift({
       const dy = mouseRef.current.y - tY;
       const distSq = dx * dx + dy * dy;
       if (distSq < 10000) {
-        mouseHealth = Math.min(100, mouseHealth + 20 * dt);
+        mouseTaskHealthRef.current = Math.min(100, mouseTaskHealthRef.current + 20 * dt);
       } else {
-        mouseHealth -= 15 * dt;
+        mouseTaskHealthRef.current -= 15 * dt;
       }
-      setMouseTaskHealth(mouseHealth);
+      if (mouseHealthBarRef.current) {
+        mouseHealthBarRef.current.style.width = `${mouseTaskHealthRef.current}%`;
+        mouseHealthBarRef.current.className = `h-full ${mouseTaskHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
+      }
 
       // --- Task 2 Logic ---
       // Gaze drifts away randomly (faster drift)
@@ -208,11 +215,14 @@ export function Level11NightShift({
         gazeRef.current.x * gazeRef.current.x +
         gazeRef.current.y * gazeRef.current.y;
       if (gazeDistSq > 0.36) {
-        gazeHealth -= 25 * dt;
+        gazeTaskHealthRef.current -= 25 * dt;
       } else {
-        gazeHealth = Math.min(100, gazeHealth + 15 * dt);
+        gazeTaskHealthRef.current = Math.min(100, gazeTaskHealthRef.current + 15 * dt);
       }
-      setGazeTaskHealth(gazeHealth);
+      if (gazeHealthBarRef.current) {
+        gazeHealthBarRef.current.style.width = `${gazeTaskHealthRef.current}%`;
+        gazeHealthBarRef.current.className = `h-full ${gazeTaskHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
+      }
 
       // --- Task 3 Logic ---
       faceTimer += dt;
@@ -223,16 +233,19 @@ export function Level11NightShift({
         currentFaceKeyRef.current = newKey;
         setFacePrompt(newKey);
       }
-      faceHealth -= 15 * dt;
-      setFaceTaskHealth(faceHealth);
+      faceTaskHealthRef.current -= 15 * dt;
+      if (faceHealthBarRef.current) {
+        faceHealthBarRef.current.style.width = `${faceTaskHealthRef.current}%`;
+        faceHealthBarRef.current.className = `h-full ${faceTaskHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
+      }
 
       // Check healths for mistake
-      if (mouseHealth <= 0 || gazeHealth <= 0 || faceHealth <= 0) {
+      if (mouseTaskHealthRef.current <= 0 || gazeTaskHealthRef.current <= 0 || faceTaskHealthRef.current <= 0) {
         registerMistake();
         // Reset healths to prevent immediate double mistake
-        if (mouseHealth <= 0) mouseHealth = 100;
-        if (gazeHealth <= 0) gazeHealth = 100;
-        if (faceHealth <= 0) faceHealth = 100;
+        if (mouseTaskHealthRef.current <= 0) mouseTaskHealthRef.current = 100;
+        if (gazeTaskHealthRef.current <= 0) gazeTaskHealthRef.current = 100;
+        if (faceTaskHealthRef.current <= 0) faceTaskHealthRef.current = 100;
       }
 
       frameRef.current = requestAnimationFrame(loop);
@@ -315,14 +328,15 @@ export function Level11NightShift({
           <div
             className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
             role="progressbar"
-            aria-valuenow={Math.round(mouseTaskHealth)}
+            aria-valuenow={Math.round(mouseTaskHealthRef.current)}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-label="Mouse task health"
           >
             <div
-              className={`h-full ${mouseTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
-              style={{ width: `${mouseTaskHealth}%` }}
+              ref={mouseHealthBarRef}
+              className={`h-full ${mouseTaskHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+              style={{ width: `${mouseTaskHealthRef.current}%` }}
             />
           </div>
         </div>
@@ -348,14 +362,15 @@ export function Level11NightShift({
           <div
             className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
             role="progressbar"
-            aria-valuenow={Math.round(gazeTaskHealth)}
+            aria-valuenow={Math.round(gazeTaskHealthRef.current)}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-label="Gaze task health"
           >
             <div
-              className={`h-full ${gazeTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
-              style={{ width: `${gazeTaskHealth}%` }}
+              ref={gazeHealthBarRef}
+              className={`h-full ${gazeTaskHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+              style={{ width: `${gazeTaskHealthRef.current}%` }}
             />
           </div>
         </div>
@@ -374,14 +389,15 @@ export function Level11NightShift({
           <div
             className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
             role="progressbar"
-            aria-valuenow={Math.round(faceTaskHealth)}
+            aria-valuenow={Math.round(faceTaskHealthRef.current)}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-label="Face task health"
           >
             <div
-              className={`h-full ${faceTaskHealth > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
-              style={{ width: `${faceTaskHealth}%` }}
+              ref={faceHealthBarRef}
+              className={`h-full ${faceTaskHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`}
+              style={{ width: `${faceTaskHealthRef.current}%` }}
             />
           </div>
         </div>
