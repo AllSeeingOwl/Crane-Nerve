@@ -37,6 +37,8 @@
 
 **Learning:** High-frequency `requestAnimationFrame` loops used `** 2` which gets transpiled or interpreted with exponentiation logic, and recalculated differences like `(mouseRef.current.x - tX)` twice. Extracting differences to variables and using direct multiplication (`dx * dx`) avoids redundant property lookups and exponentiation overhead, yielding tighter and faster code execution.
 **Action:** Extract distance differences into `dx` and `dy` variables and replace `(a - b) ** 2` with `dx * dx + dy * dy` in `distSq` calculations running at 60fps in the level components.
+
 ## 2024-07-23 - Prevent 60fps Re-renders in Level11NightShift
+
 **Learning:** High-frequency `useState` updates inside `requestAnimationFrame` game loops cause severe performance degradation due to constant React re-renders.
 **Action:** Always use `useRef` for high-frequency game loop variables and directly mutate the DOM via `useRef` handles instead of relying on React state and declarative rendering for components that update every frame.

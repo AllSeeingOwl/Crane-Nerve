@@ -190,7 +190,10 @@ export function Level11NightShift({
       const dy = mouseRef.current.y - tY;
       const distSq = dx * dx + dy * dy;
       if (distSq < 10000) {
-        mouseTaskHealthRef.current = Math.min(100, mouseTaskHealthRef.current + 20 * dt);
+        mouseTaskHealthRef.current = Math.min(
+          100,
+          mouseTaskHealthRef.current + 20 * dt,
+        );
       } else {
         mouseTaskHealthRef.current -= 15 * dt;
       }
@@ -217,7 +220,10 @@ export function Level11NightShift({
       if (gazeDistSq > 0.36) {
         gazeTaskHealthRef.current -= 25 * dt;
       } else {
-        gazeTaskHealthRef.current = Math.min(100, gazeTaskHealthRef.current + 15 * dt);
+        gazeTaskHealthRef.current = Math.min(
+          100,
+          gazeTaskHealthRef.current + 15 * dt,
+        );
       }
       if (gazeHealthBarRef.current) {
         gazeHealthBarRef.current.style.width = `${gazeTaskHealthRef.current}%`;
@@ -240,7 +246,11 @@ export function Level11NightShift({
       }
 
       // Check healths for mistake
-      if (mouseTaskHealthRef.current <= 0 || gazeTaskHealthRef.current <= 0 || faceTaskHealthRef.current <= 0) {
+      if (
+        mouseTaskHealthRef.current <= 0 ||
+        gazeTaskHealthRef.current <= 0 ||
+        faceTaskHealthRef.current <= 0
+      ) {
         registerMistake();
         // Reset healths to prevent immediate double mistake
         if (mouseTaskHealthRef.current <= 0) mouseTaskHealthRef.current = 100;
