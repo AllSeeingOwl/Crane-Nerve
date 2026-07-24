@@ -16,9 +16,8 @@ export function Level11NightShift({
   const [showWarning, setShowWarning] = useState(false);
 
   // Visual effects state
-  const [blurAmount, setBlurAmount] = useState(0);
-  const [shakeAmount, setShakeAmount] = useState(0);
-  const [darkenAmount, setDarkenAmount] = useState(0); // For microsleeps
+  const containerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   // --- Task 1: Mouse Tracking (Trace the circle) ---
   const mouseRef = useRef({
@@ -163,9 +162,13 @@ export function Level11NightShift({
         currentVfxState.shake = Math.max(0, currentVfxState.shake - dt * 5);
       }
 
-      setBlurAmount(currentVfxState.blur);
-      setShakeAmount(currentVfxState.shake);
-      setDarkenAmount(currentVfxState.darken);
+      if (containerRef.current) {
+        containerRef.current.style.filter = `blur(${currentVfxState.blur}px)`;
+        containerRef.current.style.transform = `translate(${(Math.random() - 0.5) * currentVfxState.shake}px, ${(Math.random() - 0.5) * currentVfxState.shake}px)`;
+      }
+      if (overlayRef.current) {
+        overlayRef.current.style.backgroundColor = `rgba(0,0,0,${currentVfxState.darken})`;
+      }
 
       // --- Task 1 Logic ---
       // Move target in a figure-8 or chaotic pattern (harder than Level 10)
@@ -274,18 +277,12 @@ export function Level11NightShift({
     }
   }, [mistakes, onLose]);
 
-  // Dynamic styles for VFX
-  const containerStyle = {
-    filter: `blur(${blurAmount}px)`,
-    transform: `translate(${(Math.random() - 0.5) * shakeAmount}px, ${(Math.random() - 0.5) * shakeAmount}px)`,
-  };
-
   return (
     <div className="absolute inset-0 pointer-events-auto bg-black/40 overflow-hidden">
       {/* Microsleep Overlay */}
       <div
+        ref={overlayRef}
         className="absolute inset-0 z-50 pointer-events-none transition-colors duration-100"
-        style={{ backgroundColor: `rgba(0,0,0,${darkenAmount})` }}
       />
 
       {showWarning && (
@@ -299,7 +296,7 @@ export function Level11NightShift({
         </div>
       )}
 
-      <div style={containerStyle} className="w-full h-full relative">
+      <div ref={containerRef} className="w-full h-full relative">
         {/* Timer */}
         <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center text-white bg-blue-900/80 p-4 rounded-xl z-20 shadow-lg shadow-blue-500/50">
           <h1 className="text-3xl font-black opacity-80">
