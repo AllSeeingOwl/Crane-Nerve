@@ -203,7 +203,7 @@ export function Level12TheDebrief({
       <div className="w-full max-w-4xl bg-slate-800 p-8 rounded-xl border-2 border-slate-700 shadow-2xl relative overflow-hidden h-full max-h-[80vh] flex flex-col">
         <div className="flex justify-between items-center mb-6 border-b border-slate-600 pb-4">
           <h2 className="text-2xl text-blue-400 font-bold">THE DEBRIEF</h2>
-          <div className="text-right">
+          <div className="text-right" aria-hidden="true">
             <p className="text-slate-400">
               Backspaces:{" "}
               <span

@@ -17,3 +17,8 @@
 
 **Learning:** Buttons on transition screens that include decorative visual hints (like arrows '→' or keyboard shortcuts '<kbd>ESC</kbd>') often cause noisy and confusing screen reader announcements if their text content isn't carefully controlled. While using 'aria-hidden' on the hints helps, explicitly defining the intended action via 'aria-label' ensures the most concise and accurate auditory experience.
 **Action:** Always provide explicit 'aria-label' attributes (e.g., 'aria-label="Return to menu"') on interactive buttons that have complex or multi-part visual labels to override the default text node extraction for screen readers.
+
+## 2025-02-19 - Hiding Rapidly Mutating Progress Text
+
+**Learning:** Similar to visual progress/stress bars, text elements that mutate very rapidly (e.g., typing progress counters or correct/remaining counts updating on every keystroke) will overwhelm screen reader users by constantly interrupting the output buffer, making it impossible for them to focus on the actual task (like typing).
+**Action:** Always wrap rapidly mutating text stats with `aria-hidden="true"` to prevent auditory clutter, ensuring that essential feedback is either summarized at the end of the action or handled gracefully via polite `aria-live` regions when necessary.
