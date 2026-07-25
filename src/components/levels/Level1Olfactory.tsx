@@ -24,7 +24,6 @@ export function Level1Olfactory({
 }) {
   const [selectedVial, setSelectedVial] = useState<string | null>(null);
   const [identifiedVials, setIdentifiedVials] = useState<string[]>([]);
-  const [smellProgress, setSmellProgress] = useState(0);
 
   // Mouse position
   const mouseRef = useRef({
@@ -41,6 +40,8 @@ export function Level1Olfactory({
   });
 
   const noseElementRef = useRef<HTMLDivElement>(null);
+  const progressBarContainerRef = useRef<HTMLDivElement>(null);
+  const progressBarFillRef = useRef<HTMLDivElement>(null);
 
   const selectedVialRef = useRef<string | null>(null);
   const progressRef = useRef(0);
@@ -138,7 +139,6 @@ export function Level1Olfactory({
         if (distSq < 10000) {
           // Inside smelling range
           progressRef.current += dt * 0.05; // 2 seconds to smell
-          setSmellProgress(progressRef.current);
 
           // Slowly increase stress just by taking time
           onStressChange(0.02);
@@ -147,23 +147,35 @@ export function Level1Olfactory({
             setIdentifiedVials((prev) => [...prev, activeVialId]);
             setSelectedVial(null);
             progressRef.current = 0;
-            setSmellProgress(0);
           }
         } else {
           // Decay progress if moved away
           if (progressRef.current > 0) {
             progressRef.current = Math.max(0, progressRef.current - dt * 0.1);
-            setSmellProgress(progressRef.current);
           }
         }
       } else {
         if (progressRef.current > 0) {
           progressRef.current = Math.max(0, progressRef.current - dt * 0.1);
-          setSmellProgress(progressRef.current);
         }
       }
 
       // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      if (progressBarContainerRef.current) {
+        if (progressRef.current > 0) {
+          progressBarContainerRef.current.style.display = "block";
+          progressBarContainerRef.current.setAttribute(
+            "aria-valuenow",
+            Math.round(progressRef.current).toString(),
+          );
+          if (progressBarFillRef.current) {
+            progressBarFillRef.current.style.width = `${progressRef.current}%`;
+          }
+        } else {
+          progressBarContainerRef.current.style.display = "none";
+        }
+      }
+
       if (noseElementRef.current) {
         noseElementRef.current.style.left = `${nose.x}px`;
         noseElementRef.current.style.top = `${nose.y}px`;
@@ -205,21 +217,21 @@ export function Level1Olfactory({
         <span className="text-xs text-white/70">Nose Area</span>
 
         {/* Smell Progress Ring/Bar */}
-        {smellProgress > 0 && (
+        <div
+          ref={progressBarContainerRef}
+          className="absolute -bottom-6 w-16 h-2 bg-gray-700 rounded-full overflow-hidden"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Smell identification progress"
+          style={{ display: "none" }}
+        >
           <div
-            className="absolute -bottom-6 w-16 h-2 bg-gray-700 rounded-full overflow-hidden"
-            role="progressbar"
-            aria-valuenow={Math.round(smellProgress)}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-label="Smell identification progress"
-          >
-            <div
-              className="h-full bg-blue-500"
-              style={{ width: `${smellProgress}%` }}
-            />
-          </div>
-        )}
+            ref={progressBarFillRef}
+            className="h-full bg-blue-500"
+            style={{ width: "0%" }}
+          />
+        </div>
       </div>
 
       {/* Vial Selection Bar */}

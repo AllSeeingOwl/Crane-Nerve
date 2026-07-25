@@ -44,3 +44,8 @@
 **Action:** Always use `useRef` for high-frequency game loop variables and directly mutate the DOM via `useRef` handles instead of relying on React state and declarative rendering for components that update every frame.
 
 ## 2024-07-23 - Prevent 60fps Re-renders in Level11NightShift\n**Learning:** High-frequency `useState` updates inside `requestAnimationFrame` game loops cause severe performance degradation due to constant React re-renders.\n**Action:** Always use `useRef` for high-frequency game loop variables and directly mutate the DOM via `useRef` handles instead of relying on React state and declarative rendering for components that update every frame.\n
+
+## 2024-07-25 - [Prevent 60fps Re-renders in Level1Olfactory]
+
+**Learning:** High-frequency `useState` updates (`setSmellProgress`) inside a `requestAnimationFrame` loop caused unnecessary React re-renders of the entire `Level1Olfactory` component every single frame just to animate a small progress bar.
+**Action:** Replaced the state update with direct DOM manipulation using `useRef` for the progress bar container and its fill element. Using `ref.current.style.width` within the game loop bypasses React's rendering overhead and ensures smooth performance.
