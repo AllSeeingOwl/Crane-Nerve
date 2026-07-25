@@ -156,7 +156,9 @@ export function Level5FacialNerve({
         </div>
 
         {feedback && (
-          <p className="text-sm text-blue-300 font-semibold">{feedback}</p>
+          <p className="text-sm text-blue-300 font-semibold" aria-live="polite">
+            {feedback}
+          </p>
         )}
 
         {currentPromptIndex < prompts.length && (
