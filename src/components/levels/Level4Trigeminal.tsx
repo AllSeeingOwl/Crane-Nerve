@@ -152,7 +152,9 @@ export function Level4Trigeminal({
           />
         </div>
         {feedback && (
-          <p className="text-sm text-blue-300 font-semibold">{feedback}</p>
+          <p className="text-sm text-blue-300 font-semibold" aria-live="polite">
+            {feedback}
+          </p>
         )}
         {currentRegionIndex < regions.length && (
           <p className="text-sm mt-2 text-green-300">
