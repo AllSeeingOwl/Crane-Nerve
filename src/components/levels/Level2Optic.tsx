@@ -138,7 +138,10 @@ export function Level2Optic({
         <p className="text-sm font-bold text-blue-300 mb-2">
           Scroll Mouse Wheel to adjust focus!
         </p>
-        <div className="flex justify-between text-sm mt-4 border-t border-gray-600 pt-2" aria-hidden="true">
+        <div
+          className="flex justify-between text-sm mt-4 border-t border-gray-600 pt-2"
+          aria-hidden="true"
+        >
           <span className="text-green-400">Correct: {correctCount} / 10</span>
           <span className="text-gray-300">
             Remaining: {lettersToType.length - currentIndex}
