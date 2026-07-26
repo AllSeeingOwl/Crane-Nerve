@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Props {
   onPlay: () => void;
@@ -37,6 +37,16 @@ export default function MainMenu({ onPlay }: Props) {
   useEffect(() => {
     const t = setInterval(() => setBlink((b) => !b), 600);
     return () => clearInterval(t);
+  }, []);
+
+  const proceedBtnRef = useRef<globalThis.HTMLButtonElement>(null);
+
+  useEffect(() => {
+    // Auto-focus the proceed button on mount
+    const timer = setTimeout(() => {
+      proceedBtnRef.current?.focus();
+    }, 50);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -102,6 +112,7 @@ export default function MainMenu({ onPlay }: Props) {
 
       {/* Play button */}
       <button
+        ref={proceedBtnRef}
         onClick={onPlay}
         aria-label="Proceed"
         className="group relative z-10 px-16 py-4 border-2 border-primary text-primary text-xl tracking-widest uppercase hover:bg-primary hover:text-background transition-all duration-200 mb-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
