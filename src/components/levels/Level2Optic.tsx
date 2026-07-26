@@ -24,10 +24,12 @@ export function Level2Optic({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
-  const [focusLevel, setFocusLevel] = useState(5); // 0 = perfectly clear, higher = more blur
 
   // Ref for focus level to use in the game loop
   const focusRef = useRef(5);
+  const focusBarContainerRef = useRef<HTMLDivElement>(null);
+  const focusBarFillRef = useRef<HTMLDivElement>(null);
+  const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Handle keyboard typing
@@ -82,7 +84,7 @@ export function Level2Optic({
         0,
         Math.min(10, focusRef.current + e.deltaY * 0.01),
       );
-      setFocusLevel(focusRef.current);
+      // ⚡ BOLT: DOM mutation moved to requestAnimationFrame loop
     };
 
     window.addEventListener("wheel", handleWheel);
@@ -102,7 +104,20 @@ export function Level2Optic({
       // Drift speed: ~0.5 units per second
       if (focusRef.current < 10) {
         focusRef.current = Math.min(10, focusRef.current + dt * 0.0005);
-        setFocusLevel(focusRef.current);
+      }
+
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      if (focusBarContainerRef.current) {
+        focusBarContainerRef.current.setAttribute(
+          "aria-valuenow",
+          Math.round(10 - focusRef.current).toString(),
+        );
+      }
+      if (focusBarFillRef.current) {
+        focusBarFillRef.current.style.height = `${(1 - focusRef.current / 10) * 100}%`;
+      }
+      if (chartContainerRef.current) {
+        chartContainerRef.current.style.filter = `blur(${focusRef.current * 1.5}px)`;
       }
 
       // If heavily out of focus, slowly increase stress
@@ -152,16 +167,18 @@ export function Level2Optic({
           Focus
         </span>
         <div
+          ref={focusBarContainerRef}
           className="w-4 h-64 bg-gray-800 rounded-full relative overflow-hidden border border-gray-600"
           role="progressbar"
-          aria-valuenow={Math.round(10 - focusLevel)}
+          aria-valuenow={Math.round(10 - focusRef.current)}
           aria-valuemin={0}
           aria-valuemax={10}
           aria-label="Focus level indicator"
         >
           <div
+            ref={focusBarFillRef}
             className="absolute bottom-0 w-full bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 transition-all duration-75"
-            style={{ height: `${(1 - focusLevel / 10) * 100}%` }}
+            style={{ height: `${(1 - focusRef.current / 10) * 100}%` }}
           />
         </div>
       </div>
@@ -174,9 +191,10 @@ export function Level2Optic({
 
         {/* Render the letters in a sequence with decreasing size, similar to a real chart, but laid out for this specific game mechanic */}
         <div
+          ref={chartContainerRef}
           className="flex flex-wrap justify-center gap-x-8 gap-y-12 max-w-[500px]"
           style={{
-            filter: `blur(${focusLevel * 1.5}px)`,
+            filter: `blur(${focusRef.current * 1.5}px)`,
             transition: "filter 0.1s linear",
           }}
         >

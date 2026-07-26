@@ -49,3 +49,8 @@
 
 **Learning:** High-frequency `useState` updates (`setSmellProgress`) inside a `requestAnimationFrame` loop caused unnecessary React re-renders of the entire `Level1Olfactory` component every single frame just to animate a small progress bar.
 **Action:** Replaced the state update with direct DOM manipulation using `useRef` for the progress bar container and its fill element. Using `ref.current.style.width` within the game loop bypasses React's rendering overhead and ensures smooth performance.
+
+## $(date +%Y-%m-%d) - Prevent unnecessary re-renders in game loop (Level2Optic)
+
+**Learning:** Using React state (`useState`) to update variables inside high-frequency game loops (like `requestAnimationFrame`) causes unnecessary and expensive full-component re-renders 60 times a second.
+**Action:** When working with high-frequency continuous loops in React, replace `useState` with `useRef` to hold mutable values without triggering re-renders, and use refs targeting DOM elements (`HTMLDivElement`) to mutate the DOM properties directly inside the loop.
