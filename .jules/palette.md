@@ -24,5 +24,6 @@
 **Action:** Use `aria-live="polite"` directly on the conditional rendering elements (e.g., `{feedback && <p aria-live="polite">{feedback}</p>}`) to safely announce dynamic status updates to screen reader users without over-engineering visually hidden replicas.
 
 ## 2025-02-13 - Focus management on application entry point
+
 **Learning:** For application entry points like `MainMenu.tsx`, auto-focusing the primary action (e.g., a "Proceed" button) immediately on mount ensures that keyboard users instantly know how to interact with the screen without having to tab into the content.
 **Action:** Automatically apply `useRef` and `useEffect` with a small timeout to focus primary action buttons on mount for entry and transition screens.
