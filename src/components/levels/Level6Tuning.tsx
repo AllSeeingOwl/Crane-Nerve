@@ -64,11 +64,13 @@ export function Level6Tuning({
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [isStriking, setIsStriking] = useState(false);
-  const [holdProgress, setHoldProgress] = useState(0); // For steady hand challenge (0-100)
 
   // Hold requirement: ~2 seconds at 60fps (~120 frames)
   const HOLD_DURATION_FRAMES = 120;
   const holdFramesRef = useRef(0);
+
+  const holdProgressContainerRef = useRef<HTMLDivElement>(null);
+  const holdProgressFillRef = useRef<HTMLDivElement>(null);
 
   // Update mouse ref
   useEffect(() => {
@@ -97,6 +99,8 @@ export function Level6Tuning({
         forkElementRef.current.style.top = `${forkRef.current.y}px`;
       }
 
+      let currentHoldProgress = 0;
+
       // Steady hand logic: Check if we are currently holding the fork in the target area
       if (isStriking && currentStepIndex < sequence.length) {
         const targetStep = sequence[currentStepIndex];
@@ -110,17 +114,16 @@ export function Level6Tuning({
         if (distSq < 6400) {
           // In zone
           holdFramesRef.current += 1;
-          const currentHoldProgress = Math.min(
+          currentHoldProgress = Math.min(
             (holdFramesRef.current / HOLD_DURATION_FRAMES) * 100,
             100,
           );
-          setHoldProgress(currentHoldProgress);
 
           if (holdFramesRef.current >= HOLD_DURATION_FRAMES) {
             // Completed this step
             setIsStriking(false);
             holdFramesRef.current = 0;
-            setHoldProgress(0);
+            currentHoldProgress = 0;
 
             const nextIndex = currentStepIndex + 1;
             setCurrentStepIndex(nextIndex);
@@ -136,10 +139,19 @@ export function Level6Tuning({
           if (holdFramesRef.current > 0) {
             setFeedback("You moved the fork! Start holding again.");
             holdFramesRef.current = 0;
-            setHoldProgress(0);
             onStressChange(5); // Stress penalty for slipping
           }
         }
+      }
+
+      if (holdProgressContainerRef.current) {
+        holdProgressContainerRef.current.setAttribute(
+          "aria-valuenow",
+          Math.round(currentHoldProgress).toString(),
+        );
+      }
+      if (holdProgressFillRef.current) {
+        holdProgressFillRef.current.style.width = `${currentHoldProgress}%`;
       }
 
       frameRef.current = requestAnimationFrame(loop);
@@ -166,7 +178,12 @@ export function Level6Tuning({
       // Hit target to strike
       setIsStriking(true);
       holdFramesRef.current = 0;
-      setHoldProgress(0);
+      if (holdProgressContainerRef.current) {
+        holdProgressContainerRef.current.setAttribute("aria-valuenow", "0");
+      }
+      if (holdProgressFillRef.current) {
+        holdProgressFillRef.current.style.width = "0%";
+      }
       setFeedback("Tuning fork struck! Hold steady...");
     } else {
       // Miss
@@ -225,16 +242,18 @@ export function Level6Tuning({
             {/* Hold Progress Bar */}
             {isStriking && (
               <div
+                ref={holdProgressContainerRef}
                 className="w-full h-4 bg-gray-700 rounded mt-2 overflow-hidden relative"
                 role="progressbar"
-                aria-valuenow={Math.round(holdProgress)}
+                aria-valuenow={0}
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-label="Hold progress"
               >
                 <div
+                  ref={holdProgressFillRef}
                   className="h-full bg-yellow-400 transition-all duration-75 ease-linear"
-                  style={{ width: `${holdProgress}%` }}
+                  style={{ width: `0%` }}
                 />
                 <span className="absolute inset-0 flex items-center justify-center text-[10px] text-black font-bold">
                   HOLDING...
