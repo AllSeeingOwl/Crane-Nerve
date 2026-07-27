@@ -190,8 +190,22 @@ export default function LevelSelect({
       }
     };
     window.addEventListener("keydown", handleKeyDown);
+
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onBack, focusedIndex]);
+
+  useEffect(() => {
+    // Auto-focus the next available uncompleted level on mount
+    const timer = setTimeout(() => {
+      let targetIndex = LEVELS.findIndex(
+        (l) => l.implemented && !completedLevels.has(l.id),
+      );
+      if (targetIndex === -1) targetIndex = 0;
+      setFocusedIndex(targetIndex);
+      buttonRefs.current[targetIndex]?.focus();
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [completedLevels]);
 
   return (
     <div className="w-screen h-screen flex flex-col bg-background overflow-hidden">
@@ -215,8 +229,31 @@ export default function LevelSelect({
         <h1 className="text-primary text-lg tracking-widest uppercase">
           SELECT EXAMINATION
         </h1>
-        <div className="text-muted-foreground text-sm">
-          SCORE: <span className="text-primary">{score.toLocaleString()}</span>
+        <div className="text-muted-foreground text-sm flex gap-4 items-center">
+          <div
+            className="hidden sm:flex items-center gap-1 opacity-50"
+            aria-hidden="true"
+          >
+            <kbd className="text-[10px] bg-muted-foreground/10 px-1 py-0.5 rounded font-sans">
+              ↑
+            </kbd>
+            <kbd className="text-[10px] bg-muted-foreground/10 px-1 py-0.5 rounded font-sans">
+              ↓
+            </kbd>
+            <kbd className="text-[10px] bg-muted-foreground/10 px-1 py-0.5 rounded font-sans">
+              ←
+            </kbd>
+            <kbd className="text-[10px] bg-muted-foreground/10 px-1 py-0.5 rounded font-sans">
+              →
+            </kbd>
+            <span className="text-[10px] ml-1 uppercase tracking-widest">
+              TO NAVIGATE
+            </span>
+          </div>
+          <div>
+            SCORE:{" "}
+            <span className="text-primary">{score.toLocaleString()}</span>
+          </div>
         </div>
       </div>
 

@@ -27,3 +27,8 @@
 
 **Learning:** For application entry points like `MainMenu.tsx`, auto-focusing the primary action (e.g., a "Proceed" button) immediately on mount ensures that keyboard users instantly know how to interact with the screen without having to tab into the content.
 **Action:** Automatically apply `useRef` and `useEffect` with a small timeout to focus primary action buttons on mount for entry and transition screens.
+
+## 2025-02-23 - Auto-focusing dynamic grids
+
+**Learning:** When users return to a menu or grid layout (like Level Select) after completing a task, forcing them to manually re-navigate or tab into the grid creates unnecessary friction. Auto-focusing the next logical uncompleted item on mount provides immediate continuity.
+**Action:** Use `useRef` array and a `useEffect` with a timeout on mount to automatically focus the button corresponding to the next logical step in grid-based selection menus.
