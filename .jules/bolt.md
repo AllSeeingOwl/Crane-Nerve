@@ -59,3 +59,8 @@
 
 **Learning:** React state updates inside a `requestAnimationFrame` loop run on every frame and trigger a full component re-render (60 frames per second). This leads to terrible performance for high-frequency game loops.
 **Action:** When creating high-frequency UI updates like progress bars inside a `requestAnimationFrame` loop, omit `useState`. Instead, use `useRef` to maintain references to DOM nodes and mutate them directly (e.g. `ref.current.style.width = '...'` or `ref.current.setAttribute('aria-valuenow', '...')`).
+
+## 2024-03-24 - [Reduce unnecessary re-renders in Level8Accessory]
+
+**Learning:** Using `useState` for visual game variables (`resistanceScore`, `timeHeld`, `dragVector`) inside the high-frequency `requestAnimationFrame` loop in `Level8Accessory` triggers constant component re-renders.
+**Action:** Replaced `useState` with `useRef` for these values and utilized direct DOM manipulation for the progress bars, resistance meter, and drag lines to bypass React's rendering overhead entirely.
