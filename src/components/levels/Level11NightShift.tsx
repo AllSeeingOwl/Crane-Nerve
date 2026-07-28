@@ -286,7 +286,11 @@ export function Level11NightShift({
       />
 
       {showWarning && (
-        <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none bg-red-900/30">
+        <div
+          className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none bg-red-900/30"
+          role="alert"
+          aria-live="assertive"
+        >
           <h1
             className="text-9xl font-black text-red-600 uppercase animate-bounce"
             style={{ textShadow: "0 0 40px red" }}
