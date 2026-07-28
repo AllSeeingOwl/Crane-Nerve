@@ -1,3 +1,4 @@
+/* global SVGSVGElement, SVGLineElement, SVGCircleElement */
 import React, { useEffect, useRef, useState } from "react";
 
 const TESTS = [
@@ -40,15 +41,22 @@ export function Level8Accessory({
 }) {
   const [currentTestIndex, setCurrentTestIndex] = useState(0);
   const [testActive, setTestActive] = useState(false);
-  const [resistanceScore, setResistanceScore] = useState(0);
-  const [timeHeld, setTimeHeld] = useState(0);
+  const resistanceScoreRef = useRef(0);
+  const timeHeldRef = useRef(0);
 
   const test = TESTS[currentTestIndex];
 
   // Interaction state
   const mouseRef = useRef({ x: 0, y: 0, isDown: false });
   const startPosRef = useRef({ x: 0, y: 0 });
-  const [dragVector, setDragVector] = useState({ x: 0, y: 0 });
+  const dragVectorRef = useRef({ x: 0, y: 0 });
+  const forceCursorRef = useRef<HTMLDivElement>(null);
+  const progressbarRef = useRef<HTMLDivElement>(null);
+  const holdProgressBarContainerRef = useRef<HTMLDivElement>(null);
+  const holdProgressBarFillRef = useRef<HTMLDivElement>(null);
+  const dragLineGroupRef = useRef<SVGSVGElement>(null);
+  const dragLineRef = useRef<SVGLineElement>(null);
+  const dragCircleRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
     if (currentTestIndex >= TESTS.length) {
@@ -76,8 +84,8 @@ export function Level8Accessory({
     };
     const handleMouseUp = () => {
       mouseRef.current.isDown = false;
-      setDragVector({ x: 0, y: 0 });
-      setResistanceScore(0);
+      dragVectorRef.current = { x: 0, y: 0 };
+      resistanceScoreRef.current = 0;
     };
 
     window.addEventListener("mousedown", handleMouseDown);
@@ -105,57 +113,103 @@ export function Level8Accessory({
         const dx = mouseRef.current.x - startPosRef.current.x;
         const dy = mouseRef.current.y - startPosRef.current.y;
 
-        setDragVector({ x: dx, y: dy });
+        dragVectorRef.current = { x: dx, y: dy };
 
         if (test) {
-          // Calculate the projected resistance against the patient's movement.
-          // The patient is trying to move in `test.dir`.
-          // The player should drag in the opposite direction (-test.dir).
-          // We'll calculate a scalar "force" value.
-
           const expectedDir = { x: -test.dir.x, y: -test.dir.y };
-
-          // Dot product to see how well they are pulling in the opposite direction
           const dot = dx * expectedDir.x + dy * expectedDir.y;
 
-          // "Optimal" drag distance is around 100-150 pixels.
-          // Score maps to a 0-100% scale.
           let score = 0;
           if (dot > 0) {
             score = Math.min(100, (dot / 150) * 100);
           } else {
-            score = 0; // Pulling the wrong way or not pulling
+            score = 0;
           }
 
-          setResistanceScore(score);
+          resistanceScoreRef.current = score;
 
-          // Green zone is between 40% and 80%
           if (score >= 40 && score <= 80) {
-            setTimeHeld((prev) => {
-              const next = prev + dt;
-              if (next >= 2000) {
-                // Hold for 2 seconds
-                // Test complete!
-                setTestActive(false);
-                setTimeout(() => {
-                  setCurrentTestIndex((idx) => idx + 1);
-                  setTimeHeld(0);
-                  setResistanceScore(0);
-                }, 1000);
-              }
-              return next;
-            });
+            timeHeldRef.current += dt;
+            if (timeHeldRef.current >= 2000) {
+              setTestActive(false);
+              setTimeout(() => {
+                setCurrentTestIndex((idx) => idx + 1);
+                timeHeldRef.current = 0;
+                resistanceScoreRef.current = 0;
+              }, 1000);
+            }
           } else {
-            // Too weak or too strong
             onStressChange(0.1);
-            // Decay time held if not in green zone
-            setTimeHeld((prev) => Math.max(0, prev - dt * 0.5));
+            timeHeldRef.current = Math.max(0, timeHeldRef.current - dt * 0.5);
           }
         }
       } else {
-        // Patient overpowers because player let go
         onStressChange(0.2);
-        setTimeHeld((prev) => Math.max(0, prev - dt));
+        timeHeldRef.current = Math.max(0, timeHeldRef.current - dt);
+      }
+
+      // Update DOM
+      const meterHeight = 200;
+      if (forceCursorRef.current) {
+        const cursorY = Math.max(
+          0,
+          Math.min(
+            meterHeight,
+            (resistanceScoreRef.current / 100) * meterHeight,
+          ),
+        );
+        forceCursorRef.current.style.bottom = `${cursorY}px`;
+      }
+      if (progressbarRef.current) {
+        progressbarRef.current.setAttribute(
+          "aria-valuenow",
+          Math.round(resistanceScoreRef.current).toString(),
+        );
+      }
+      if (holdProgressBarContainerRef.current) {
+        holdProgressBarContainerRef.current.setAttribute(
+          "aria-valuenow",
+          Math.round(timeHeldRef.current).toString(),
+        );
+      }
+      if (holdProgressBarFillRef.current) {
+        holdProgressBarFillRef.current.style.width = `${(timeHeldRef.current / 2000) * 100}%`;
+      }
+
+      if (dragLineGroupRef.current) {
+        if (mouseRef.current.isDown) {
+          dragLineGroupRef.current.style.display = "block";
+          if (dragLineRef.current) {
+            dragLineRef.current.setAttribute(
+              "x1",
+              startPosRef.current.x.toString(),
+            );
+            dragLineRef.current.setAttribute(
+              "y1",
+              startPosRef.current.y.toString(),
+            );
+            dragLineRef.current.setAttribute(
+              "x2",
+              (startPosRef.current.x + dragVectorRef.current.x).toString(),
+            );
+            dragLineRef.current.setAttribute(
+              "y2",
+              (startPosRef.current.y + dragVectorRef.current.y).toString(),
+            );
+          }
+          if (dragCircleRef.current) {
+            dragCircleRef.current.setAttribute(
+              "cx",
+              (startPosRef.current.x + dragVectorRef.current.x).toString(),
+            );
+            dragCircleRef.current.setAttribute(
+              "cy",
+              (startPosRef.current.y + dragVectorRef.current.y).toString(),
+            );
+          }
+        } else {
+          dragLineGroupRef.current.style.display = "none";
+        }
       }
 
       frameRef.current = requestAnimationFrame(loop);
@@ -169,8 +223,8 @@ export function Level8Accessory({
 
   const startTest = () => {
     setTestActive(true);
-    setTimeHeld(0);
-    setResistanceScore(0);
+    timeHeldRef.current = 0;
+    resistanceScoreRef.current = 0;
     lastTimeRef.current = performance.now();
   };
 
@@ -179,10 +233,6 @@ export function Level8Accessory({
   // Calculate visual properties for the resistance meter
   // Meter goes 0-100. Green zone is 40-80.
   const meterHeight = 200;
-  const cursorY = Math.max(
-    0,
-    Math.min(meterHeight, (resistanceScore / 100) * meterHeight),
-  );
 
   return (
     <div className="absolute inset-0 pointer-events-auto overflow-hidden bg-zinc-900 flex flex-col items-center justify-center select-none">
@@ -208,7 +258,7 @@ export function Level8Accessory({
             {test.name}
           </div>
 
-          {!testActive && timeHeld === 0 ? (
+          {!testActive && timeHeldRef.current === 0 ? (
             <button
               onClick={startTest}
               aria-label="Start patient movement"
@@ -239,7 +289,7 @@ export function Level8Accessory({
           )}
 
           {/* Test Complete Overlay */}
-          {!testActive && timeHeld >= 2000 && (
+          {!testActive && timeHeldRef.current >= 2000 && (
             <div className="absolute inset-0 bg-green-900/80 flex items-center justify-center rounded-xl">
               <span className="text-green-300 font-bold text-xl">
                 Test Passed!
@@ -260,10 +310,11 @@ export function Level8Accessory({
             FORCE
           </div>
           <div
+            ref={progressbarRef}
             className="relative w-8 bg-slate-900 rounded-full flex-grow overflow-hidden border border-slate-700"
             role="progressbar"
             aria-labelledby="force-label"
-            aria-valuenow={Math.round(resistanceScore)}
+            aria-valuenow={Math.round(resistanceScoreRef.current)}
             aria-valuemin={0}
             aria-valuemax={100}
           >
@@ -276,8 +327,17 @@ export function Level8Accessory({
             {/* Too strong */}
             {/* Force Cursor */}
             <div
+              ref={forceCursorRef}
               className="absolute w-full h-2 bg-white shadow-[0_0_10px_white] transition-all duration-75"
-              style={{ bottom: cursorY }}
+              style={{
+                bottom: Math.max(
+                  0,
+                  Math.min(
+                    meterHeight,
+                    (resistanceScoreRef.current / 100) * meterHeight,
+                  ),
+                ),
+              }}
             />
           </div>
         </div>
@@ -286,38 +346,44 @@ export function Level8Accessory({
       {/* Progress Bar for holding in the green zone */}
       {testActive && (
         <div
+          ref={holdProgressBarContainerRef}
           className="mt-8 w-64 h-4 bg-slate-800 rounded-full overflow-hidden border border-slate-600"
           role="progressbar"
-          aria-valuenow={Math.round(timeHeld)}
+          aria-valuenow={Math.round(timeHeldRef.current)}
           aria-valuemin={0}
           aria-valuemax={2000}
           aria-label="Resistance hold time"
         >
           <div
+            ref={holdProgressBarFillRef}
             className="h-full bg-blue-500 transition-all"
-            style={{ width: `${(timeHeld / 2000) * 100}%` }}
+            style={{ width: `${(timeHeldRef.current / 2000) * 100}%` }}
           />
         </div>
       )}
 
       {/* Visual drag line */}
-      {mouseRef.current.isDown && testActive && (
+      {testActive && (
         <svg
+          ref={dragLineGroupRef}
           className="absolute inset-0 pointer-events-none z-50 w-full h-full"
           aria-hidden="true"
+          style={{ display: mouseRef.current.isDown ? "block" : "none" }}
         >
           <line
+            ref={dragLineRef}
             x1={startPosRef.current.x}
             y1={startPosRef.current.y}
-            x2={startPosRef.current.x + dragVector.x}
-            y2={startPosRef.current.y + dragVector.y}
+            x2={startPosRef.current.x + dragVectorRef.current.x}
+            y2={startPosRef.current.y + dragVectorRef.current.y}
             stroke="rgba(255,255,255,0.5)"
             strokeWidth="4"
             strokeDasharray="5,5"
           />
           <circle
-            cx={startPosRef.current.x + dragVector.x}
-            cy={startPosRef.current.y + dragVector.y}
+            ref={dragCircleRef}
+            cx={startPosRef.current.x + dragVectorRef.current.x}
+            cy={startPosRef.current.y + dragVectorRef.current.y}
             r="6"
             fill="white"
           />
