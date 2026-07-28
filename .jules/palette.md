@@ -32,3 +32,8 @@
 
 **Learning:** When users return to a menu or grid layout (like Level Select) after completing a task, forcing them to manually re-navigate or tab into the grid creates unnecessary friction. Auto-focusing the next logical uncompleted item on mount provides immediate continuity.
 **Action:** Use `useRef` array and a `useEffect` with a timeout on mount to automatically focus the button corresponding to the next logical step in grid-based selection menus.
+
+## 2025-02-23 - Critical Alert ARIA Roles
+
+**Learning:** When displaying critical, transient warning messages or delayed popups (like a sudden "WARNING! WAKE UP!" message), screen readers will not announce them by default since focus does not change. Standard `aria-live="polite"` might not be urgent enough.
+**Action:** For highly critical warnings that demand immediate attention, use `role="alert"` and `aria-live="assertive"` on the rendering container so that the screen reader interrupts current speech and announces the message immediately.
