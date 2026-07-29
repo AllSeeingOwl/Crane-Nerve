@@ -11,7 +11,8 @@ export function Level10Crisis({
   onWin: () => void;
   onLose: (reason: string) => void;
 }) {
-  const [timeRemaining, setTimeRemaining] = useState(30);
+  const timeRemainingRef = useRef(30);
+  const timeRemainingElementRef = useRef<globalThis.HTMLParagraphElement>(null);
 
   // --- Task 1: Mouse Tracking (Trace the circle) ---
   const mouseRef = useRef({
@@ -53,7 +54,8 @@ export function Level10Crisis({
   }, []);
 
   // --- Task 3: Number Keys (Facial expressions) ---
-  const [facePrompt, setFacePrompt] = useState(1);
+  const facePromptRef = useRef(1);
+  const facePromptElementRef = useRef<HTMLDivElement>(null);
   const faceHealthRef = useRef(100);
   const currentFaceKeyRef = useRef(1);
   const faceHealthBarRef = useRef<HTMLDivElement>(null);
@@ -86,7 +88,15 @@ export function Level10Crisis({
       elapsedRef.current += dt;
 
       // Update timer display
-      setTimeRemaining(Math.max(0, 30 - Math.floor(elapsedRef.current)));
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      const newTimeRemaining = Math.max(0, 30 - Math.floor(elapsedRef.current));
+      if (newTimeRemaining !== timeRemainingRef.current) {
+        timeRemainingRef.current = newTimeRemaining;
+        if (timeRemainingElementRef.current) {
+          timeRemainingElementRef.current.textContent = `${newTimeRemaining}s`;
+        }
+      }
+
       if (elapsedRef.current >= 30) {
         onWin();
         return;
@@ -156,7 +166,13 @@ export function Level10Crisis({
         faceTimer = 0;
         const newKey = Math.floor(Math.random() * 4) + 1;
         currentFaceKeyRef.current = newKey;
-        setFacePrompt(newKey);
+        // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+        if (facePromptRef.current !== newKey) {
+          facePromptRef.current = newKey;
+          if (facePromptElementRef.current) {
+            facePromptElementRef.current.textContent = `PRESS ${newKey}`;
+          }
+        }
       }
       faceHealthRef.current -= 10 * dt;
 
@@ -201,7 +217,9 @@ export function Level10Crisis({
       {/* Timer */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center text-white bg-red-600/80 p-4 rounded-xl z-20 shadow-lg shadow-red-500/50">
         <h1 className="text-3xl font-black animate-pulse">CRISIS MODE</h1>
-        <p className="text-2xl font-mono">{timeRemaining}s</p>
+        <p ref={timeRemainingElementRef} className="text-2xl font-mono">
+          {timeRemainingRef.current}s
+        </p>
       </div>
 
       {/* Task 1: Mouse */}
@@ -276,8 +294,11 @@ export function Level10Crisis({
           KEYS 1-4
         </h3>
 
-        <div className="text-5xl font-black text-white/80 animate-bounce">
-          PRESS {facePrompt}
+        <div
+          ref={facePromptElementRef}
+          className="text-5xl font-black text-white/80 animate-bounce"
+        >
+          PRESS {facePromptRef.current}
         </div>
 
         {/* Health Bar */}

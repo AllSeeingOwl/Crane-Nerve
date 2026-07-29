@@ -11,7 +11,8 @@ export function Level11NightShift({
   onWin: () => void;
   onLose: (reason: string) => void;
 }) {
-  const [timeRemaining, setTimeRemaining] = useState(120);
+  const timeRemainingRef = useRef(120);
+  const timeRemainingElementRef = useRef<globalThis.HTMLParagraphElement>(null);
   const [mistakes, setMistakes] = useState(0);
   const [showWarning, setShowWarning] = useState(false);
 
@@ -59,7 +60,8 @@ export function Level11NightShift({
   }, []);
 
   // --- Task 3: Number Keys (Facial expressions) ---
-  const [facePrompt, setFacePrompt] = useState(1);
+  const facePromptRef = useRef(1);
+  const facePromptElementRef = useRef<HTMLDivElement>(null);
   const faceTaskHealthRef = useRef(100);
   const faceHealthBarRef = useRef<HTMLDivElement>(null);
   const currentFaceKeyRef = useRef(1);
@@ -128,7 +130,18 @@ export function Level11NightShift({
       elapsedRef.current += dt;
 
       // Update timer display
-      setTimeRemaining(Math.max(0, 120 - Math.floor(elapsedRef.current)));
+      // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+      const newTimeRemaining = Math.max(
+        0,
+        120 - Math.floor(elapsedRef.current),
+      );
+      if (newTimeRemaining !== timeRemainingRef.current) {
+        timeRemainingRef.current = newTimeRemaining;
+        if (timeRemainingElementRef.current) {
+          timeRemainingElementRef.current.textContent = `${newTimeRemaining}s`;
+        }
+      }
+
       if (elapsedRef.current >= 120) {
         onWin();
         return;
@@ -240,7 +253,13 @@ export function Level11NightShift({
         faceTimer = 0;
         const newKey = Math.floor(Math.random() * 4) + 1;
         currentFaceKeyRef.current = newKey;
-        setFacePrompt(newKey);
+        // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
+        if (facePromptRef.current !== newKey) {
+          facePromptRef.current = newKey;
+          if (facePromptElementRef.current) {
+            facePromptElementRef.current.textContent = `PRESS ${newKey}`;
+          }
+        }
       }
       faceTaskHealthRef.current -= 15 * dt;
       if (faceHealthBarRef.current) {
@@ -306,7 +325,9 @@ export function Level11NightShift({
           <h1 className="text-3xl font-black opacity-80">
             NIGHT SHIFT: 36 HOURS IN
           </h1>
-          <p className="text-2xl font-mono">{timeRemaining}s</p>
+          <p ref={timeRemainingElementRef} className="text-2xl font-mono">
+            {timeRemainingRef.current}s
+          </p>
           <p className="text-red-400 font-bold">{mistakes} / 2 Mistakes</p>
         </div>
 
@@ -392,8 +413,11 @@ export function Level11NightShift({
             KEYS 1-4
           </h3>
 
-          <div className="text-5xl font-black text-white/80 animate-bounce">
-            PRESS {facePrompt}
+          <div
+            ref={facePromptElementRef}
+            className="text-5xl font-black text-white/80 animate-bounce"
+          >
+            PRESS {facePromptRef.current}
           </div>
 
           {/* Health Bar */}
