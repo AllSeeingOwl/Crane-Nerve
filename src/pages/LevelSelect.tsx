@@ -309,6 +309,11 @@ export default function LevelSelect({
                       : `Play Level ${level.nerve}: ${level.title}`
                     : `Level ${level.nerve}: ${level.title} - Locked`
                 }
+                aria-describedby={
+                  isAvailable
+                    ? `desc-${level.id} controls-${level.id}`
+                    : `desc-${level.id}`
+                }
                 className={`
                   relative p-4 border text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background group
                   ${
@@ -348,6 +353,7 @@ export default function LevelSelect({
 
                 {/* Description */}
                 <p
+                  id={`desc-${level.id}`}
                   className={`text-xs mb-3 leading-relaxed ${isAvailable ? "text-muted-foreground" : "text-muted-foreground/50"}`}
                 >
                   {level.description}
@@ -356,6 +362,7 @@ export default function LevelSelect({
                 {/* Controls hint */}
                 {isAvailable && (
                   <div
+                    id={`controls-${level.id}`}
                     className={`text-xs font-mono border-t border-border/50 pt-2 mt-auto opacity-70 group-hover:opacity-100 transition-all ${isComplete ? colors.text : "text-muted-foreground " + colors.hoverText}`}
                   >
                     {level.controls}

@@ -37,3 +37,8 @@
 
 **Learning:** When displaying critical, transient warning messages or delayed popups (like a sudden "WARNING! WAKE UP!" message), screen readers will not announce them by default since focus does not change. Standard `aria-live="polite"` might not be urgent enough.
 **Action:** For highly critical warnings that demand immediate attention, use `role="alert"` and `aria-live="assertive"` on the rendering container so that the screen reader interrupts current speech and announces the message immediately.
+
+## 2025-02-24 - Restoring Context with aria-describedby
+
+**Learning:** When adding `aria-label` to buttons to provide clean screen reader announcements, we often inadvertently hide rich secondary text (like descriptions or control hints) present in the button's DOM.
+**Action:** Use `aria-describedby` with dynamic IDs to explicitly link secondary descriptive text (like `<p>` tags for descriptions or `<div>` tags for controls) back to the button. This ensures screen readers announce the primary label followed by the rich context, preserving a clean structure without losing information.
