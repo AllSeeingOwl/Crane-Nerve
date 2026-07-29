@@ -131,7 +131,10 @@ export function Level11NightShift({
 
       // Update timer display
       // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
-      const newTimeRemaining = Math.max(0, 120 - Math.floor(elapsedRef.current));
+      const newTimeRemaining = Math.max(
+        0,
+        120 - Math.floor(elapsedRef.current),
+      );
       if (newTimeRemaining !== timeRemainingRef.current) {
         timeRemainingRef.current = newTimeRemaining;
         if (timeRemainingElementRef.current) {
@@ -322,7 +325,9 @@ export function Level11NightShift({
           <h1 className="text-3xl font-black opacity-80">
             NIGHT SHIFT: 36 HOURS IN
           </h1>
-          <p ref={timeRemainingElementRef} className="text-2xl font-mono">{timeRemainingRef.current}s</p>
+          <p ref={timeRemainingElementRef} className="text-2xl font-mono">
+            {timeRemainingRef.current}s
+          </p>
           <p className="text-red-400 font-bold">{mistakes} / 2 Mistakes</p>
         </div>
 
@@ -408,7 +413,10 @@ export function Level11NightShift({
             KEYS 1-4
           </h3>
 
-          <div ref={facePromptElementRef} className="text-5xl font-black text-white/80 animate-bounce">
+          <div
+            ref={facePromptElementRef}
+            className="text-5xl font-black text-white/80 animate-bounce"
+          >
             PRESS {facePromptRef.current}
           </div>
 

@@ -217,7 +217,9 @@ export function Level10Crisis({
       {/* Timer */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center text-white bg-red-600/80 p-4 rounded-xl z-20 shadow-lg shadow-red-500/50">
         <h1 className="text-3xl font-black animate-pulse">CRISIS MODE</h1>
-        <p ref={timeRemainingElementRef} className="text-2xl font-mono">{timeRemainingRef.current}s</p>
+        <p ref={timeRemainingElementRef} className="text-2xl font-mono">
+          {timeRemainingRef.current}s
+        </p>
       </div>
 
       {/* Task 1: Mouse */}
@@ -292,7 +294,10 @@ export function Level10Crisis({
           KEYS 1-4
         </h3>
 
-        <div ref={facePromptElementRef} className="text-5xl font-black text-white/80 animate-bounce">
+        <div
+          ref={facePromptElementRef}
+          className="text-5xl font-black text-white/80 animate-bounce"
+        >
           PRESS {facePromptRef.current}
         </div>
 

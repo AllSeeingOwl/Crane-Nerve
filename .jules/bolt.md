@@ -64,6 +64,8 @@
 
 **Learning:** Using `useState` for visual game variables (`resistanceScore`, `timeHeld`, `dragVector`) inside the high-frequency `requestAnimationFrame` loop in `Level8Accessory` triggers constant component re-renders.
 **Action:** Replaced `useState` with `useRef` for these values and utilized direct DOM manipulation for the progress bars, resistance meter, and drag lines to bypass React's rendering overhead entirely.
+
 ## 2026-07-29 - [Avoid SetState for TimeRemaining in Game Loops]
+
 **Learning:** Unconditionally calling `setState` inside a high-frequency `requestAnimationFrame` game loop, even for slowly changing values like a `timeRemaining` counter (e.g., ticking down by seconds), forces React to queue state updates and triggers unnecessary component re-renders up to 60 times a second.
 **Action:** Replace `useState` with `useRef` for tracking the time (and other similar variables). When a change in the value is detected, use a secondary ref to the target DOM element to mutate the `textContent` or `style` directly, bypassing React's rendering overhead entirely.
