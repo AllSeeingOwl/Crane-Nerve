@@ -204,7 +204,7 @@ export function Level1Olfactory({
           Select a vial and hold it near the patient's nose for them to identify
           the smell. Identify 2 smells to pass.
         </p>
-        <div className="text-sm font-bold text-green-300">
+        <div className="text-sm font-bold text-green-300" aria-live="polite">
           Identified: {identifiedVials.length} / 2
         </div>
       </div>
@@ -247,6 +247,7 @@ export function Level1Olfactory({
                 !isIdentified && setSelectedVial(isSelected ? null : vial.id)
               }
               aria-disabled={isIdentified}
+              aria-pressed={isSelected}
               aria-label={
                 isIdentified
                   ? `${vial.name} identified`
