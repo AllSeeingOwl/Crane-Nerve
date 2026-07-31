@@ -328,7 +328,9 @@ export function Level11NightShift({
           <p ref={timeRemainingElementRef} className="text-2xl font-mono">
             {timeRemainingRef.current}s
           </p>
-          <p className="text-red-400 font-bold">{mistakes} / 2 Mistakes</p>
+          <p className="text-red-400 font-bold" aria-live="polite">
+            {mistakes} / 2 Mistakes
+          </p>
         </div>
 
         {/* Task 1: Mouse */}

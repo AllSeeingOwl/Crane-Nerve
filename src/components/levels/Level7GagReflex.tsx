@@ -188,7 +188,7 @@ export function Level7GagReflex({
           trigger the gag reflex. Don't poke too hard, don't hold it there too
           long, and avoid the surrounding mouth areas!
         </p>
-        <div className="text-sm font-bold text-green-300">
+        <div className="text-sm font-bold text-green-300" aria-live="polite">
           Reflex Triggered: {successfulGags} / 3
         </div>
       </div>

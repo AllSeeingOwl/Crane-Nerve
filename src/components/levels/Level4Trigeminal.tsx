@@ -157,7 +157,7 @@ export function Level4Trigeminal({
           </p>
         )}
         {currentRegionIndex < regions.length && (
-          <p className="text-sm mt-2 text-green-300">
+          <p className="text-sm mt-2 text-green-300" aria-live="polite">
             Target: {regions[currentRegionIndex].label} (
             {regions[currentRegionIndex].type})
           </p>
