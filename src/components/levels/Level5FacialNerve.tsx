@@ -162,7 +162,10 @@ export function Level5FacialNerve({
         )}
 
         {currentPromptIndex < prompts.length && (
-          <p className="text-lg mt-2 text-green-300 font-bold animate-pulse">
+          <p
+            className="text-lg mt-2 text-green-300 font-bold animate-pulse"
+            aria-live="polite"
+          >
             Prompt: "{prompts[currentPromptIndex].label}"
           </p>
         )}

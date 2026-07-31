@@ -238,7 +238,10 @@ export function Level9Hypoglossal({
         </div>
 
         {currentTargetIndex < targets.length && (
-          <p className="text-lg mt-2 text-pink-300 font-bold animate-pulse">
+          <p
+            className="text-lg mt-2 text-pink-300 font-bold animate-pulse"
+            aria-live="polite"
+          >
             Target: {targets[currentTargetIndex].label}
           </p>
         )}

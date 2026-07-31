@@ -245,7 +245,10 @@ export function Level8Accessory({
           <strong>opposite direction</strong> to apply resistance. Keep the
           resistance in the green zone!
         </p>
-        <div className="text-sm font-bold text-blue-300 mt-2">
+        <div
+          className="text-sm font-bold text-blue-300 mt-2"
+          aria-live="polite"
+        >
           Tests Completed: {currentTestIndex} / {TESTS.length}
         </div>
       </div>

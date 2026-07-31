@@ -236,7 +236,10 @@ export function Level6Tuning({
 
         {currentStepIndex < sequence.length && (
           <div className="mt-2">
-            <p className="text-lg text-green-300 font-bold animate-pulse">
+            <p
+              className="text-lg text-green-300 font-bold animate-pulse"
+              aria-live="polite"
+            >
               Next: {sequence[currentStepIndex].label}
             </p>
             {/* Hold Progress Bar */}
