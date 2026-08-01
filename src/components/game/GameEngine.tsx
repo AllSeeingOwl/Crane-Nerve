@@ -29,11 +29,25 @@ interface Props {
 }
 
 interface LevelProps {
-  stress: number;
+  stressRef: React.RefObject<number>;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
 }
+
+
+const LEVEL_LOSE_REASONS: Record<number, string> = {
+  1: "Patient got too stressed from the smells!",
+  2: "Patient got too stressed from struggling to see!",
+  3: "Patient got too stressed during the eye exam!",
+  4: "Patient couldn't tolerate the facial exam!",
+  5: "Patient couldn't follow the facial nerve commands!",
+  6: "Patient became overwhelmed by the hearing exam!",
+  7: "Patient got too stressed from the gag reflex test!",
+  8: "Patient got too stressed from the resistance tests!",
+  9: "Patient got too stressed from the tongue examination!",
+  10: "Total systemic failure! The crisis was too much.",
+};
 
 export default function GameEngine({
   levelId,
@@ -43,7 +57,18 @@ export default function GameEngine({
   onLose,
   onQuit,
 }: Props) {
-  const level = LEVELS.find((l) => l.id === levelId)!;
+const level = LEVELS.find((l) => l.id === levelId)!;
+
+  const stressRef = useRef(stress);
+  useEffect(() => {
+    stressRef.current = stress;
+  }, [stress]);
+
+  useEffect(() => {
+    if (stress >= 100 && levelId <= 10) {
+      onLose(LEVEL_LOSE_REASONS[levelId] || "Patient got too stressed!");
+    }
+  }, [stress, levelId, onLose]);
 
   // ⚡ BOLT OPTIMIZATION:
   // App.tsx passes inline functions that change reference on every render.
@@ -75,12 +100,12 @@ export default function GameEngine({
 
   const levelProps: LevelProps = useMemo(
     () => ({
-      stress,
+      stressRef,
       onStressChange: stableOnStressChange,
       onWin: stableOnWin,
       onLose: stableOnLose,
     }),
-    [stress, stableOnStressChange, stableOnWin, stableOnLose],
+    [stableOnStressChange, stableOnWin, stableOnLose],
   );
 
   useAmbientAudio(true);
@@ -123,9 +148,10 @@ export default function GameEngine({
       {/* ── 3D Doctor's Office — full-screen background ── */}
       {backgroundCanvas}
 
-      {/* ── Level UI — overlays the 3D scene ── */}
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        {levelId === 1 && <Level1Olfactory {...levelProps} />}
+            {/* ── Level UI — overlays the 3D scene ── */}
+      {useMemo(() => (
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          {levelId === 1 && <Level1Olfactory {...levelProps} />}
         {levelId === 2 && <Level2Optic {...levelProps} />}
         {levelId === 3 && <Level3EyeMovement {...levelProps} />}
         {levelId === 4 && <Level4Trigeminal {...levelProps} />}
@@ -137,7 +163,8 @@ export default function GameEngine({
         {levelId === 10 && <Level10Crisis {...levelProps} />}
         {levelId === 11 && <Level11NightShift {...levelProps} />}
         {levelId === 12 && <Level12TheDebrief {...levelProps} />}
-      </div>
+        </div>
+      ), [levelId, levelProps])}
 
       {/* ── Window of Distraction — floats bottom-right ── */}
       {windowDistraction}

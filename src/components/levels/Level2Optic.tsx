@@ -4,12 +4,10 @@ import React, { useEffect, useRef, useState } from "react";
 const CHART_LETTERS = ["C", "G", "O", "Q", "D", "P", "F", "E", "B", "R"];
 
 export function Level2Optic({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -136,11 +134,6 @@ export function Level2Optic({
     };
   }, [onStressChange]);
 
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient got too stressed from struggling to see!");
-    }
-  }, [stress, onLose]);
 
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-auto bg-white/10 backdrop-blur-sm">

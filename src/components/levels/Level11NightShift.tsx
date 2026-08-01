@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export function Level11NightShift({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;

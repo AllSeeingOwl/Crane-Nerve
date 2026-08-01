@@ -69,3 +69,8 @@
 
 **Learning:** Unconditionally calling `setState` inside a high-frequency `requestAnimationFrame` game loop, even for slowly changing values like a `timeRemaining` counter (e.g., ticking down by seconds), forces React to queue state updates and triggers unnecessary component re-renders up to 60 times a second.
 **Action:** Replace `useState` with `useRef` for tracking the time (and other similar variables). When a change in the value is detected, use a secondary ref to the target DOM element to mutate the `textContent` or `style` directly, bypassing React's rendering overhead entirely.
+
+## $(date +%Y-%m-%d) - [Extract High-Frequency State Checks to Prevent Re-renders]
+
+**Learning:** When a child component only needs a high-frequency state variable (like a 60fps `stress` meter) to evaluate a single threshold (e.g., `if (stress >= 100) lose()`), passing the primitive value as a prop causes the child component to unnecessarily re-render 60 times a second.
+**Action:** Extract the threshold logic and its associated messages/handlers into the parent component (e.g., `GameEngine.tsx`). Then, omit the high-frequency primitive from the child's props. For children that *actually* need the value inside a `requestAnimationFrame` loop (like `Level5FacialNerve`), pass it as a `React.RefObject` to preserve a stable prop signature while allowing synchronous access.

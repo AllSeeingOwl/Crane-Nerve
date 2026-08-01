@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export function Level6Tuning({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -192,11 +190,6 @@ export function Level6Tuning({
     }
   };
 
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient became overwhelmed by the hearing exam!");
-    }
-  }, [stress, onLose]);
 
   return (
     <div
