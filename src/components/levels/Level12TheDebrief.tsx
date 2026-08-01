@@ -191,7 +191,11 @@ export function Level12TheDebrief({
   return (
     <div className="absolute inset-0 pointer-events-auto bg-slate-900/95 flex flex-col items-center justify-center font-mono p-8">
       {showDvorakMessage && (
-        <div className="absolute top-10 text-center animate-bounce z-50">
+        <div
+          className="absolute top-10 text-center animate-bounce z-50"
+          role="alert"
+          aria-live="assertive"
+        >
           <h1 className="text-4xl font-black text-yellow-400 bg-black/80 px-8 py-4 rounded-xl border-4 border-yellow-400 shadow-[0_0_50px_rgba(250,204,21,0.5)]">
             By the way, this is a DVORAK keyboard.
           </h1>
