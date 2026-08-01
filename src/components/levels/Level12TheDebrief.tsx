@@ -92,12 +92,10 @@ Sincerely,
 The Doctor`;
 
 export function Level12TheDebrief({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;

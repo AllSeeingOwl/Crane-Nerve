@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export function Level7GagReflex({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -50,12 +48,6 @@ export function Level7GagReflex({
       onWin();
     }
   }, [successfulGags, onWin]);
-
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient got too stressed from the gag reflex test!");
-    }
-  }, [stress, onLose]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {

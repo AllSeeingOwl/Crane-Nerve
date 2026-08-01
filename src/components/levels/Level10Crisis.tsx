@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export function Level10Crisis({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -205,12 +203,6 @@ export function Level10Crisis({
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
   }, [onWin, onStressChange]);
-
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Total systemic failure! The crisis was too much.");
-    }
-  }, [stress, onLose]);
 
   return (
     <div className="absolute inset-0 pointer-events-auto bg-black/40">

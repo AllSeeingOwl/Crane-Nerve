@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export function Level3EyeMovement({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -112,12 +110,6 @@ export function Level3EyeMovement({
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
   }, [onWin, onStressChange]);
-
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient got too stressed during the eye exam!");
-    }
-  }, [stress, onLose]);
 
   return (
     <div ref={containerRef} className="absolute inset-0 pointer-events-auto">

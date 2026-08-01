@@ -13,12 +13,10 @@ interface Point {
 }
 
 export function Level9Hypoglossal({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -206,12 +204,6 @@ export function Level9Hypoglossal({
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
   }, [onWin, onStressChange]);
-
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient got too stressed from the tongue examination!");
-    }
-  }, [stress, onLose]);
 
   return (
     <div

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export function Level5FacialNerve({
-  stress,
+  stressRef,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
+  stressRef: React.RefObject<number>;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -63,7 +63,8 @@ export function Level5FacialNerve({
       let nextY = cursorRef.current.y + dy * 0.05;
 
       // Add shake based on stress (higher stress = more shake)
-      const shakeAmount = 2 + (stress / 100) * 15;
+      const currentStress = stressRef.current || 0;
+      const shakeAmount = 2 + (currentStress / 100) * 15;
       nextX += Math.sin(time * 5) * shakeAmount;
       nextY += Math.cos(time * 6.3) * shakeAmount;
 
@@ -88,7 +89,7 @@ export function Level5FacialNerve({
     return () => {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
-  }, [stress, onStressChange]);
+  }, [stressRef, onStressChange]);
 
   const handleInteract = () => {
     if (currentPromptIndex >= prompts.length) return;
@@ -117,12 +118,6 @@ export function Level5FacialNerve({
       onStressChange(10);
     }
   };
-
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient couldn't follow the facial nerve commands!");
-    }
-  }, [stress, onLose]);
 
   return (
     <div

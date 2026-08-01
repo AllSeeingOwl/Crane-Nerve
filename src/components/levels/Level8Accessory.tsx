@@ -29,12 +29,10 @@ const TESTS = [
 ];
 
 export function Level8Accessory({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -63,12 +61,6 @@ export function Level8Accessory({
       onWin();
     }
   }, [currentTestIndex, onWin]);
-
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient got too stressed from the resistance tests!");
-    }
-  }, [stress, onLose]);
 
   // Handle mouse events globally for drag
   useEffect(() => {

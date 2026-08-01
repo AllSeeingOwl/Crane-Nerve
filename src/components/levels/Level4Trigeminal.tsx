@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export function Level4Trigeminal({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -109,12 +107,6 @@ export function Level4Trigeminal({
       onStressChange(5);
     }
   };
-
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient couldn't tolerate the facial exam!");
-    }
-  }, [stress, onLose]);
 
   return (
     <div

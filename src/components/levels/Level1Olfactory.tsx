@@ -12,12 +12,10 @@ const VIALS = [
 ];
 
 export function Level1Olfactory({
-  stress,
   onStressChange,
   onWin,
   onLose,
 }: {
-  stress: number;
   onStressChange: (delta: number) => void;
   onWin: () => void;
   onLose: (reason: string) => void;
@@ -189,12 +187,6 @@ export function Level1Olfactory({
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
   }, [onStressChange]);
-
-  useEffect(() => {
-    if (stress >= 100) {
-      onLose("Patient got too stressed from the smells!");
-    }
-  }, [stress, onLose]);
 
   return (
     <div className="absolute inset-0 pointer-events-auto overflow-hidden">
