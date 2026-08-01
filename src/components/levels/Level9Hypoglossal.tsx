@@ -122,16 +122,20 @@ export function Level9Hypoglossal({
         segments[i].y += segments[i].vy * dt;
       }
 
-      // Constraints (spring-like links)
+      // ⚡ BOLT OPTIMIZATION: Fast Position-Based Dynamics (PBD) Constraints
+      // Replaced exact distance calculation (Math.sqrt) with squared distance approximation.
+      // Original: dist = Math.sqrt(distSq); percent = (dist - L) / dist / 2;
+      // Approximation: percent = (distSq - L*L) / (distSq + L*L) / 2
+      // This saves ~2700 square root operations per second (5 iters * 9 links * 60fps)
+      const targetSq = SEGMENT_LENGTH * SEGMENT_LENGTH;
       for (let iter = 0; iter < 5; iter++) {
         for (let i = 0; i < NUM_SEGMENTS - 1; i++) {
           const dx = segments[i + 1].x - segments[i].x;
           const dy = segments[i + 1].y - segments[i].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const diff = dist - SEGMENT_LENGTH;
+          const distSq = dx * dx + dy * dy;
 
-          if (dist > 0) {
-            const percent = diff / dist / 2;
+          if (distSq > 0) {
+            const percent = (distSq - targetSq) / (distSq + targetSq) / 2;
             const offsetX = dx * percent;
             const offsetY = dy * percent;
 
