@@ -49,7 +49,6 @@ export function Level7GagReflex({
     }
   }, [successfulGags, onWin]);
 
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = e.clientX;

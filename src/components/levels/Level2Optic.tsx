@@ -134,7 +134,6 @@ export function Level2Optic({
     };
   }, [onStressChange]);
 
-
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-auto bg-white/10 backdrop-blur-sm">
       <div className="absolute top-8 left-1/2 -translate-x-1/2 w-96 text-center text-white bg-black/70 p-4 rounded z-20">

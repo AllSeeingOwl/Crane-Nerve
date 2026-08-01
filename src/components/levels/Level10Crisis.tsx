@@ -204,7 +204,6 @@ export function Level10Crisis({
     };
   }, [onWin, onStressChange]);
 
-
   return (
     <div className="absolute inset-0 pointer-events-auto bg-black/40">
       {/* Timer */}

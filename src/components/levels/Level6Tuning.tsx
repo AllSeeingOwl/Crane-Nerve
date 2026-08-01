@@ -190,7 +190,6 @@ export function Level6Tuning({
     }
   };
 
-
   return (
     <div
       className="absolute inset-0 pointer-events-auto select-none"

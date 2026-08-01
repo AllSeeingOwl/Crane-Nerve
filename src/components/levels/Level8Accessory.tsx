@@ -62,7 +62,6 @@ export function Level8Accessory({
     }
   }, [currentTestIndex, onWin]);
 
-
   // Handle mouse events globally for drag
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {

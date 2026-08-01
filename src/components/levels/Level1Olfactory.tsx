@@ -188,7 +188,6 @@ export function Level1Olfactory({
     };
   }, [onStressChange]);
 
-
   return (
     <div className="absolute inset-0 pointer-events-auto overflow-hidden">
       <div className="absolute top-8 left-1/2 -translate-x-1/2 w-96 text-center text-white bg-black/50 p-4 rounded z-20 pointer-events-none">

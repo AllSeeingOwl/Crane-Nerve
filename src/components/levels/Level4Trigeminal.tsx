@@ -108,7 +108,6 @@ export function Level4Trigeminal({
     }
   };
 
-
   return (
     <div
       className="absolute inset-0 pointer-events-auto select-none"

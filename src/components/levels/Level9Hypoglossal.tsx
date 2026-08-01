@@ -205,7 +205,6 @@ export function Level9Hypoglossal({
     };
   }, [onWin, onStressChange]);
 
-
   return (
     <div
       ref={containerRef}

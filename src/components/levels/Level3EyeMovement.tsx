@@ -111,7 +111,6 @@ export function Level3EyeMovement({
     };
   }, [onWin, onStressChange]);
 
-
   return (
     <div ref={containerRef} className="absolute inset-0 pointer-events-auto">
       <div className="absolute top-8 left-1/2 -translate-x-1/2 w-96 text-center text-white bg-black/50 p-4 rounded">

@@ -119,7 +119,6 @@ export function Level5FacialNerve({
     }
   };
 
-
   return (
     <div
       className="absolute inset-0 pointer-events-auto select-none"

@@ -35,7 +35,6 @@ interface LevelProps {
   onLose: (reason: string) => void;
 }
 
-
 const LEVEL_LOSE_REASONS: Record<number, string> = {
   1: "Patient got too stressed from the smells!",
   2: "Patient got too stressed from struggling to see!",
@@ -57,7 +56,7 @@ export default function GameEngine({
   onLose,
   onQuit,
 }: Props) {
-const level = LEVELS.find((l) => l.id === levelId)!;
+  const level = LEVELS.find((l) => l.id === levelId)!;
 
   const stressRef = useRef(stress);
   useEffect(() => {
@@ -148,23 +147,26 @@ const level = LEVELS.find((l) => l.id === levelId)!;
       {/* ── 3D Doctor's Office — full-screen background ── */}
       {backgroundCanvas}
 
-            {/* ── Level UI — overlays the 3D scene ── */}
-      {useMemo(() => (
-        <div className="absolute inset-0 z-10 pointer-events-none">
-          {levelId === 1 && <Level1Olfactory {...levelProps} />}
-        {levelId === 2 && <Level2Optic {...levelProps} />}
-        {levelId === 3 && <Level3EyeMovement {...levelProps} />}
-        {levelId === 4 && <Level4Trigeminal {...levelProps} />}
-        {levelId === 5 && <Level5FacialNerve {...levelProps} />}
-        {levelId === 6 && <Level6Tuning {...levelProps} />}
-        {levelId === 7 && <Level7GagReflex {...levelProps} />}
-        {levelId === 8 && <Level8Accessory {...levelProps} />}
-        {levelId === 9 && <Level9Hypoglossal {...levelProps} />}
-        {levelId === 10 && <Level10Crisis {...levelProps} />}
-        {levelId === 11 && <Level11NightShift {...levelProps} />}
-        {levelId === 12 && <Level12TheDebrief {...levelProps} />}
-        </div>
-      ), [levelId, levelProps])}
+      {/* ── Level UI — overlays the 3D scene ── */}
+      {useMemo(
+        () => (
+          <div className="absolute inset-0 z-10 pointer-events-none">
+            {levelId === 1 && <Level1Olfactory {...levelProps} />}
+            {levelId === 2 && <Level2Optic {...levelProps} />}
+            {levelId === 3 && <Level3EyeMovement {...levelProps} />}
+            {levelId === 4 && <Level4Trigeminal {...levelProps} />}
+            {levelId === 5 && <Level5FacialNerve {...levelProps} />}
+            {levelId === 6 && <Level6Tuning {...levelProps} />}
+            {levelId === 7 && <Level7GagReflex {...levelProps} />}
+            {levelId === 8 && <Level8Accessory {...levelProps} />}
+            {levelId === 9 && <Level9Hypoglossal {...levelProps} />}
+            {levelId === 10 && <Level10Crisis {...levelProps} />}
+            {levelId === 11 && <Level11NightShift {...levelProps} />}
+            {levelId === 12 && <Level12TheDebrief {...levelProps} />}
+          </div>
+        ),
+        [levelId, levelProps],
+      )}
 
       {/* ── Window of Distraction — floats bottom-right ── */}
       {windowDistraction}
