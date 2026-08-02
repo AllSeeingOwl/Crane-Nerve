@@ -44,6 +44,15 @@ export function Level8Accessory({
 
   const test = TESTS[currentTestIndex];
 
+  const startBtnRef = useRef<globalThis.HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!testActive && timeHeldRef.current === 0) {
+      const timer = setTimeout(() => startBtnRef.current?.focus(), 50);
+      return () => clearTimeout(timer);
+    }
+  }, [testActive, currentTestIndex]);
+
   // Interaction state
   const mouseRef = useRef({ x: 0, y: 0, isDown: false });
   const startPosRef = useRef({ x: 0, y: 0 });
@@ -255,11 +264,18 @@ export function Level8Accessory({
 
           {!testActive && timeHeldRef.current === 0 ? (
             <button
+              ref={startBtnRef}
               onClick={startTest}
               aria-label="Start patient movement"
-              className="focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none focus-visible:ring-offset-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded cursor-pointer pointer-events-auto"
+              className="group relative flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none focus-visible:ring-offset-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded cursor-pointer pointer-events-auto transition-all"
             >
-              Start Movement
+              <span>START MOVEMENT</span>
+              <kbd
+                className="text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-sans opacity-70 group-hover:opacity-100 transition-opacity"
+                aria-hidden="true"
+              >
+                ENTER
+              </kbd>
             </button>
           ) : (
             <div className="text-center">
