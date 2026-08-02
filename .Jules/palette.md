@@ -7,3 +7,8 @@
 
 **Learning:** For interactive UI mini-games (like Level 1 Olfactory), tracking rapid mutations is difficult for screen readers. However, meaningful, slower progress indicators (like "Identified: X / Y") greatly benefit from `aria-live="polite"` so the user receives auditory success feedback without spamming them during gameplay.
 **Action:** When identifying core success indicators or progress states in an app that update incrementally (not every frame), add `aria-live="polite"`. Additionally, when using `<button>` elements to select/deselect items (like inventory or tools), always add `aria-pressed={isSelected}` to correctly identify the toggle state.
+
+## 2024-03-21 - Auto-focus intra-level action buttons
+
+**Learning:** Buttons used as start conditions or interaction triggers within individual mini-games (e.g. "Start Movement") are easily missed by keyboard navigation, breaking the flow.
+**Action:** Automatically focus these intra-level primary action buttons on component mount/render and include explicit semantic keyboard hints (like `<kbd>ENTER</kbd>`) natively integrated into the button UI, mirroring the transition screen pattern.
