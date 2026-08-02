@@ -123,9 +123,13 @@ export function Level1Olfactory({
         if (vialDef?.type === "bad") {
           // If it's a bad smell, patient evades
           if (distSq < 90000) {
-            const angle = Math.atan2(dy, dx);
-            nose.vx += Math.cos(angle) * 0.5;
-            nose.vy += Math.sin(angle) * 0.5;
+            // ⚡ BOLT OPTIMIZATION: Avoid expensive Math.atan2, Math.cos, Math.sin calls
+            // Normalize the vector directly instead of converting to polar coordinates and back
+            const dist = Math.sqrt(distSq);
+            if (dist > 0) {
+              nose.vx += (dx / dist) * 0.5;
+              nose.vy += (dy / dist) * 0.5;
+            }
 
             // Rapid stress increase if smelling something bad
             if (distSq < 22500) {

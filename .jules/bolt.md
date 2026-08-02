@@ -50,7 +50,7 @@
 **Learning:** High-frequency `useState` updates (`setSmellProgress`) inside a `requestAnimationFrame` loop caused unnecessary React re-renders of the entire `Level1Olfactory` component every single frame just to animate a small progress bar.
 **Action:** Replaced the state update with direct DOM manipulation using `useRef` for the progress bar container and its fill element. Using `ref.current.style.width` within the game loop bypasses React's rendering overhead and ensures smooth performance.
 
-## $(date +%Y-%m-%d) - Prevent unnecessary re-renders in game loop (Level2Optic)
+## 2024-05-16 - Prevent unnecessary re-renders in game loop (Level2Optic)
 
 **Learning:** Using React state (`useState`) to update variables inside high-frequency game loops (like `requestAnimationFrame`) causes unnecessary and expensive full-component re-renders 60 times a second.
 **Action:** When working with high-frequency continuous loops in React, replace `useState` with `useRef` to hold mutable values without triggering re-renders, and use refs targeting DOM elements (`HTMLDivElement`) to mutate the DOM properties directly inside the loop.
@@ -70,7 +70,7 @@
 **Learning:** Unconditionally calling `setState` inside a high-frequency `requestAnimationFrame` game loop, even for slowly changing values like a `timeRemaining` counter (e.g., ticking down by seconds), forces React to queue state updates and triggers unnecessary component re-renders up to 60 times a second.
 **Action:** Replace `useState` with `useRef` for tracking the time (and other similar variables). When a change in the value is detected, use a secondary ref to the target DOM element to mutate the `textContent` or `style` directly, bypassing React's rendering overhead entirely.
 
-## $(date +%Y-%m-%d) - [Extract High-Frequency State Checks to Prevent Re-renders]
+## 2024-05-16 - [Extract High-Frequency State Checks to Prevent Re-renders]
 
 **Learning:** When a child component only needs a high-frequency state variable (like a 60fps `stress` meter) to evaluate a single threshold (e.g., `if (stress >= 100) lose()`), passing the primitive value as a prop causes the child component to unnecessarily re-render 60 times a second.
 **Action:** Extract the threshold logic and its associated messages/handlers into the parent component (e.g., `GameEngine.tsx`). Then, omit the high-frequency primitive from the child's props. For children that _actually_ need the value inside a `requestAnimationFrame` loop (like `Level5FacialNerve`), pass it as a `React.RefObject` to preserve a stable prop signature while allowing synchronous access.
@@ -79,3 +79,8 @@
 
 **Learning:** In Position Based Dynamics (PBD) for game loops, constraint resolution (like springs or links) often runs multiple times per frame per segment (e.g., 5 iterations _ 9 segments _ 60fps = 2700 times/sec). Calculating exact distances using `Math.sqrt` is a major bottleneck. Furthermore, directly replacing the percent error function `(dist - L) / (2 * dist)` with `(distSq - L*L) / (distSq + L*L)` will cause a factor-of-2 overcorrection error which can explode game physics.
 **Action:** Replace `Math.sqrt(distSq)` with squared distance approximations for small distances near a target length `L`: Instead of calculating `percent = (dist - L) / dist / 2`, calculate `percent = (distSq - L*L) / (distSq + L*L) / 2`. This accurately models the first order Taylor expansion of the original function while avoiding expensive root operations in the hot path.
+
+## 2024-05-16 - Prevent 60fps Re-renders and Expensive Math inside Game Loops
+
+**Learning:** Using `Math.atan2`, `Math.cos`, and `Math.sin` inside high-frequency `requestAnimationFrame` game loops for vector normalization (e.g., pointing a velocity vector toward a target) is a performance bottleneck. Computing angle using `atan2` and converting back to components using `sin` and `cos` adds unnecessary overhead.
+**Action:** Replace `Math.atan2`, `Math.cos`, and `Math.sin` with direct vector normalization. Use `Math.sqrt(distSq)` to find the distance and normalize the `dx` and `dy` components directly (`dx / dist` and `dy / dist`) when you just need the direction vector.
