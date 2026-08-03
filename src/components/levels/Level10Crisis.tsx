@@ -22,6 +22,7 @@ export function Level10Crisis({
   const targetRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const mouseHealthBarRef = useRef<HTMLDivElement>(null);
+  const mouseHealthContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -36,6 +37,7 @@ export function Level10Crisis({
   const gazeHealthRef = useRef(100);
   const gazeDotRef = useRef<HTMLDivElement>(null);
   const gazeHealthBarRef = useRef<HTMLDivElement>(null);
+  const gazeHealthContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -58,6 +60,7 @@ export function Level10Crisis({
   const faceHealthRef = useRef(100);
   const currentFaceKeyRef = useRef(1);
   const faceHealthBarRef = useRef<HTMLDivElement>(null);
+  const faceHealthContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -132,6 +135,12 @@ export function Level10Crisis({
         mouseHealthBarRef.current.style.width = `${mouseHealthRef.current}%`;
         mouseHealthBarRef.current.className = `h-full ${mouseHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
       }
+      if (mouseHealthContainerRef.current) {
+        mouseHealthContainerRef.current.setAttribute(
+          "aria-valuenow",
+          Math.round(mouseHealthRef.current).toString(),
+        );
+      }
 
       // --- Task 2 Logic ---
       // Gaze drifts away randomly
@@ -157,6 +166,12 @@ export function Level10Crisis({
         gazeHealthBarRef.current.style.width = `${gazeHealthRef.current}%`;
         gazeHealthBarRef.current.className = `h-full ${gazeHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
       }
+      if (gazeHealthContainerRef.current) {
+        gazeHealthContainerRef.current.setAttribute(
+          "aria-valuenow",
+          Math.round(gazeHealthRef.current).toString(),
+        );
+      }
 
       // --- Task 3 Logic ---
       faceTimer += dt;
@@ -178,6 +193,12 @@ export function Level10Crisis({
       if (faceHealthBarRef.current) {
         faceHealthBarRef.current.style.width = `${faceHealthRef.current}%`;
         faceHealthBarRef.current.className = `h-full ${faceHealthRef.current > 30 ? "bg-green-500" : "bg-red-500 animate-pulse"}`;
+      }
+      if (faceHealthContainerRef.current) {
+        faceHealthContainerRef.current.setAttribute(
+          "aria-valuenow",
+          Math.round(faceHealthRef.current).toString(),
+        );
       }
 
       // Stress calculation based on healths
@@ -235,6 +256,7 @@ export function Level10Crisis({
 
         {/* Health Bar */}
         <div
+          ref={mouseHealthContainerRef}
           className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
           role="progressbar"
           aria-valuenow={Math.round(mouseHealthRef.current)}
@@ -266,6 +288,7 @@ export function Level10Crisis({
 
         {/* Health Bar */}
         <div
+          ref={gazeHealthContainerRef}
           className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
           role="progressbar"
           aria-valuenow={Math.round(gazeHealthRef.current)}
@@ -296,6 +319,7 @@ export function Level10Crisis({
 
         {/* Health Bar */}
         <div
+          ref={faceHealthContainerRef}
           className="absolute bottom-2 w-11/12 h-2 bg-gray-700 rounded-full overflow-hidden"
           role="progressbar"
           aria-valuenow={Math.round(faceHealthRef.current)}
