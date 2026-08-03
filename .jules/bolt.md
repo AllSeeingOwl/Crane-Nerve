@@ -84,3 +84,8 @@
 
 **Learning:** Using `Math.atan2`, `Math.cos`, and `Math.sin` inside high-frequency `requestAnimationFrame` game loops for vector normalization (e.g., pointing a velocity vector toward a target) is a performance bottleneck. Computing angle using `atan2` and converting back to components using `sin` and `cos` adds unnecessary overhead.
 **Action:** Replace `Math.atan2`, `Math.cos`, and `Math.sin` with direct vector normalization. Use `Math.sqrt(distSq)` to find the distance and normalize the `dx` and `dy` components directly (`dx / dist` and `dy / dist`) when you just need the direction vector.
+
+## 2024-05-17 - [Optimize Trigonometric Functions in Game Loops]
+
+**Learning:** Using native `Math.sin()` and `Math.cos()` inside 60fps `requestAnimationFrame` game loops for visual elements like circular targets or camera shakes introduces unnecessary computational overhead, especially as the number of elements scales.
+**Action:** Replace `Math.sin()` and `Math.cos()` with pre-computed lookup tables (LUTs) using `Float32Array`. Create utility functions `fastSin()` and `fastCos()` to quickly retrieve approximated values based on mapped indices, significantly reducing CPU cycles per frame with negligible visual difference.

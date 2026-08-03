@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { fastSin, fastCos } from "@/lib/mathLUT";
 
 export function Level5FacialNerve({
   stressRef,
@@ -65,8 +66,8 @@ export function Level5FacialNerve({
       // Add shake based on stress (higher stress = more shake)
       const currentStress = stressRef.current || 0;
       const shakeAmount = 2 + (currentStress / 100) * 15;
-      nextX += Math.sin(time * 5) * shakeAmount;
-      nextY += Math.cos(time * 6.3) * shakeAmount;
+      nextX += fastSin(time * 5) * shakeAmount;
+      nextY += fastCos(time * 6.3) * shakeAmount;
 
       cursorRef.current.x = nextX;
       cursorRef.current.y = nextY;

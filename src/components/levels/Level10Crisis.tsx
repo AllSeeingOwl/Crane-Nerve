@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { fastSin, fastCos } from "@/lib/mathLUT";
 
 export function Level10Crisis({
   onStressChange,
@@ -102,8 +103,8 @@ export function Level10Crisis({
 
       // --- Task 1 Logic ---
       // Move target in a circle
-      const tX = window.innerWidth * 0.2 + Math.cos(time / 1000) * 100;
-      const tY = window.innerHeight * 0.5 + Math.sin(time / 1000) * 100;
+      const tX = window.innerWidth * 0.2 + fastCos(time / 1000) * 100;
+      const tY = window.innerHeight * 0.5 + fastSin(time / 1000) * 100;
 
       if (targetRef.current) {
         targetRef.current.style.left = `${tX - window.innerWidth * 0.2 + 128 - 24}px`;

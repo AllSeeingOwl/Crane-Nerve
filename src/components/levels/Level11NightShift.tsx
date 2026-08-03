@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { fastSin, fastCos } from "@/lib/mathLUT";
 
 export function Level11NightShift({
   onStressChange,
@@ -185,12 +186,12 @@ export function Level11NightShift({
       // Move target in a figure-8 or chaotic pattern (harder than Level 10)
       const tX =
         window.innerWidth * 0.2 +
-        Math.cos(time / 800) * 120 +
-        Math.sin(time / 400) * 40;
+        fastCos(time / 800) * 120 +
+        fastSin(time / 400) * 40;
       const tY =
         window.innerHeight * 0.5 +
-        Math.sin(time / 600) * 120 +
-        Math.cos(time / 300) * 40;
+        fastSin(time / 600) * 120 +
+        fastCos(time / 300) * 40;
 
       // ⚡ BOLT: Mutate DOM directly instead of using setState in requestAnimationFrame
       targetPosRef.current.x = tX;
