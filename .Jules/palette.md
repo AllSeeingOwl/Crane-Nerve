@@ -12,3 +12,8 @@
 
 **Learning:** Buttons used as start conditions or interaction triggers within individual mini-games (e.g. "Start Movement") are easily missed by keyboard navigation, breaking the flow.
 **Action:** Automatically focus these intra-level primary action buttons on component mount/render and include explicit semantic keyboard hints (like `<kbd>ENTER</kbd>`) natively integrated into the button UI, mirroring the transition screen pattern.
+
+## 2024-03-22 - Dynamic aria-valuenow in Game Loops
+
+**Learning:** High-frequency game loops often use `useRef` and direct DOM mutation (bypassing React state) for performance. If progress bars (`role="progressbar"`) are updated this way, their `aria-valuenow` attribute won't update unless explicitly mutated via `.setAttribute()`, causing screen readers to announce stale values.
+**Action:** When optimizing progress indicators in `requestAnimationFrame` loops, always attach a `ref` to the container `div` and dynamically update `containerRef.current.setAttribute("aria-valuenow", value)` alongside the visual style changes.
