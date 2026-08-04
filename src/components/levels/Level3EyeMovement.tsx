@@ -130,7 +130,10 @@ export function Level3EyeMovement({
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="text-sm font-bold text-blue-300 mt-2" aria-live="polite">
+        <div
+          className="text-sm font-bold text-blue-300 mt-2"
+          aria-live="polite"
+        >
           Nodes Traced: {currentNodeIndex} / {nodes.length}
         </div>
       </div>
