@@ -17,3 +17,8 @@
 
 **Learning:** High-frequency game loops often use `useRef` and direct DOM mutation (bypassing React state) for performance. If progress bars (`role="progressbar"`) are updated this way, their `aria-valuenow` attribute won't update unless explicitly mutated via `.setAttribute()`, causing screen readers to announce stale values.
 **Action:** When optimizing progress indicators in `requestAnimationFrame` loops, always attach a `ref` to the container `div` and dynamically update `containerRef.current.setAttribute("aria-valuenow", value)` alongside the visual style changes.
+
+## 2024-03-22 - Adding Aria-Live Textual Progress to Rapid Visual States
+
+**Learning:** For interactive UI mini-games (like Level 3 Eye Movement), progress bars update rapidly, but relying only on `aria-valuenow` can still be too abstract or verbose for screen readers. Providing a structured, slow-updating text string (e.g. "Nodes Traced: X / Y") is more meaningful and pleasant.
+**Action:** Always complement abstract or rapid `role="progressbar"` elements with a concrete, slower-updating textual equivalent wrapped in an `aria-live="polite"` container, ensuring auditory feedback is both reliable and contextual.
