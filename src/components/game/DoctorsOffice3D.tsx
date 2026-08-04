@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import WindowVignette from "./WindowVignette";
 import { cameraState } from "@/lib/cameraState";
+import { fastSin, fastCos } from "@/lib/mathLUT";
 
 /** Smooth parallax: camera drifts toward mouse position, always looking at the patient */
 function CameraRig() {
@@ -210,8 +211,8 @@ function Room() {
           <mesh
             key={i}
             position={[
-              Math.cos((i / 12) * Math.PI * 2) * 0.3,
-              Math.sin((i / 12) * Math.PI * 2) * 0.28,
+              fastCos((i / 12) * Math.PI * 2) * 0.3,
+              fastSin((i / 12) * Math.PI * 2) * 0.28,
               0.025,
             ]}
           >
@@ -295,7 +296,7 @@ function PatientCharacter() {
   const bodyRef = useRef<THREE.Group>(null);
   useFrame((state) => {
     if (!bodyRef.current) return;
-    const s = 1 + Math.sin(state.clock.elapsedTime * 0.65) * 0.018;
+    const s = 1 + fastSin(state.clock.elapsedTime * 0.65) * 0.018;
     bodyRef.current.scale.y = s;
   });
 
@@ -421,7 +422,7 @@ function DoctorCharacter() {
   useFrame((state) => {
     if (!groupRef.current) return;
     groupRef.current.position.y =
-      Math.sin(state.clock.elapsedTime * 0.42) * 0.007;
+      fastSin(state.clock.elapsedTime * 0.42) * 0.007;
   });
 
   return (
@@ -622,7 +623,7 @@ function DoctorStool() {
         return (
           <mesh
             key={i}
-            position={[Math.cos(r) * 0.24, 0.04, Math.sin(r) * 0.24]}
+            position={[fastCos(r) * 0.24, 0.04, fastSin(r) * 0.24]}
             rotation={[0, -r, 0]}
           >
             <boxGeometry args={[0.42, 0.04, 0.06]} />
@@ -645,7 +646,7 @@ function EKGMonitor() {
     if (!screenRef.current) return;
     const mat = screenRef.current.material as THREE.MeshStandardMaterial;
     mat.emissiveIntensity =
-      0.65 + Math.sin(state.clock.elapsedTime * 1.8) * 0.15;
+      0.65 + fastSin(state.clock.elapsedTime * 1.8) * 0.15;
   });
 
   return (
@@ -734,10 +735,7 @@ function IVStand() {
       {[0, 90, 180, 270].map((deg, i) => {
         const r = (deg * Math.PI) / 180;
         return (
-          <mesh
-            key={i}
-            position={[Math.cos(r) * 0.28, 0.05, Math.sin(r) * 0.28]}
-          >
+          <mesh key={i} position={[fastCos(r) * 0.28, 0.05, fastSin(r) * 0.28]}>
             <cylinderGeometry args={[0.04, 0.04, 0.06, 8]} />
             <meshStandardMaterial
               color="#3a3a40"

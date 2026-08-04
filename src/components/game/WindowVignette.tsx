@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { fastSin } from "@/lib/mathLUT";
 
 interface VignetteScene {
   name: string;
@@ -28,7 +29,7 @@ function drawStars(ctx: CanvasRenderingContext2D, seed: number) {
   ];
   ctx.fillStyle = "rgba(200,220,255,0.6)";
   stars.forEach(([x, y]) => {
-    const flicker = 0.4 + 0.6 * Math.abs(Math.sin(seed * 0.3 + x * 0.05));
+    const flicker = 0.4 + 0.6 * Math.abs(fastSin(seed * 0.3 + x * 0.05));
     ctx.globalAlpha = flicker;
     ctx.fillRect(x, y, 1, 1);
   });
@@ -69,7 +70,7 @@ const SCENES: VignetteScene[] = [
 
       // Moon reflection ripple
       for (let i = 0; i < 6; i++) {
-        const yOff = height * 0.58 + i * 6 + Math.sin(t * 1.5 + i) * 2;
+        const yOff = height * 0.58 + i * 6 + fastSin(t * 1.5 + i) * 2;
         const w = 20 - i * 2;
         ctx.fillStyle = `rgba(180,195,220,${0.15 - i * 0.02})`;
         ctx.fillRect(width * 0.88 - w / 2, yOff, w, 1.5);
@@ -99,7 +100,7 @@ const SCENES: VignetteScene[] = [
         ctx.arc(width * 0.36 + 6, figureY - 24, 7, 0, Math.PI * 2);
         ctx.fill();
         // Arms out
-        const armAngle = Math.sin(phase * 2) * 0.4 + 0.3;
+        const armAngle = fastSin(phase * 2) * 0.4 + 0.3;
         ctx.save();
         ctx.translate(width * 0.36 + 6, figureY - 12);
         ctx.rotate(-armAngle);
@@ -184,8 +185,8 @@ const SCENES: VignetteScene[] = [
       drawPylon(380, 100, 0.85);
 
       // Electric arcs / sparks
-      const sparkOn = Math.sin(t * 8) > 0.5;
-      const sparkOn2 = Math.sin(t * 12 + 1.5) > 0.7;
+      const sparkOn = fastSin(t * 8) > 0.5;
+      const sparkOn2 = fastSin(t * 12 + 1.5) > 0.7;
       if (sparkOn) {
         ctx.strokeStyle = "rgba(180,200,255,0.9)";
         ctx.lineWidth = 1.5;

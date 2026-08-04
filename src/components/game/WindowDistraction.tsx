@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { fastSin } from "@/lib/mathLUT";
 
 interface VignetteDrawFn {
   (ctx: CanvasRenderingContext2D, t: number, phase: number): void;
@@ -30,7 +31,7 @@ function drawDarkWater(
     [180, 55],
   ];
   stars.forEach(([x, y]) => {
-    ctx.fillStyle = `rgba(200,220,255,${0.3 + 0.5 * Math.abs(Math.sin(t * 0.3 + x * 0.1))})`;
+    ctx.fillStyle = `rgba(200,220,255,${0.3 + 0.5 * Math.abs(fastSin(t * 0.3 + x * 0.1))})`;
     ctx.fillRect(x % width, y, 1.5, 1.5);
   });
 
@@ -134,7 +135,7 @@ function drawHighVoltage(
   pylon(330, 95);
 
   // Spark
-  if (Math.sin(t * 9) > 0.6) {
+  if (fastSin(t * 9) > 0.6) {
     ctx.strokeStyle = "rgba(180,200,255,0.9)";
     ctx.lineWidth = 1.5;
     ctx.shadowColor = "rgba(120,160,255,1)";
@@ -146,7 +147,7 @@ function drawHighVoltage(
     ctx.stroke();
     ctx.shadowBlur = 0;
   }
-  if (Math.sin(t * 13 + 2) > 0.75) {
+  if (fastSin(t * 13 + 2) > 0.75) {
     ctx.strokeStyle = "rgba(200,220,255,0.7)";
     ctx.lineWidth = 1;
     ctx.shadowColor = "rgba(150,180,255,1)";
@@ -208,7 +209,7 @@ function drawDarkRoad(ctx: CanvasRenderingContext2D, t: number, phase: number) {
     [130, 35],
     [280, 28],
   ].forEach(([x, y]) => {
-    ctx.fillStyle = `rgba(200,220,255,${0.3 + 0.4 * Math.abs(Math.sin(t * 0.4 + x * 0.07))})`;
+    ctx.fillStyle = `rgba(200,220,255,${0.3 + 0.4 * Math.abs(fastSin(t * 0.4 + x * 0.07))})`;
     ctx.fillRect(x, y, 1, 1);
   });
 
