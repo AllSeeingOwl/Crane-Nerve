@@ -91,3 +91,8 @@
 **Action:** Replace `Math.sin()` and `Math.cos()` with pre-computed lookup tables (LUTs) using `Float32Array`. Create utility functions `fastSin()` and `fastCos()` to quickly retrieve approximated values based on mapped indices, significantly reducing CPU cycles per frame with negligible visual difference.
 
 ## 2026-08-04 - [Optimize Trigonometric Functions in Window Vignettes and Models]\n**Learning:** Using native `Math.sin()` and `Math.cos()` inside 60fps `requestAnimationFrame` game loops for visual elements like flickering stars, procedural effects, and subtle model bobs introduces unnecessary computational overhead, especially as the number of elements scales.\n**Action:** Replaced `Math.sin()` and `Math.cos()` with pre-computed lookup tables (LUTs) using `fastSin()` and `fastCos()` from `src/lib/mathLUT.ts` to reduce CPU cycles per frame with negligible visual difference.
+
+## 2024-08-05 - Avoid expensive Array.find in game loops and use inverse square root for vector normalization
+
+**Learning:** In high-frequency 60fps `requestAnimationFrame` game loops, using `Array.find` to look up elements (even small arrays) can cause noticeable overhead because it gets evaluated 60 times a second. Additionally, when normalizing vectors, dividing by `Math.sqrt()` is slower than multiplying by the inverse (`1 / Math.sqrt()`).
+**Action:** Precompute a lookup map (`Record<string, T>`) for `O(1)` access outside the component/loop instead of using `Array.find` inside it. Use `1 / Math.sqrt()` and multiply the components instead of dividing them directly by `Math.sqrt()`.
