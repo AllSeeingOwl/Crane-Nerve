@@ -361,6 +361,7 @@ export default function WindowDistraction({ className }: Props) {
     <div
       className={`absolute z-20 select-none pointer-events-none ${className}`}
       style={{ bottom: 72, right: 24 }}
+      aria-hidden="true"
     >
       <div
         style={{

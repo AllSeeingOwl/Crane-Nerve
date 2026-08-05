@@ -47,3 +47,8 @@
 
 **Learning:** When displaying critical, transient warning messages (like the DVORAK keyboard warning in Level12TheDebrief), screen readers will not announce them by default since focus does not change. Standard `aria-live="polite"` might not be urgent enough for these sudden game events.
 **Action:** For highly critical warnings that demand immediate attention, use `role="alert"` and `aria-live="assertive"` on the rendering container so that the screen reader interrupts current speech and announces the message immediately.
+
+## $(date +%Y-%m-%d) - Screen Reader Spam Prevention
+
+**Learning:** Applying `aria-live` directly to rapidly mutating text elements (like per-second countdown timers or per-keystroke progress counters) causes severe screen reader spam, locking up speech and making the application unusable for visually impaired users.
+**Action:** Never use `aria-live` on high-frequency UI updates. Instead, use `role="progressbar"` with `aria-valuenow`, announce only at meaningful thresholds, or provide a button to request the status. For purely visual/decorative components that provide no interaction (like `WindowDistraction`), apply `aria-hidden="true"` to the outermost container to remove them from the accessibility tree entirely.
