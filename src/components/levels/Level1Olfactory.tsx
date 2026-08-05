@@ -11,6 +11,15 @@ const VIALS = [
   },
 ];
 
+// ⚡ BOLT OPTIMIZATION: Precompute VIALS map for O(1) lookups instead of Array.find()
+const VIALS_MAP = VIALS.reduce(
+  (acc, vial) => {
+    acc[vial.id] = vial;
+    return acc;
+  },
+  {} as Record<string, (typeof VIALS)[0]>,
+);
+
 export function Level1Olfactory({
   onStressChange,
   onWin,
@@ -106,14 +115,14 @@ export function Level1Olfactory({
         // Limit speed
         const speedSq = nose.vx * nose.vx + nose.vy * nose.vy;
         if (speedSq > 4) {
-          const speed = Math.sqrt(speedSq);
-          nose.vx = (nose.vx / speed) * 2;
-          nose.vy = (nose.vy / speed) * 2;
+          const invSpeed = 1 / Math.sqrt(speedSq);
+          nose.vx = nose.vx * invSpeed * 2;
+          nose.vy = nose.vy * invSpeed * 2;
         }
       }
 
       const activeVialId = selectedVialRef.current;
-      const vialDef = VIALS.find((v) => v.id === activeVialId);
+      const vialDef = activeVialId ? VIALS_MAP[activeVialId] : undefined;
 
       const dx = nose.x - mouse.x;
       const dy = nose.y - mouse.y;
@@ -125,10 +134,10 @@ export function Level1Olfactory({
           if (distSq < 90000) {
             // ⚡ BOLT OPTIMIZATION: Avoid expensive Math.atan2, Math.cos, Math.sin calls
             // Normalize the vector directly instead of converting to polar coordinates and back
-            const dist = Math.sqrt(distSq);
-            if (dist > 0) {
-              nose.vx += (dx / dist) * 0.5;
-              nose.vy += (dy / dist) * 0.5;
+            if (distSq > 0) {
+              const invDist = 1 / Math.sqrt(distSq);
+              nose.vx += dx * invDist * 0.5;
+              nose.vy += dy * invDist * 0.5;
             }
 
             // Rapid stress increase if smelling something bad
@@ -282,7 +291,7 @@ export function Level1Olfactory({
         >
           <div
             className={`w-full h-full rounded-t-lg rounded-b-md shadow-lg opacity-80 ${
-              VIALS.find((v) => v.id === selectedVial)?.color
+              selectedVial ? VIALS_MAP[selectedVial]?.color : ""
             }`}
           >
             <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-2 bg-gray-300 rounded-t-sm" />
