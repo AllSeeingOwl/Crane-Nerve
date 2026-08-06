@@ -56,7 +56,7 @@ export default function GameEngine({
   onLose,
   onQuit,
 }: Props) {
-  const level = LEVELS.find((l) => l.id === levelId)!;
+  const level = LEVELS[levelId - 1];
 
   const stressRef = useRef(stress);
   useEffect(() => {

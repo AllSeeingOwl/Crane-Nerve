@@ -18,7 +18,7 @@ export default function LevelComplete({
   onLevelSelect,
 }: Props) {
   const [quote, setQuote] = useState("");
-  const level = LEVELS.find((l) => l.id === levelId)!;
+  const level = LEVELS[levelId - 1];
   const stressLeft = 100 - stress;
   const grade =
     stressLeft > 80 ? "A" : stressLeft > 60 ? "B" : stressLeft > 40 ? "C" : "D";

@@ -10,7 +10,7 @@ interface Props {
 
 export default function GameOver({ levelId, onRetry, onLevelSelect }: Props) {
   const [quote, setQuote] = useState("");
-  const level = LEVELS.find((l) => l.id === levelId)!;
+  const level = LEVELS[levelId - 1];
 
   const [focusedButton, setFocusedButton] = useState<"retry" | "quit">("retry");
   const retryBtnRef = useRef<globalThis.HTMLButtonElement | null>(null);
