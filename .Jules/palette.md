@@ -22,3 +22,8 @@
 
 **Learning:** For interactive UI mini-games (like Level 3 Eye Movement), progress bars update rapidly, but relying only on `aria-valuenow` can still be too abstract or verbose for screen readers. Providing a structured, slow-updating text string (e.g. "Nodes Traced: X / Y") is more meaningful and pleasant.
 **Action:** Always complement abstract or rapid `role="progressbar"` elements with a concrete, slower-updating textual equivalent wrapped in an `aria-live="polite"` container, ensuring auditory feedback is both reliable and contextual.
+
+## $(date +%Y-%m-%d) - Keyboard Accessibility for Mouse-centric Controls
+
+**Learning:** Some custom interactions (like using the mouse wheel for "focus" in an optic nerve test) can completely block keyboard-only users from progressing if no alternative input is provided and native elements aren't used.
+**Action:** When identifying mouse-only custom controls (like mouse wheel scroll), always ensure an explicit keyboard alternative (like ArrowUp/ArrowDown) is intercepted in a corresponding keydown listener, and surface the shortcut visually using `<kbd>` elements in the UI.

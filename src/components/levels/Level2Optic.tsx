@@ -32,6 +32,16 @@ export function Level2Optic({
   useEffect(() => {
     // Handle keyboard typing
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        focusRef.current = Math.max(0, focusRef.current - 0.5);
+        return;
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        focusRef.current = Math.min(10, focusRef.current + 0.5);
+        return;
+      }
+
       // Ignore modifier keys or long keys
       if (e.key.length > 1) return;
 
@@ -142,8 +152,15 @@ export function Level2Optic({
           Read the Snellen chart! Type the{" "}
           <span className="text-yellow-400 font-bold">highlighted</span> letter.
         </p>
-        <p className="text-sm font-bold text-blue-300 mb-2">
-          Scroll Mouse Wheel to adjust focus!
+        <p className="text-sm font-bold text-blue-300 mb-2 flex items-center justify-center gap-1">
+          Scroll Mouse Wheel or use{" "}
+          <kbd className="text-[10px] bg-blue-900/50 px-1 py-0.5 rounded font-sans mx-0.5">
+            ↑
+          </kbd>
+          <kbd className="text-[10px] bg-blue-900/50 px-1 py-0.5 rounded font-sans mx-0.5">
+            ↓
+          </kbd>{" "}
+          to adjust focus!
         </p>
         <div
           className="flex justify-between text-sm mt-4 border-t border-gray-600 pt-2"
