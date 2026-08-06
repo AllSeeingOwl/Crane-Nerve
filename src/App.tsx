@@ -41,7 +41,7 @@ export default function App() {
         document.title = "Select Examination | Cranial Nerve Crisis";
         break;
       case "playing": {
-        const levelInfo = LEVELS.find((l) => l.id === currentLevel);
+        const levelInfo = LEVELS[currentLevel - 1];
         document.title = levelInfo
           ? `Playing: ${levelInfo.title} | Cranial Nerve Crisis`
           : "Playing | Cranial Nerve Crisis";

@@ -96,3 +96,8 @@
 
 **Learning:** In high-frequency 60fps `requestAnimationFrame` game loops, using `Array.find` to look up elements (even small arrays) can cause noticeable overhead because it gets evaluated 60 times a second. Additionally, when normalizing vectors, dividing by `Math.sqrt()` is slower than multiplying by the inverse (`1 / Math.sqrt()`).
 **Action:** Precompute a lookup map (`Record<string, T>`) for `O(1)` access outside the component/loop instead of using `Array.find` inside it. Use `1 / Math.sqrt()` and multiply the components instead of dividing them directly by `Math.sqrt()`.
+
+## 2024-05-18 - [Optimize Array Lookups]
+
+**Learning:** When retrieving objects from a static array based on an ID that matches the array index, using `Array.find()` loops over the array sequentially ($O(N)$), which adds unnecessary operations compared to a direct array lookup ($O(1)$), especially when the array is relatively large or accessed frequently.
+**Action:** Replace `Array.find(item => item.id === targetId)` with direct index access like `array[targetId - 1]` whenever the array elements' IDs correspond directly to their indices.
