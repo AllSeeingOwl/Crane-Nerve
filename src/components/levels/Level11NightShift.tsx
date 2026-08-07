@@ -440,6 +440,7 @@ export function Level11NightShift({
           <div
             ref={facePromptElementRef}
             className="text-5xl font-black text-white/80 animate-bounce"
+            aria-live="polite"
           >
             PRESS {facePromptRef.current}
           </div>

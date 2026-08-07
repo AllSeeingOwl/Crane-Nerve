@@ -27,3 +27,8 @@
 
 **Learning:** Some custom interactions (like using the mouse wheel for "focus" in an optic nerve test) can completely block keyboard-only users from progressing if no alternative input is provided and native elements aren't used.
 **Action:** When identifying mouse-only custom controls (like mouse wheel scroll), always ensure an explicit keyboard alternative (like ArrowUp/ArrowDown) is intercepted in a corresponding keydown listener, and surface the shortcut visually using `<kbd>` elements in the UI.
+
+## 2024-08-07 - Dynamic Text Content in Game Loops
+
+**Learning:** When text content (like a key press prompt in a mini-game) updates periodically via direct DOM mutation (`ref.current.textContent = ...`) inside a game loop, screen readers will remain completely silent because React state is not triggering an update and there is no live region.
+**Action:** Add `aria-live="polite"` to the container element of any periodically updating text (like randomized key prompts) even if they are modified via direct DOM references, so screen readers can reliably announce the changing instructions.
