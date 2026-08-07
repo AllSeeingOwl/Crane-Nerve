@@ -101,3 +101,8 @@
 
 **Learning:** When retrieving objects from a static array based on an ID that matches the array index, using `Array.find()` loops over the array sequentially ($O(N)$), which adds unnecessary operations compared to a direct array lookup ($O(1)$), especially when the array is relatively large or accessed frequently.
 **Action:** Replace `Array.find(item => item.id === targetId)` with direct index access like `array[targetId - 1]` whenever the array elements' IDs correspond directly to their indices.
+
+## 2024-05-18 - [Optimize Array.findIndex with loop]
+
+**Learning:** `Array.findIndex` combined with anonymous callback functions inside components (even if only triggered occasionally by state updates) introduces unnecessary function allocation overhead compared to a plain `for` loop.
+**Action:** Replace `Array.findIndex(...)` with a classic `for` loop and variable assignment when searching through static arrays, completely bypassing the callback overhead.

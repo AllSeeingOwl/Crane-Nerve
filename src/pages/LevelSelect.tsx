@@ -197,9 +197,14 @@ export default function LevelSelect({
   useEffect(() => {
     // Auto-focus the next available uncompleted level on mount
     const timer = setTimeout(() => {
-      let targetIndex = LEVELS.findIndex(
-        (l) => l.implemented && !completedLevels.has(l.id),
-      );
+      // ⚡ BOLT OPTIMIZATION: Replace Array.findIndex with a simple for loop to avoid callback overhead
+      let targetIndex = -1;
+      for (let i = 0; i < LEVELS.length; i++) {
+        if (LEVELS[i].implemented && !completedLevels.has(LEVELS[i].id)) {
+          targetIndex = i;
+          break;
+        }
+      }
       if (targetIndex === -1) targetIndex = 0;
       setFocusedIndex(targetIndex);
       buttonRefs.current[targetIndex]?.focus();
